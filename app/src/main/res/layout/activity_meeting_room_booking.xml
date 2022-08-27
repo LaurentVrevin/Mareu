@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MeetingRoomBooking">
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/tvAboutObject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Objet de la réunion :"
+        android:textStyle="bold"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"/>
+    <TextView
+        android:id="@+id/tvRoomChoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choisissez votre salle de réunion"
+        android:textStyle="bold"
+        android:layout_margin="15dp"
+        tools:ignore="MissingConstraints" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_margin="15dp"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+    <Button
+        android:id="@+id/DatePickerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choisissez la date"/>
+
+        <TextView
+            android:id="@+id/tvDateTimeSelected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date et heure choisie"/>
+    </LinearLayout>
+        <Button
+            android:id="@+id/SaveMeetingButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="enregistrer"/>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/layout/item_list_meeting.xml" value="0.5" />
+        <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/drawable/circle.xml" value="0.283" />
+        <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/drawable/ring.xml" value="0.283" />
+        <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/layout/activity_meeting_room_booking.xml" value="0.5" />
+        <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/layout/item_list_meeting.xml" value="0.33" />
       </map>
     </option>
   </component>
