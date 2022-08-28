@@ -1,11 +1,16 @@
 package fr.laurentvrevin.mareu.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -15,14 +20,18 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.timepicker.MaterialTimePicker;
 
+import java.util.List;
 import java.util.Locale;
 
 import fr.laurentvrevin.mareu.R;
+import fr.laurentvrevin.mareu.model.Rooms;
+import fr.laurentvrevin.mareu.service.DummyRoomsGenerator;
 
 public class MeetingRoomBooking extends AppCompatActivity {
     private Button datetimePicker;
     private TextView dateSelected, timeSelected;
     int thour, tminute;
+    private Spinner mRoomToSelectSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +41,35 @@ public class MeetingRoomBooking extends AppCompatActivity {
         datetimePicker = findViewById(R.id.DatePickerButton);
         dateSelected = findViewById(R.id.tvDateSelected);
         timeSelected = findViewById(R.id.tvTimeSelected);
+        mRoomToSelectSpinner = findViewById(R.id.RoomToSelectSpinner);
 
+        //ON GERE LE SPINNER DES SALLES DE REUNION
+        //rooms = les salles étant dans getRooms
+        Rooms[] rooms = DummyRoomsGenerator.getRooms();
+        //On crée l'adapter de type Rooms dans un nouvel adapter
+        ArrayAdapter<Rooms> adapter = new ArrayAdapter<Rooms>
+                (this, com.google.android.material.R.layout.support_simple_spinner_dropdown_item, rooms);
+        //On charge l'adapter dans le spinner
+        this.mRoomToSelectSpinner.setAdapter(adapter);
+        //On définit ce qu'il se passera quand on le déroule, selon ce que l'on fait.
 
+        this.mRoomToSelectSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            //On récupère la vue de l'item sélectionné
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                onItemSelectedHandler(parent, view, position, id);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+            //gestionnaire de l'item sélectionné, on récupère l'item selon sa position, servira pour plus tard avec rooms
+            private void onItemSelectedHandler(AdapterView<?> parent, View view, int position, long id) {
+                Adapter adapter = parent.getAdapter();
+                Rooms rooms = (Rooms) adapter.getItem(position);
+            }
+        });
 
+        //ON GERE LE DATE PICKER
         long today = MaterialDatePicker.todayInUtcMilliseconds();
         //contrainte du date picker, il doit démarrer à la date du jour
         // et ne doit pas permettre de réserver une date antérieur à celle-ci.
@@ -55,8 +90,8 @@ public class MeetingRoomBooking extends AppCompatActivity {
         dateBuilder.setCalendarConstraints(constraintDateBuilder.build());
         final MaterialDatePicker materialDatePicker = dateBuilder.build();
 
-        //Material Time Picker
-        MaterialTimePicker materialTimePicker = timeBuilder.build();
+        //ON GERE LE TIME PICKER
+        //MaterialTimePicker materialTimePicker = timeBuilder.build();
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int selectedHour, int selectedminute) {
@@ -75,7 +110,7 @@ public class MeetingRoomBooking extends AppCompatActivity {
         });
 
         //Quand je valide la date choisie, ouvre le timePicker via materialTimePicker
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, thour, tminute, true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, thour, tminute, false);
         materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
             @Override
             public void onPositiveButtonClick(Object selection) {
@@ -96,4 +131,6 @@ public class MeetingRoomBooking extends AppCompatActivity {
             }
         });
     }
+
+
 }
