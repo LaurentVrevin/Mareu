@@ -92,14 +92,8 @@ public class MeetingRoomBooking extends AppCompatActivity {
                         tminute = minute;
                         timeSelected.setText(String.format(Locale.getDefault(),"%02d:%02d", thour, tminute));
                     }
-
                 };
-
             }
-
         });
-
-
-
     }
 }
