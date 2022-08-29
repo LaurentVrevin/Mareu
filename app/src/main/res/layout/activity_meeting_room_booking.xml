@@ -20,6 +20,7 @@
         android:textStyle="bold"/>
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tietObectOfMeeting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"/>
@@ -38,30 +39,33 @@
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints" />
 
-        <LinearLayout
-            android:layout_width="367dp"
+        <Button
+            android:id="@+id/DatePickerButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:text="Choisissez la date" />
+        <TextView
+            android:id="@+id/tvObjectSelected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Objet de la réunion" />
 
-            <Button
-                android:id="@+id/DatePickerButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Choisissez la date" />
+        <TextView
+            android:id="@+id/tvDateSelected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date  choisie" />
 
-            <TextView
-                android:id="@+id/tvDateSelected"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date  choisie" />
-
-            <TextView
-                android:id="@+id/tvTimeSelected"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Heure choisie"/>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tvTimeSelected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Heure choisie"/>
+        <TextView
+            android:id="@+id/tvRoomSelected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Salle choisie"/>
         <Button
             android:id="@+id/SaveMeetingButton"
             android:layout_width="wrap_content"
