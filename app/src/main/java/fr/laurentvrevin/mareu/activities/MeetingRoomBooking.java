@@ -1,8 +1,5 @@
 package fr.laurentvrevin.mareu.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
@@ -14,13 +11,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.timepicker.MaterialTimePicker;
-
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,8 +30,7 @@ import fr.laurentvrevin.mareu.service.DummyRoomsGenerator;
 
 public class MeetingRoomBooking extends AppCompatActivity {
     private Button datetimePickerButton;
-    private TextView dateSelected, timeSelected, roomSelected, tvObjectSelected;
-    private TextInputEditText aboutObjectOfMeeting;
+    private TextView dateSelected, timeSelected, roomSelected;
     int thour, tminute;
     private Spinner mRoomToSelectSpinner;
 
@@ -47,11 +44,8 @@ public class MeetingRoomBooking extends AppCompatActivity {
         timeSelected = findViewById(R.id.tvTimeSelected);
         mRoomToSelectSpinner = findViewById(R.id.RoomToSelectSpinner);
         roomSelected = findViewById(R.id.tvRoomSelected);
-        aboutObjectOfMeeting = findViewById(R.id.titObjectOfMeeting);
 
         //On récupère l'objet de la réunion
-
-
 
 
         //ON GERE LE SPINNER DES SALLES DE REUNION
@@ -70,9 +64,11 @@ public class MeetingRoomBooking extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 onItemSelectedHandler(parent, view, position, id);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
+
             //gestionnaire de l'item sélectionné, on récupère l'item selon sa position, servira pour plus tard avec rooms
             private void onItemSelectedHandler(AdapterView<?> parent, View view, int position, long id) {
                 Adapter adapter = parent.getAdapter();
@@ -110,17 +106,16 @@ public class MeetingRoomBooking extends AppCompatActivity {
         tminute = calendar.get(Calendar.MINUTE);
 
         /**final MaterialTimePicker materialTimePicker = new MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_12H)
-                .setHour(thour)
-                .setMinute(tminute)
-                .build();
-        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                thour = hourOfDay;
-                tminute = minute;
-                timeSelected.setText(String.format(Locale.getDefault(), "%02d:%02d",thour, tminute));
-            }
+         .setTimeFormat(TimeFormat.CLOCK_12H)
+         .setHour(thour)
+         .setMinute(tminute)
+         .build();
+         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+        @Override public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        thour = hourOfDay;
+        tminute = minute;
+        timeSelected.setText(String.format(Locale.getDefault(), "%02d:%02d",thour, tminute));
+        }
         };*/
 
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
@@ -134,7 +129,7 @@ public class MeetingRoomBooking extends AppCompatActivity {
 
                 thour = hourOfDay;
                 tminute = selectedminute;
-                timeSelected.setText(String.format(Locale.getDefault(),"%02d:%02d", thour, tminute));
+                timeSelected.setText(String.format(Locale.getDefault(), "%02d:%02d", thour, tminute));
             }
         };
 
@@ -151,11 +146,7 @@ public class MeetingRoomBooking extends AppCompatActivity {
         materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
             @Override
             public void onPositiveButtonClick(Object selection) {
-                calendar.setTimeInMillis((Long)selection);
-
-                //récupérer jour + mois + année
-                //ouvrir time picker
-
+                calendar.setTimeInMillis((Long) selection);
 
                 //materialTimePicker.show(getSupportFragmentManager(), "fragment_tag");
                 timePickerDialog.setTitle("Sélectionne l'heure de début");
@@ -163,6 +154,4 @@ public class MeetingRoomBooking extends AppCompatActivity {
             }
         });
     }
-
-
 }

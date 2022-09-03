@@ -6,21 +6,18 @@ public class Employees {
 
     private String firstname;
 
-    private String familyname;
-
     private String function;
-
 
     private String email;
 
-    public Employees(long id, String firstname, String familyname, String funtion, String email) {
+    public Employees(long id, String firstname, String funtion, String email) {
 
         this.id = id;
         this.firstname = firstname;
-        this.familyname = familyname;
         this.function = funtion;
         this.email = email;
     }
+
     public long getId() {
         return id;
     }
@@ -35,14 +32,6 @@ public class Employees {
 
     public void setFirstname(String Firstname) {
         this.firstname = firstname;
-    }
-
-    public String getFamilyname() {
-        return familyname;
-    }
-
-    public void setFamilyname(String familyname) {
-        this.familyname = familyname;
     }
 
     public String getFunction() {
@@ -60,7 +49,6 @@ public class Employees {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
 
 }
