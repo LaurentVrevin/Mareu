@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,43 +7,61 @@
     tools:context=".activities.MeetingRoomBooking">
 
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="12dp"
+        android:gravity="left"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvAboutObject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Objet de la réunion :"
-        android:textStyle="bold"/>
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tietObectOfMeeting"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"/>
-    <TextView
-        android:id="@+id/tvRoomChoice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choisissez votre salle de réunion"
-        android:textStyle="bold"
-        android:layout_margin="15dp"
-        tools:ignore="MissingConstraints" />
-    <Spinner
-        android:id="@+id/RoomToSelectSpinner"
-        android:layout_width="match_parent"
-        android:layout_margin="15dp"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints" />
+            android:layout_margin="10dp"
+            android:hint="Objet de la réunion"
+            app:helperText="Required*"
+            app:helperTextTextColor="@color/design_default_color_error">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/titObjectOfMeeting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:id="@+id/tvRoomChoice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Choisissez votre salle de réunion"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints" />
+
+        <Spinner
+            android:id="@+id/RoomToSelectSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"/>
 
         <Button
             android:id="@+id/DatePickerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Choisissez la date" />
+
         <TextView
             android:id="@+id/tvObjectSelected"
             android:layout_width="wrap_content"
@@ -60,19 +78,21 @@
             android:id="@+id/tvTimeSelected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Heure choisie"/>
+            android:text="Heure choisie" />
+
         <TextView
             android:id="@+id/tvRoomSelected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Salle choisie"/>
+            android:text="Salle choisie" />
+
         <Button
             android:id="@+id/SaveMeetingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="enregistrer"/>
+            android:text="enregistrer" />
 
     </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
