@@ -13,26 +13,29 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.chip.Chip;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.timepicker.MaterialTimePicker;
+
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 import fr.laurentvrevin.mareu.R;
+import fr.laurentvrevin.mareu.fragment.EmployeesListDialogFragment;
 import fr.laurentvrevin.mareu.model.Rooms;
 import fr.laurentvrevin.mareu.service.DummyRoomsGenerator;
 
 public class MeetingRoomBooking extends AppCompatActivity {
-    private Button datetimePickerButton;
+    private Button datetimePickerButton, inviteEmployeeButton;
     private TextView dateSelected, timeSelected, roomSelected;
-    int thour, tminute;
+    int thour, tminute, resultChipGroup;
     private Spinner mRoomToSelectSpinner;
+    private Chip chips_choice_group, chips_choice_01, chips_choice_02, chips_choice_03;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +47,23 @@ public class MeetingRoomBooking extends AppCompatActivity {
         timeSelected = findViewById(R.id.tvTimeSelected);
         mRoomToSelectSpinner = findViewById(R.id.RoomToSelectSpinner);
         roomSelected = findViewById(R.id.tvRoomSelected);
+        inviteEmployeeButton = findViewById(R.id.invitationEmployeesButton);
 
-        //On récupère l'objet de la réunion
+
+
+
+        //On ouvre le dialog fragment en cliquant sur le button inviteEmployeeButton
+        inviteEmployeeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EmployeesListDialogFragment dialogFragment = new EmployeesListDialogFragment();
+                dialogFragment.show(getFragmentManager(), "Mon Fragment");
+
+            }
+        });
+
+
+
 
 
         //ON GERE LE SPINNER DES SALLES DE REUNION
@@ -78,6 +96,7 @@ public class MeetingRoomBooking extends AppCompatActivity {
             }
         });
 
+
         //ON GERE LE DATE PICKER
         long today = MaterialDatePicker.todayInUtcMilliseconds();
         //contrainte du date picker, il doit démarrer à la date du jour
@@ -89,7 +108,7 @@ public class MeetingRoomBooking extends AppCompatActivity {
         //Material Date Picker
         MaterialDatePicker.Builder<Long> dateBuilder = MaterialDatePicker.Builder.datePicker();
         //Material Time Picker
-        MaterialTimePicker.Builder timeBuilder = new MaterialTimePicker.Builder();
+        //MaterialTimePicker.Builder timeBuilder = new MaterialTimePicker.Builder();
 
         dateBuilder.setTitleText("SELECTIONNE UNE DATE");
         //charge pour date sélectionnée, la date du jour
@@ -97,7 +116,7 @@ public class MeetingRoomBooking extends AppCompatActivity {
         //Je lui rappelle qu'il a pour contrainte d'être à aujourd'hui
         // et de ne pas pouvoir sélectionner de date antérieur à celle du jour
         dateBuilder.setCalendarConstraints(constraintDateBuilder.build());
-        final MaterialDatePicker materialDatePicker = dateBuilder.build();
+        final MaterialDatePicker<Long> materialDatePicker = dateBuilder.build();
 
         //ON GERE LE TIME PICKER
         //on commence le time Picker à l'heure du jour
@@ -118,19 +137,14 @@ public class MeetingRoomBooking extends AppCompatActivity {
         }
         };*/
 
-        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int selectedminute) {
-                calendar.set(Calendar.HOUR, hourOfDay);
-                calendar.set(Calendar.MINUTE, selectedminute);
-                SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
-                dateSelected.setText("Date : " + format1.format(calendar.getTime()));
-
-
-                thour = hourOfDay;
-                tminute = selectedminute;
-                timeSelected.setText(String.format(Locale.getDefault(), "%02d:%02d", thour, tminute));
-            }
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = (view, hourOfDay, selectedminute) -> {
+            calendar.set(Calendar.HOUR, hourOfDay);
+            calendar.set(Calendar.MINUTE, selectedminute);
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
+            dateSelected.setText("Date : " + format1.format(calendar.getTime()));
+            thour = hourOfDay;
+            tminute = selectedminute;
+            timeSelected.setText(String.format(Locale.getDefault(), "%02d:%02d", thour, tminute));
         };
 
         //Quand je clique sur le bouton datetimePicker ouvre le fragment via la variable materialDatePicker

@@ -1,4 +1,4 @@
-package fr.laurentvrevin.mareu;
+package fr.laurentvrevin.mareu.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import fr.laurentvrevin.mareu.R;
 import fr.laurentvrevin.mareu.activities.MeetingRoomBooking;
 
 public class MainActivity extends AppCompatActivity {

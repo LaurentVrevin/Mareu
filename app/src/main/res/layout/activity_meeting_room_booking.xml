@@ -62,27 +62,34 @@
             android:layout_height="wrap_content"
             android:text="Choisissez la date" />
         <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chips_choice_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:singleSelection="true"
             >
             <com.google.android.material.chip.Chip
+                android:id="@+id/chips_choice_01"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
+                android:checkable="true"
                 android:text="30 min"/>
             <com.google.android.material.chip.Chip
+                android:id="@+id/chips_choice_02"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="false"
+                android:checkable="true"
                 android:text="45 min"/>
             <com.google.android.material.chip.Chip
+                android:id="@+id/chips_choice_03"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="false"
+                android:checkable="true"
                 android:text="1h"/>
 
 
@@ -111,6 +118,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Salle choisie" />
+        <Button
+            android:id="@+id/invitationEmployeesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inviter" />
 
         <Button
             android:id="@+id/SaveMeetingButton"
