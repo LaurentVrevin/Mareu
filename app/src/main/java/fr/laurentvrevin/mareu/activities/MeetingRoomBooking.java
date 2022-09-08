@@ -1,7 +1,10 @@
 package fr.laurentvrevin.mareu.activities;
 
+import static fr.laurentvrevin.mareu.service.DummyEmployeesGenerator.DUMMY_EMPLOYEES;
+
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -21,20 +24,25 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import fr.laurentvrevin.mareu.R;
 import fr.laurentvrevin.mareu.fragment.EmployeesListDialogFragment;
+import fr.laurentvrevin.mareu.model.Employees;
 import fr.laurentvrevin.mareu.model.Rooms;
 import fr.laurentvrevin.mareu.service.DummyRoomsGenerator;
 
-public class MeetingRoomBooking extends AppCompatActivity {
+public class MeetingRoomBooking extends AppCompatActivity implements EmployeesListDialogFragment.Listener{
     private Button datetimePickerButton, inviteEmployeeButton;
     private TextView dateSelected, timeSelected, roomSelected;
     int thour, tminute, resultChipGroup;
     private Spinner mRoomToSelectSpinner;
     private Chip chips_choice_group, chips_choice_01, chips_choice_02, chips_choice_03;
+    private ArrayList<Employees> mEmployeesSelected = new ArrayList<>();
+    private EmployeesListDialogFragment mDialogFragment;
 
 
     @Override
@@ -56,14 +64,13 @@ public class MeetingRoomBooking extends AppCompatActivity {
         inviteEmployeeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EmployeesListDialogFragment dialogFragment = new EmployeesListDialogFragment();
-                dialogFragment.show(getFragmentManager(), "Mon Fragment");
+                mDialogFragment =  EmployeesListDialogFragment.createdialogfragment(DUMMY_EMPLOYEES, mEmployeesSelected, MeetingRoomBooking.this);
+                mDialogFragment.show(getFragmentManager(), "Mon Fragment");
+                //passer la liste employee ici
+                //faire un listener
 
             }
         });
-
-
-
 
 
         //ON GERE LE SPINNER DES SALLES DE REUNION
@@ -167,5 +174,11 @@ public class MeetingRoomBooking extends AppCompatActivity {
                 timePickerDialog.show();
             }
         });
+    }
+
+    @Override
+    public void onEmployeesSelected(List<Employees> employees) {
+        Log.e("test", "onEmployeesSelected: ");
+        mDialogFragment.dismiss();
     }
 }

@@ -28,7 +28,7 @@
         android:text="tvEmployee_name"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/image_employee"
-        />
+        tools:ignore="MissingConstraints" />
     <TextView
         android:id="@+id/tv_employee_function"
         android:layout_width="wrap_content"

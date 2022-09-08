@@ -8,18 +8,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_employees"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/fragment_employees" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Voici ma recycler view pour les employers"
-        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/OkButton"

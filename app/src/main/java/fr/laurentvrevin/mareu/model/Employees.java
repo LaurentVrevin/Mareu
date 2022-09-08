@@ -1,6 +1,9 @@
 package fr.laurentvrevin.mareu.model;
 
-public class Employees {
+
+import java.io.Serializable;
+
+public class Employees implements Serializable {
 
     private long id;
 
@@ -10,11 +13,11 @@ public class Employees {
 
     private String email;
 
-    public Employees(long id, String firstname, String funtion, String email) {
+    public Employees(long id, String firstname, String function, String email) {
 
         this.id = id;
         this.firstname = firstname;
-        this.function = funtion;
+        this.function = function;
         this.email = email;
     }
 
