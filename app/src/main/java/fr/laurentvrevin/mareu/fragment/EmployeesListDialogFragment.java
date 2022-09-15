@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +30,7 @@ public class EmployeesListDialogFragment extends DialogFragment {
     private static final String EMPLOYEES_CHECKED_LIST = "checked_employees";
     private static final String LISTENER = "listener";
     private Listener mListener;
-    public List<Employees> mEmployees;
-    private List<Employees> mEmployeesSelected;
+    private EmployeesRecyclerViewAdapter adapter;
     private RecyclerView mRecyclerView;
     private MareuApiService mMareuApiService;
 
@@ -55,15 +55,16 @@ public class EmployeesListDialogFragment extends DialogFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_employees_list_dialog, container, false);
         assert getArguments() != null;
-        mEmployees = (List<Employees>) getArguments().getSerializable(EMPLOYEES_LIST);
-        mEmployeesSelected = (List<Employees>) getArguments().getSerializable(EMPLOYEES_CHECKED_LIST);
+        ArrayList<Employees> employees = (ArrayList<Employees>) getArguments().getSerializable(EMPLOYEES_LIST);
+        ArrayList<Employees> employeesChecked = (ArrayList<Employees>) getArguments().getSerializable(EMPLOYEES_CHECKED_LIST);
+        adapter = new EmployeesRecyclerViewAdapter(employees, employeesChecked);
         mRecyclerView = view.findViewById(R.id.recycler_view_employees);
         mMareuApiService = DI.getEmployeesApiService();
-        mEmployees = mMareuApiService.getEmployees();
-        mRecyclerView.setAdapter(new EmployeesRecyclerViewAdapter(mEmployees));
+        //employees = mMareuApiService.getEmployees();
+        mRecyclerView.setAdapter(adapter);
 
         //On gère le bouton OK qui écoute les éléments de liste sélectionnées
-        view.findViewById(R.id.ok_button).setOnClickListener(v -> mListener.onEmployeesSelected(mEmployeesSelected));
+        view.findViewById(R.id.ok_button).setOnClickListener(v -> mListener.onEmployeesSelected(adapter.mEmployeesChecked));
         //On gère le bouton Cancel pour annuler
         view.findViewById(R.id.cancel_button).setOnClickListener(v -> dismiss());
         return view;
@@ -73,7 +74,7 @@ public class EmployeesListDialogFragment extends DialogFragment {
 
     //On crée un contrat Listener qui renvoie la Liste des Employees sélectionnés
     public interface Listener {
-        void onEmployeesSelected(List<Employees> employees);
+        void onEmployeesSelected(ArrayList<Employees> employees);
     }
 
 

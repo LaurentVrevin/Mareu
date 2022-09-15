@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -19,12 +21,13 @@ import fr.laurentvrevin.mareu.model.Employees;
 
 
 public class EmployeesRecyclerViewAdapter extends RecyclerView.Adapter<EmployeesRecyclerViewAdapter.ViewHolder> {
-    Context mContext;
-    List<Employees> mEmployees;
+    public ArrayList<Employees> mEmployees;
+    public ArrayList<Employees> mEmployeesChecked;
 
 
-    public EmployeesRecyclerViewAdapter(List<Employees> employees) {
-        this.mEmployees = employees;
+    public EmployeesRecyclerViewAdapter(ArrayList<Employees> employees, ArrayList<Employees> checkedemployees) {
+        this.mEmployees = new ArrayList<>(employees);
+        this.mEmployeesChecked = new ArrayList<>(checkedemployees);
     }
 
     @Override
@@ -36,9 +39,25 @@ public class EmployeesRecyclerViewAdapter extends RecyclerView.Adapter<Employees
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.displayEmployees(this.mEmployees.get(position));
-
+        Employees employee = mEmployees.get(position);
+        holder.mEmployeeName.setText(employee.getFirstname());
+        holder.mEmployeeFunction.setText(employee.getFunction());
+        holder.mEmployeeEmail.setText(employee.getEmail());
+        if (mEmployeesChecked.contains(employee)){
+            holder.checkedButton.setChecked(true);
+        }
+        holder.checkedButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    mEmployeesChecked.add(employee);
+                }else{
+                    mEmployeesChecked.remove(employee);
+                }
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {
@@ -47,7 +66,7 @@ public class EmployeesRecyclerViewAdapter extends RecyclerView.Adapter<Employees
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mEmployeeName, mEmployeeFunction, mEmployeeEmail;
-        public ImageButton checkedButton;
+        public CheckBox checkedButton;
 
 
         public ViewHolder(View itemView) {
@@ -55,16 +74,11 @@ public class EmployeesRecyclerViewAdapter extends RecyclerView.Adapter<Employees
             mEmployeeName = itemView.findViewById(R.id.tv_employee_name);
             mEmployeeFunction = itemView.findViewById(R.id.tv_employee_function);
             mEmployeeEmail = itemView.findViewById(R.id.tv_employee_email);
-            //checkedButton = itemView.findViewById(R.id.item_list_meeting_delete_button);
+            checkedButton = itemView.findViewById(R.id.checkbox_item);
 
         }
 
-        public void displayEmployees(Employees employees) {
-            mEmployeeName.setText(employees.getFirstname());
-            mEmployeeFunction.setText(employees.getFunction());
-            mEmployeeEmail.setText(employees.getEmail());
 
-        }
     }
 
 }

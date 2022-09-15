@@ -60,7 +60,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
             mDialogFragment = EmployeesListDialogFragment.createDialogFragment((ArrayList<Employees>) DUMMY_EMPLOYEES, mEmployeesSelected, MeetingRoomBookingActivity.this);
             mDialogFragment.show(getSupportFragmentManager(), "MyFragment");
             //passer la liste employeeToCheck ici
-            //mEmployeesToCheck = new ArrayList<>(DUMMY_EMPLOYEES);
+            mEmployeesToCheck = new ArrayList<>(DUMMY_EMPLOYEES);
 
             //faire un listener
         });
@@ -159,8 +159,9 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
 
 
     @Override
-    public void onEmployeesSelected(List<Employees> employees) {
+    public void onEmployeesSelected(ArrayList<Employees> employees) {
         Log.e("test", "onEmployeesSelected: ");
+        mEmployeesSelected = employees;
         mDialogFragment.dismiss();
     }
 }
