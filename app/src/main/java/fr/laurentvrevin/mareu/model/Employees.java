@@ -2,6 +2,7 @@ package fr.laurentvrevin.mareu.model;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Employees implements Serializable {
 

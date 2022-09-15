@@ -12,16 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.chip.Chip;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
-
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,41 +32,37 @@ import fr.laurentvrevin.mareu.model.Employees;
 import fr.laurentvrevin.mareu.model.Rooms;
 import fr.laurentvrevin.mareu.service.DummyRoomsGenerator;
 
-public class MeetingRoomBooking extends AppCompatActivity implements EmployeesListDialogFragment.Listener{
-    private Button datetimePickerButton, inviteEmployeeButton;
+
+public class MeetingRoomBookingActivity extends AppCompatActivity implements EmployeesListDialogFragment.Listener {
+    private Button mbutton_datepicker, mbutton_invitation;
     private TextView dateSelected, timeSelected, roomSelected;
     int thour, tminute, resultChipGroup;
     private Spinner mRoomToSelectSpinner;
-    private Chip chips_choice_group, chips_choice_01, chips_choice_02, chips_choice_03;
+    //private Chip chips_choice_group, chips_choice_01, chips_choice_02, chips_choice_03;
+    private ArrayList<Employees> mEmployeesToCheck;
     private ArrayList<Employees> mEmployeesSelected = new ArrayList<>();
     private EmployeesListDialogFragment mDialogFragment;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meeting_room_booking);
 
-        datetimePickerButton = findViewById(R.id.DatePickerButton);
-        dateSelected = findViewById(R.id.tvDateSelected);
-        timeSelected = findViewById(R.id.tvTimeSelected);
-        mRoomToSelectSpinner = findViewById(R.id.RoomToSelectSpinner);
-        roomSelected = findViewById(R.id.tvRoomSelected);
-        inviteEmployeeButton = findViewById(R.id.invitationEmployeesButton);
+        mbutton_datepicker = findViewById(R.id.button_date_picker);
+        dateSelected = findViewById(R.id.tv_date_selected);
+        timeSelected = findViewById(R.id.tv_time_selected);
+        mRoomToSelectSpinner = findViewById(R.id.spinner_room_toselect);
+        roomSelected = findViewById(R.id.tv_room_selected);
+        mbutton_invitation = findViewById(R.id.button_invitation_employees);
 
+        //On ouvre le dialog fragment en cliquant sur le button "mbutton_invitation"
+        mbutton_invitation.setOnClickListener(v -> {
+            mDialogFragment = EmployeesListDialogFragment.createDialogFragment((ArrayList<Employees>) DUMMY_EMPLOYEES, mEmployeesSelected, MeetingRoomBookingActivity.this);
+            mDialogFragment.show(getSupportFragmentManager(), "MyFragment");
+            //passer la liste employeeToCheck ici
+            //mEmployeesToCheck = new ArrayList<>(DUMMY_EMPLOYEES);
 
-
-
-        //On ouvre le dialog fragment en cliquant sur le button inviteEmployeeButton
-        inviteEmployeeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDialogFragment =  EmployeesListDialogFragment.createdialogfragment(DUMMY_EMPLOYEES, mEmployeesSelected, MeetingRoomBooking.this);
-                mDialogFragment.show(getFragmentManager(), "Mon Fragment");
-                //passer la liste employee ici
-                //faire un listener
-
-            }
+            //faire un listener
         });
 
 
@@ -131,18 +124,6 @@ public class MeetingRoomBooking extends AppCompatActivity implements EmployeesLi
         thour = calendar.get(Calendar.HOUR_OF_DAY);
         tminute = calendar.get(Calendar.MINUTE);
 
-        /**final MaterialTimePicker materialTimePicker = new MaterialTimePicker.Builder()
-         .setTimeFormat(TimeFormat.CLOCK_12H)
-         .setHour(thour)
-         .setMinute(tminute)
-         .build();
-         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-        @Override public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        thour = hourOfDay;
-        tminute = minute;
-        timeSelected.setText(String.format(Locale.getDefault(), "%02d:%02d",thour, tminute));
-        }
-        };*/
 
         TimePickerDialog.OnTimeSetListener onTimeSetListener = (view, hourOfDay, selectedminute) -> {
             calendar.set(Calendar.HOUR, hourOfDay);
@@ -155,7 +136,7 @@ public class MeetingRoomBooking extends AppCompatActivity implements EmployeesLi
         };
 
         //Quand je clique sur le bouton datetimePicker ouvre le fragment via la variable materialDatePicker
-        datetimePickerButton.setOnClickListener(new View.OnClickListener() {
+        mbutton_datepicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER");
@@ -175,6 +156,7 @@ public class MeetingRoomBooking extends AppCompatActivity implements EmployeesLi
             }
         });
     }
+
 
     @Override
     public void onEmployeesSelected(List<Employees> employees) {

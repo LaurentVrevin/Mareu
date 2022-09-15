@@ -7,14 +7,14 @@ import java.util.List;
 import fr.laurentvrevin.mareu.model.Employees;
 
 public class DummyEmployeesGenerator {
-    public static ArrayList<Employees> DUMMY_EMPLOYEES = new ArrayList<>(Arrays.asList(
+    public static List<Employees> DUMMY_EMPLOYEES = new ArrayList<>(Arrays.asList(
             new Employees(1, "Caroline", "Développeuse",
                     "caroline@lamzone.com"),
-            new Employees(2, "Caroline", "Développeuse",
-                    "caroline@lamzone.com"),
-            new Employees(3, "Caroline", "Développeuse",
-                    "caroline@lamzone.com"),
-            new Employees(4, "Caroline", "Développeuse",
+            new Employees(2, "Mathieu", "DRH",
+                    "mathieu@lamzone.com"),
+            new Employees(3, "Laura", "Designeuse",
+                    "laura@lamzone.com"),
+            new Employees(4, "Laurent", "Développeuse",
                     "caroline@lamzone.com"),
             new Employees(5, "Caroline", "Développeuse",
                     "caroline@lamzone.com"),

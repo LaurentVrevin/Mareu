@@ -3,29 +3,33 @@ package fr.laurentvrevin.mareu.fragment;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+
 import fr.laurentvrevin.mareu.R;
+import fr.laurentvrevin.mareu.adapter.EmployeesRecyclerViewAdapter;
+import fr.laurentvrevin.mareu.model.Employees;
+import fr.laurentvrevin.mareu.service.MareuApiService;
 
 
-public class EmployeesFragment extends android.app.DialogFragment {
+public class ItemEmployeesFragment extends android.app.DialogFragment {
+    private RecyclerView recyclerviewemployees;
 
-   private RecyclerView recyclerviewemployees;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,4 +42,6 @@ public class EmployeesFragment extends android.app.DialogFragment {
         recyclerviewemployees.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         return view;
     }
+
+
 }

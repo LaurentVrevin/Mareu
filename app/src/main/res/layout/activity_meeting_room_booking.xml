@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MeetingRoomBooking">
+    tools:context=".activities.MeetingRoomBookingActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,7 +44,7 @@
             tools:ignore="MissingConstraints" />
 
         <Spinner
-            android:id="@+id/RoomToSelectSpinner"
+            android:id="@+id/spinner_room_toselect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:ignore="MissingConstraints"
@@ -57,7 +57,7 @@
             android:layout_marginBottom="12dp"/>
 
         <Button
-            android:id="@+id/DatePickerButton"
+            android:id="@+id/button_date_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Choisissez la date" />
@@ -96,36 +96,36 @@
         </com.google.android.material.chip.ChipGroup>
 
         <TextView
-            android:id="@+id/tvObjectSelected"
+            android:id="@+id/tv_object_selected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Objet de la réunion" />
 
         <TextView
-            android:id="@+id/tvDateSelected"
+            android:id="@+id/tv_date_selected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date  choisie" />
 
         <TextView
-            android:id="@+id/tvTimeSelected"
+            android:id="@+id/tv_time_selected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Heure choisie" />
 
         <TextView
-            android:id="@+id/tvRoomSelected"
+            android:id="@+id/tv_room_selected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Salle choisie" />
         <Button
-            android:id="@+id/invitationEmployeesButton"
+            android:id="@+id/button_invitation_employees"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Inviter" />
 
         <Button
-            android:id="@+id/SaveMeetingButton"
+            android:id="@+id/button_save_meeting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="enregistrer" />
