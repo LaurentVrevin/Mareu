@@ -1,21 +1,15 @@
 package fr.laurentvrevin.mareu.adapter;
 
-import android.content.Context;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-import java.util.List;
-
-
 import fr.laurentvrevin.mareu.R;
 import fr.laurentvrevin.mareu.model.Employees;
 
@@ -23,11 +17,13 @@ import fr.laurentvrevin.mareu.model.Employees;
 public class EmployeesRecyclerViewAdapter extends RecyclerView.Adapter<EmployeesRecyclerViewAdapter.ViewHolder> {
     public ArrayList<Employees> mEmployees;
     public ArrayList<Employees> mEmployeesChecked;
+    String mEmployeesCheckedText;
 
 
     public EmployeesRecyclerViewAdapter(ArrayList<Employees> employees, ArrayList<Employees> checkedemployees) {
         this.mEmployees = new ArrayList<>(employees);
         this.mEmployeesChecked = new ArrayList<>(checkedemployees);
+
     }
 
     @Override
@@ -51,13 +47,13 @@ public class EmployeesRecyclerViewAdapter extends RecyclerView.Adapter<Employees
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
                     mEmployeesChecked.add(employee);
+
                 }else{
                     mEmployeesChecked.remove(employee);
                 }
             }
         });
     }
-
 
     @Override
     public int getItemCount() {
@@ -77,8 +73,6 @@ public class EmployeesRecyclerViewAdapter extends RecyclerView.Adapter<Employees
             checkedButton = itemView.findViewById(R.id.checkbox_item);
 
         }
-
-
     }
 
 }

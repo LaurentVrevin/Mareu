@@ -34,7 +34,6 @@ public class EmployeesListDialogFragment extends DialogFragment {
     private RecyclerView mRecyclerView;
     private MareuApiService mMareuApiService;
 
-
     public static EmployeesListDialogFragment createDialogFragment(ArrayList<Employees> employees, ArrayList<Employees> employeesSelected, Listener listener) {
         EmployeesListDialogFragment f = new EmployeesListDialogFragment();
         Bundle args = new Bundle();
@@ -55,26 +54,33 @@ public class EmployeesListDialogFragment extends DialogFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_employees_list_dialog, container, false);
         assert getArguments() != null;
+        //On vérifie à la création de la vue si la liste comporte des employees sélectionnés et non sélectionnés
         ArrayList<Employees> employees = (ArrayList<Employees>) getArguments().getSerializable(EMPLOYEES_LIST);
         ArrayList<Employees> employeesChecked = (ArrayList<Employees>) getArguments().getSerializable(EMPLOYEES_CHECKED_LIST);
+        //adapter = nouvel adapter de recyclerview comprenant les employes cochés et non cochés
         adapter = new EmployeesRecyclerViewAdapter(employees, employeesChecked);
         mRecyclerView = view.findViewById(R.id.recycler_view_employees);
         mMareuApiService = DI.getEmployeesApiService();
-        //employees = mMareuApiService.getEmployees();
+        //
         mRecyclerView.setAdapter(adapter);
 
         //On gère le bouton OK qui écoute les éléments de liste sélectionnées
-        view.findViewById(R.id.ok_button).setOnClickListener(v -> mListener.onEmployeesSelected(adapter.mEmployeesChecked));
+        view.findViewById(R.id.ok_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onEmployeesSelected(adapter.mEmployeesChecked);
+
+            }});
+
         //On gère le bouton Cancel pour annuler
         view.findViewById(R.id.cancel_button).setOnClickListener(v -> dismiss());
         return view;
     }
 
-
-
     //On crée un contrat Listener qui renvoie la Liste des Employees sélectionnés
     public interface Listener {
         void onEmployeesSelected(ArrayList<Employees> employees);
+
     }
 
 

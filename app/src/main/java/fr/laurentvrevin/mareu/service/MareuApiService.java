@@ -1,10 +1,14 @@
 package fr.laurentvrevin.mareu.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.laurentvrevin.mareu.model.Employees;
+import fr.laurentvrevin.mareu.model.Meetings;
 
 public interface MareuApiService {
     List<Employees> getEmployees();
+    List<Meetings> getMeetings();
+    void addMeeting(Meetings meeting);
+    void deleteMeeting(Meetings meeting);
+
 }

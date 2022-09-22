@@ -94,6 +94,16 @@
 
 
         </com.google.android.material.chip.ChipGroup>
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"/>
+        <Button
+            android:id="@+id/button_invitation_employees"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inviter" />
 
         <TextView
             android:id="@+id/tv_object_selected"
@@ -118,17 +128,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Salle choisie" />
-        <Button
-            android:id="@+id/button_invitation_employees"
+        <TextView
+            android:id="@+id/tv_duree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Inviter" />
+            android:text="durée " />
+
 
         <Button
             android:id="@+id/button_save_meeting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="enregistrer" />
+        <TextView
+            android:id="@+id/tv_list_invited"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:hint="liste des participants"/>
 
     </LinearLayout>
 
