@@ -26,12 +26,14 @@ public class DummyMareuApiService implements MareuApiService{
     }
 
     @Override
-    public void addMeeting(Meetings meeting) {
+    public void createMeeting(Meetings meeting) {
+        mMeetings.add(meeting);
 
     }
 
     @Override
     public void deleteMeeting(Meetings meeting) {
+        mMeetings.remove(meeting);
 
     }
 

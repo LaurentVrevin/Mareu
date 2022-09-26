@@ -7,29 +7,27 @@
     tools:context=".activities.MeetingRoomBookingActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_margin="12dp"
-        android:gravity="left"
+        android:gravity="center"
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_Meeting_Object"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:hint="Objet de la réunion"
-            app:helperText="Required*"
-            app:helperTextTextColor="@color/design_default_color_error">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/titObjectOfMeeting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.divider.MaterialDivider
-            android:layout_width="wrap_content"
+            android:layout_width="400dp"
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"/>
@@ -61,39 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Choisissez la date" />
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chips_choice_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:singleSelection="true"
-            >
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chips_choice_01"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:checkable="true"
-                android:text="30 min"/>
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chips_choice_02"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:checkable="true"
-                android:text="45 min"/>
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chips_choice_03"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:checkable="true"
-                android:text="1h"/>
 
-
-        </com.google.android.material.chip.ChipGroup>
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -104,6 +70,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Inviter" />
+
+        <TextView
+            android:id="@+id/tv_list_invited"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:hint="liste des participants"/>
+        <Button
+            android:id="@+id/button_save_meeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="enregistrer" />
 
         <TextView
             android:id="@+id/tv_object_selected"
@@ -128,24 +106,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Salle choisie" />
-        <TextView
-            android:id="@+id/tv_duree"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="durée " />
-
-
-        <Button
-            android:id="@+id/button_save_meeting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="enregistrer" />
-        <TextView
-            android:id="@+id/tv_list_invited"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:hint="liste des participants"/>
 
     </LinearLayout>
 

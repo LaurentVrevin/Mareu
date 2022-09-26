@@ -1,7 +1,5 @@
 package fr.laurentvrevin.mareu.adapter;
 
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +15,11 @@ import fr.laurentvrevin.mareu.model.Employees;
 public class EmployeesRecyclerViewAdapter extends RecyclerView.Adapter<EmployeesRecyclerViewAdapter.ViewHolder> {
     public ArrayList<Employees> mEmployees;
     public ArrayList<Employees> mEmployeesChecked;
-    String mEmployeesCheckedText;
 
 
     public EmployeesRecyclerViewAdapter(ArrayList<Employees> employees, ArrayList<Employees> checkedemployees) {
         this.mEmployees = new ArrayList<>(employees);
         this.mEmployeesChecked = new ArrayList<>(checkedemployees);
-
     }
 
     @Override

@@ -5,13 +5,13 @@ public class Meetings {
 
     private String meetingname;
 
-    private long startime;
+    private String startime;
 
     private String roomname;
 
     private String email;
 
-    public Meetings(long id, String meetingname, long startime, String roomname, String email) {
+    public Meetings(long id, String meetingname, String startime, String roomname, String email) {
 
         this.id = id;
         this.meetingname = meetingname;
@@ -36,11 +36,11 @@ public class Meetings {
         this.meetingname = meetingname;
     }
 
-    public long getStartime() {
+    public String getStartime() {
         return startime;
     }
 
-    public void setStartime(long startime) {
+    public void setStartime(String startime) {
         this.startime = startime;
     }
 

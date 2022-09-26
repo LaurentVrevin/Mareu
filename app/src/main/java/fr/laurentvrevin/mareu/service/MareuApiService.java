@@ -8,7 +8,7 @@ import fr.laurentvrevin.mareu.model.Meetings;
 public interface MareuApiService {
     List<Employees> getEmployees();
     List<Meetings> getMeetings();
-    void addMeeting(Meetings meeting);
+    void createMeeting(Meetings meeting);
     void deleteMeeting(Meetings meeting);
 
 }

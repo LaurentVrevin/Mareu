@@ -7,6 +7,8 @@ import java.util.List;
 import fr.laurentvrevin.mareu.model.Meetings;
 
 public class MeetingListGenerator {
-    public static List<Meetings> sDummyMeetings = new ArrayList<>(Arrays.asList());
-    static List<Meetings> generateMeeting(){return new ArrayList<>(sDummyMeetings);}
+    public static List<Meetings> DUMMY_MEETING = new ArrayList<>(Arrays.asList(
+            new Meetings(1, "refaire la gueule", "2h00","salle de réunion","coucou@jojo.fr")
+    ));
+    static List<Meetings> generateMeeting(){return new ArrayList<>(DUMMY_MEETING);}
 }

@@ -1,7 +1,5 @@
 package fr.laurentvrevin.mareu.fragment;
 
-import android.app.Dialog;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +7,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 import fr.laurentvrevin.mareu.DI.DI;
 import fr.laurentvrevin.mareu.R;
@@ -30,7 +25,7 @@ public class EmployeesListDialogFragment extends DialogFragment {
     private static final String EMPLOYEES_CHECKED_LIST = "checked_employees";
     private static final String LISTENER = "listener";
     private Listener mListener;
-    private EmployeesRecyclerViewAdapter adapter;
+    private EmployeesRecyclerViewAdapter mEmployeesAdapter;
     private RecyclerView mRecyclerView;
     private MareuApiService mMareuApiService;
 
@@ -58,17 +53,17 @@ public class EmployeesListDialogFragment extends DialogFragment {
         ArrayList<Employees> employees = (ArrayList<Employees>) getArguments().getSerializable(EMPLOYEES_LIST);
         ArrayList<Employees> employeesChecked = (ArrayList<Employees>) getArguments().getSerializable(EMPLOYEES_CHECKED_LIST);
         //adapter = nouvel adapter de recyclerview comprenant les employes cochés et non cochés
-        adapter = new EmployeesRecyclerViewAdapter(employees, employeesChecked);
+        mEmployeesAdapter = new EmployeesRecyclerViewAdapter(employees, employeesChecked);
         mRecyclerView = view.findViewById(R.id.recycler_view_employees);
         mMareuApiService = DI.getEmployeesApiService();
         //
-        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter(mEmployeesAdapter);
 
         //On gère le bouton OK qui écoute les éléments de liste sélectionnées
         view.findViewById(R.id.ok_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onEmployeesSelected(adapter.mEmployeesChecked);
+                mListener.onEmployeesSelected(mEmployeesAdapter.mEmployeesChecked);
 
             }});
 

@@ -4,7 +4,6 @@ import static fr.laurentvrevin.mareu.service.DummyEmployeesGenerator.DUMMY_EMPLO
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -12,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,49 +19,57 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.textfield.TextInputLayout;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
 
-import fr.laurentvrevin.mareu.DI.DI;
 import fr.laurentvrevin.mareu.R;
-import fr.laurentvrevin.mareu.adapter.EmployeesRecyclerViewAdapter;
 import fr.laurentvrevin.mareu.fragment.EmployeesListDialogFragment;
 import fr.laurentvrevin.mareu.model.Employees;
+import fr.laurentvrevin.mareu.model.Meetings;
 import fr.laurentvrevin.mareu.model.Rooms;
 import fr.laurentvrevin.mareu.service.DummyRoomsGenerator;
 import fr.laurentvrevin.mareu.service.MareuApiService;
 
 
 public class MeetingRoomBookingActivity extends AppCompatActivity implements EmployeesListDialogFragment.Listener {
-    private Button mbutton_datepicker, mbutton_invitation;
-     TextView dateSelected, timeSelected, roomSelected, list_invited;
+    private Button mButtonDateTimePicker, mButtonInvitation, mButtonSaveMeeting;
+    TextView dateSelected, timeSelected, roomSelected, list_invited;
+    TextInputLayout txt_Meeting_Object;
     private Employees employees;
-    int thour, tminute;
     private Spinner mRoomToSelectSpinner;
-    String myEmail;
+    String meetingObject;
     private ArrayList<Employees> mEmployeesToCheck;
     private ArrayList<Employees> mEmployeesSelected = new ArrayList<>();
     private EmployeesListDialogFragment mDialogFragment;
     private MareuApiService mMareuApiService;
+    private Calendar mStartdate;
+    private Calendar mEndDate;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_meeting_room_booking);
 
-        mbutton_datepicker = findViewById(R.id.button_date_picker);
+        setContentView(R.layout.activity_meeting_room_booking);
+        mStartdate = Calendar.getInstance();
+        //mEndDate = Calendar.getInstance();
+
+        mButtonDateTimePicker = findViewById(R.id.button_date_picker);
         dateSelected = findViewById(R.id.tv_date_selected);
         timeSelected = findViewById(R.id.tv_time_selected);
         mRoomToSelectSpinner = findViewById(R.id.spinner_room_toselect);
         roomSelected = findViewById(R.id.tv_room_selected);
-        mbutton_invitation = findViewById(R.id.button_invitation_employees);
+        mButtonInvitation = findViewById(R.id.button_invitation_employees);
         list_invited = findViewById(R.id.tv_list_invited);
+        mButtonSaveMeeting = findViewById(R.id.button_save_meeting);
+        txt_Meeting_Object = findViewById(R.id.txt_Meeting_Object);
 
         //On ouvre le dialog fragment en cliquant sur le button "mbutton_invitation"
-        mbutton_invitation.setOnClickListener(v -> {
+        mButtonInvitation.setOnClickListener(v -> {
             mDialogFragment = EmployeesListDialogFragment.createDialogFragment((ArrayList<Employees>) DUMMY_EMPLOYEES, mEmployeesSelected, MeetingRoomBookingActivity.this);
             mDialogFragment.show(getSupportFragmentManager(), "MyFragment");
             //passer la liste employeeToCheck ici
@@ -121,28 +129,24 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         //ON GERE LE TIME PICKER
         //on commence le time Picker à l'heure du jour
         Calendar calendar = Calendar.getInstance();
-        thour = calendar.get(Calendar.HOUR_OF_DAY);
-        tminute = calendar.get(Calendar.MINUTE);
+        int thour = calendar.get(Calendar.HOUR_OF_DAY);
+        int tminute = calendar.get(Calendar.MINUTE);
 
-        //je crée un second timer
-        //je devrais lui donner les informations du 1er avec les sélections
-        //je dois lui azjouter ensuite la valeur à ajouter
+        //créer endtime,
 
         //on récupère l'heure et les minutes sélectionnées dans la vue pour être mises dans thour et tminutes
         TimePickerDialog.OnTimeSetListener onTimeSetListener = (view, hourSelected, minutesSelected) -> {
-            calendar.set(Calendar.HOUR_OF_DAY, hourSelected); //on passe l'heure sélectionnée
-            calendar.set(Calendar.MINUTE, minutesSelected); //on passe les minutes sélectionnées
+
+            mStartdate.set(Calendar.HOUR_OF_DAY, hourSelected); //on passe l'heure sélectionnée
+            mStartdate.set(Calendar.MINUTE, minutesSelected); //on passe les minutes sélectionnées
             SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy"); //je lui dis quel format de date je souhaite
-            dateSelected.setText("Date : " + format1.format(calendar.getTime())); //j'affiche la date sélectionnée
-            thour = hourSelected; //je passe hourSelected à thour
-            tminute = minutesSelected; //je passe minutesSelected ) tminute
-            //J'affiche l'heure et les minutes sélectionnées
-            timeSelected.setText(String.format(Locale.getDefault(), "%02dh%02d", thour, tminute));
-            //je dois maintenant ajouter la durée à ces variables selon le choix fait.
+            SimpleDateFormat format2 = new SimpleDateFormat("HH:mm");
+            dateSelected.setText("Date : " + format1.format(mStartdate.getTime())); //j'affiche la date sélectionnée
+            timeSelected.setText("L'heure choisie est : " + format2.format(mStartdate.getTime()));
         };
 
         //Quand je clique sur le bouton datetimePicker ouvre le fragment via la variable materialDatePicker
-        mbutton_datepicker.setOnClickListener(new View.OnClickListener() {
+        mButtonDateTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER");
@@ -156,13 +160,32 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
             @Override
             public void onPositiveButtonClick(Object selection) {
 
-                calendar.setTimeInMillis((Long) selection);
+                mStartdate.setTimeInMillis((Long) selection);
                 //timeBuilder.setTimeFormat()
                 timePickerDialog.setTitle("Sélectionne l'heure de début");
                 timePickerDialog.show();
             }
         });
+
+        mButtonSaveMeeting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v ==mButtonSaveMeeting) {
+                    onSubmit();
+                }
+            }
+        });
     }
+
+    private void onSubmit() {
+        meetingObject = txt_Meeting_Object.getEditText().getText().toString();
+        if (meetingObject.isEmpty()){
+            txt_Meeting_Object.setError("Merci de saisir un objet de réunion");
+            return;
+        }
+        Toast.makeText(this, "L'objet de la réunion n'est pas vide", Toast.LENGTH_SHORT).show();
+    }
+
 
     @Override
     public void onEmployeesSelected(ArrayList<Employees> employees) {
@@ -171,4 +194,6 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         list_invited.setText("Voici les salarié(e)s invité(e)s : "+ mEmployeesSelected);
         mDialogFragment.dismiss();
     }
+
+
 }
