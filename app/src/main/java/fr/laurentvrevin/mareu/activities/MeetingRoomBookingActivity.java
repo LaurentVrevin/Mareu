@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import fr.laurentvrevin.mareu.DI.DI;
 import fr.laurentvrevin.mareu.R;
 import fr.laurentvrevin.mareu.fragment.EmployeesListDialogFragment;
 import fr.laurentvrevin.mareu.model.Employees;
@@ -36,15 +37,16 @@ import fr.laurentvrevin.mareu.service.MareuApiService;
 
 public class MeetingRoomBookingActivity extends AppCompatActivity implements EmployeesListDialogFragment.Listener {
     private Button mButtonDateTimePicker, mButtonInvitation, mButtonSaveMeeting;
-    TextView dateSelected, timeSelected, roomSelected, list_invited;
+    TextView dateSelected, txt_timeSeleted, txt_roomSeleted, list_invited;
     TextInputLayout txt_Meeting_Object;
     private Employees employees;
     private Spinner mRoomToSelectSpinner;
-    String meetingObject;
+    String meetingObject, timeSelected, roomSelected;
     private ArrayList<Employees> mEmployeesToCheck;
     private ArrayList<Employees> mEmployeesSelected = new ArrayList<>();
+    private ArrayList<Meetings> createMeetingList = new ArrayList<>();
     private EmployeesListDialogFragment mDialogFragment;
-    private MareuApiService mMareuApiService;
+    private MareuApiService mMareuApiService = DI.getMeetingsApiService();
     private Calendar mStartdate;
     private Calendar mEndDate;
 
@@ -60,9 +62,9 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
 
         mButtonDateTimePicker = findViewById(R.id.button_date_picker);
         dateSelected = findViewById(R.id.tv_date_selected);
-        timeSelected = findViewById(R.id.tv_time_selected);
+        txt_timeSeleted = findViewById(R.id.tv_time_selected);
         mRoomToSelectSpinner = findViewById(R.id.spinner_room_toselect);
-        roomSelected = findViewById(R.id.tv_room_selected);
+        txt_roomSeleted = findViewById(R.id.tv_room_selected);
         mButtonInvitation = findViewById(R.id.button_invitation_employees);
         list_invited = findViewById(R.id.tv_list_invited);
         mButtonSaveMeeting = findViewById(R.id.button_save_meeting);
@@ -75,7 +77,6 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
             //passer la liste employeeToCheck ici
             mEmployeesToCheck = new ArrayList<>(DUMMY_EMPLOYEES);
 
-            //faire un listener
         });
 
 
@@ -105,7 +106,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
                 Adapter adapter = parent.getAdapter();
                 Rooms rooms = (Rooms) adapter.getItem(position);
                 //on met dans la textview via la variable roomSelected la salle  choisie
-                roomSelected.setText(rooms.getName());
+                txt_roomSeleted.setText(rooms.getName());
             }
         });
 
@@ -142,7 +143,8 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
             SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy"); //je lui dis quel format de date je souhaite
             SimpleDateFormat format2 = new SimpleDateFormat("HH:mm");
             dateSelected.setText("Date : " + format1.format(mStartdate.getTime())); //j'affiche la date sélectionnée
-            timeSelected.setText("L'heure choisie est : " + format2.format(mStartdate.getTime()));
+            txt_timeSeleted.setText("L'heure choisie est : " + format2.format(mStartdate.getTime()));
+            timeSelected = format2.format(mStartdate.getTime());
         };
 
         //Quand je clique sur le bouton datetimePicker ouvre le fragment via la variable materialDatePicker
@@ -172,20 +174,25 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
             public void onClick(View v) {
                 if (v ==mButtonSaveMeeting) {
                     onSubmit();
+
                 }
             }
         });
     }
 
     private void onSubmit() {
+
         meetingObject = txt_Meeting_Object.getEditText().getText().toString();
+        roomSelected = txt_roomSeleted.getText().toString();
+
         if (meetingObject.isEmpty()){
             txt_Meeting_Object.setError("Merci de saisir un objet de réunion");
             return;
         }
+        mMareuApiService.createMeeting(new Meetings(meetingObject, timeSelected, roomSelected, mEmployeesSelected.toString()));
         Toast.makeText(this, "L'objet de la réunion n'est pas vide", Toast.LENGTH_SHORT).show();
-    }
 
+    }
 
     @Override
     public void onEmployeesSelected(ArrayList<Employees> employees) {

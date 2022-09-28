@@ -55,7 +55,7 @@ public class EmployeesListDialogFragment extends DialogFragment {
         //adapter = nouvel adapter de recyclerview comprenant les employes cochés et non cochés
         mEmployeesAdapter = new EmployeesRecyclerViewAdapter(employees, employeesChecked);
         mRecyclerView = view.findViewById(R.id.recycler_view_employees);
-        mMareuApiService = DI.getEmployeesApiService();
+        mMareuApiService = DI.getMeetingsApiService();
         //
         mRecyclerView.setAdapter(mEmployeesAdapter);
 

@@ -1,7 +1,7 @@
 package fr.laurentvrevin.mareu.model;
 
 public class Meetings {
-    private long id;
+
 
     private String meetingname;
 
@@ -11,22 +11,16 @@ public class Meetings {
 
     private String email;
 
-    public Meetings(long id, String meetingname, String startime, String roomname, String email) {
+    public Meetings( String meetingname, String startime, String roomname, String email) {
 
-        this.id = id;
+
         this.meetingname = meetingname;
         this.startime = startime;
         this.roomname = roomname;
         this.email = email;
     }
 
-    public long getId() {
-        return id;
-    }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getMeetingname() {
         return meetingname;

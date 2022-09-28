@@ -10,9 +10,10 @@ public class DI {
      * Get an instance on @{@link MareuApiService}
      * @return
      */
-    public static MareuApiService getEmployeesApiService() {
+    public static MareuApiService getMeetingsApiService() {
         return testservice;
     }
+
 
     /**
      * Get always a new instance on @{@link MareuApiService}. Useful for tests, so we ensure the context is clean.
