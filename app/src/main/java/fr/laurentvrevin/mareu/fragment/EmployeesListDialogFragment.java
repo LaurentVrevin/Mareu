@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -47,17 +49,23 @@ public class EmployeesListDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
         View view = inflater.inflate(R.layout.fragment_employees_list_dialog, container, false);
         assert getArguments() != null;
         //On vérifie à la création de la vue si la liste comporte des employees sélectionnés et non sélectionnés
         ArrayList<Employees> employees = (ArrayList<Employees>) getArguments().getSerializable(EMPLOYEES_LIST);
         ArrayList<Employees> employeesChecked = (ArrayList<Employees>) getArguments().getSerializable(EMPLOYEES_CHECKED_LIST);
         //adapter = nouvel adapter de recyclerview comprenant les employes cochés et non cochés
-        mEmployeesAdapter = new EmployeesRecyclerViewAdapter(employees, employeesChecked);
         mRecyclerView = view.findViewById(R.id.recycler_view_employees);
+        mEmployeesAdapter = new EmployeesRecyclerViewAdapter(employees, employeesChecked);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),layoutManager.getOrientation());
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
         mMareuApiService = DI.getMeetingsApiService();
-        //
         mRecyclerView.setAdapter(mEmployeesAdapter);
+        mRecyclerView = view.findViewById(R.id.recycler_view_employees);
 
         //On gère le bouton OK qui écoute les éléments de liste sélectionnées
         view.findViewById(R.id.ok_button).setOnClickListener(new View.OnClickListener() {

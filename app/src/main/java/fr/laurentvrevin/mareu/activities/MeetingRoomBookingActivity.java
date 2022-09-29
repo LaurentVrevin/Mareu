@@ -50,8 +50,6 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
     private Calendar mStartdate;
     private Calendar mEndDate;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +105,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
                 Rooms rooms = (Rooms) adapter.getItem(position);
                 //on met dans la textview via la variable roomSelected la salle  choisie
                 txt_roomSeleted.setText(rooms.getName());
+                roomSelected = rooms.getName();
             }
         });
 
@@ -172,9 +171,8 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         mButtonSaveMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v ==mButtonSaveMeeting) {
+                if (v == mButtonSaveMeeting) {
                     onSubmit();
-
                 }
             }
         });
@@ -183,22 +181,22 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
     private void onSubmit() {
 
         meetingObject = txt_Meeting_Object.getEditText().getText().toString();
-        roomSelected = txt_roomSeleted.getText().toString();
+        //roomSelected = txt_roomSeleted.getText().toString();
 
-        if (meetingObject.isEmpty()){
+        if (meetingObject.isEmpty()) {
             txt_Meeting_Object.setError("Merci de saisir un objet de réunion");
             return;
         }
         mMareuApiService.createMeeting(new Meetings(meetingObject, timeSelected, roomSelected, mEmployeesSelected.toString()));
         Toast.makeText(this, "L'objet de la réunion n'est pas vide", Toast.LENGTH_SHORT).show();
-
+        finish();
     }
 
     @Override
     public void onEmployeesSelected(ArrayList<Employees> employees) {
         mEmployeesSelected = employees;
         //je charge la textview avec la liste des employées sélectionnés
-        list_invited.setText("Voici les salarié(e)s invité(e)s : "+ mEmployeesSelected);
+        list_invited.setText("Voici les salarié(e)s invité(e)s : " + mEmployeesSelected);
         mDialogFragment.dismiss();
     }
 

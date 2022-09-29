@@ -45,6 +45,7 @@
             android:id="@+id/spinner_room_toselect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             tools:ignore="MissingConstraints"
             />
 
@@ -53,12 +54,17 @@
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
         <Button
             android:id="@+id/button_date_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Choisissez la date" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_baseline_calendar_month_24"/>
+        </LinearLayout>
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="wrap_content"

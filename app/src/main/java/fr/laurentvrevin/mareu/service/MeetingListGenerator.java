@@ -8,7 +8,7 @@ import fr.laurentvrevin.mareu.model.Meetings;
 
 public class MeetingListGenerator {
     public static List<Meetings> DUMMY_MEETING = new ArrayList<>(Arrays.asList(
-            new Meetings( "refaire la gueule", "2h00","salle de réunion","coucou@jojo.fr")
+            //new Meetings( "refaire la gueule", "2h00","salle de réunion","coucou@jojo.fr")
     ));
     static List<Meetings> generateMeeting(){return new ArrayList<>(DUMMY_MEETING);}
 }
