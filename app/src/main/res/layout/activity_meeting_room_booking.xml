@@ -18,8 +18,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Objet de la réunion"
-            >
+            android:hint="Objet de la réunion">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -30,7 +29,7 @@
             android:layout_width="400dp"
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="12dp" />
 
         <TextView
             android:id="@+id/tvRoomChoice"
@@ -46,31 +45,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            tools:ignore="MissingConstraints"
-            />
+            tools:ignore="MissingConstraints" />
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginBottom="12dp" />
 
-        <Button
-            android:id="@+id/button_date_picker"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/ic_baseline_calendar_month_24"/>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_datetime_selected"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawableEnd="@drawable/ic_baseline_calendar_month_24"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="Sélectionnez la date et l'heure"
+            android:textStyle="bold" />
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="12dp" />
+
         <Button
             android:id="@+id/button_invitation_employees"
             android:layout_width="wrap_content"
@@ -82,36 +80,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:hint="liste des participants"/>
+            android:hint="liste des participants" />
+
         <Button
             android:id="@+id/button_save_meeting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="enregistrer" />
 
-        <TextView
-            android:id="@+id/tv_object_selected"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Objet de la réunion" />
-
-        <TextView
-            android:id="@+id/tv_date_selected"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date  choisie" />
-
-        <TextView
-            android:id="@+id/tv_time_selected"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Heure choisie" />
-
-        <TextView
-            android:id="@+id/tv_room_selected"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Salle choisie" />
 
     </LinearLayout>
 

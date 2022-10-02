@@ -27,6 +27,7 @@ import java.util.Calendar;
 
 import fr.laurentvrevin.mareu.DI.DI;
 import fr.laurentvrevin.mareu.R;
+import fr.laurentvrevin.mareu.Utils;
 import fr.laurentvrevin.mareu.fragment.EmployeesListDialogFragment;
 import fr.laurentvrevin.mareu.model.Employees;
 import fr.laurentvrevin.mareu.model.Meetings;
@@ -36,8 +37,8 @@ import fr.laurentvrevin.mareu.service.MareuApiService;
 
 
 public class MeetingRoomBookingActivity extends AppCompatActivity implements EmployeesListDialogFragment.Listener {
-    private Button mButtonDateTimePicker, mButtonInvitation, mButtonSaveMeeting;
-    TextView dateSelected, txt_timeSeleted, txt_roomSeleted, list_invited;
+    private Button mButtonInvitation, mButtonSaveMeeting;
+    TextView txt_dateSelected, mButtonDateTimePicker,  txt_timeSeleted, txt_roomSeleted, list_invited;
     TextInputLayout txt_Meeting_Object;
     private Employees employees;
     private Spinner mRoomToSelectSpinner;
@@ -58,11 +59,11 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         mStartdate = Calendar.getInstance();
         //mEndDate = Calendar.getInstance();
 
-        mButtonDateTimePicker = findViewById(R.id.button_date_picker);
-        dateSelected = findViewById(R.id.tv_date_selected);
-        txt_timeSeleted = findViewById(R.id.tv_time_selected);
+        mButtonDateTimePicker = findViewById(R.id.tv_datetime_selected);
+        txt_dateSelected = findViewById(R.id.tv_datetime_selected);
+       // txt_timeSeleted = findViewById(R.id.tv_time_selected);
         mRoomToSelectSpinner = findViewById(R.id.spinner_room_toselect);
-        txt_roomSeleted = findViewById(R.id.tv_room_selected);
+        //txt_roomSeleted = findViewById(R.id.tv_room_selected);
         mButtonInvitation = findViewById(R.id.button_invitation_employees);
         list_invited = findViewById(R.id.tv_list_invited);
         mButtonSaveMeeting = findViewById(R.id.button_save_meeting);
@@ -104,7 +105,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
                 Adapter adapter = parent.getAdapter();
                 Rooms rooms = (Rooms) adapter.getItem(position);
                 //on met dans la textview via la variable roomSelected la salle  choisie
-                txt_roomSeleted.setText(rooms.getName());
+                //txt_roomSeleted.setText(rooms.getName());
                 roomSelected = rooms.getName();
             }
         });
@@ -141,8 +142,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
             mStartdate.set(Calendar.MINUTE, minutesSelected); //on passe les minutes sélectionnées
             SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy"); //je lui dis quel format de date je souhaite
             SimpleDateFormat format2 = new SimpleDateFormat("HH:mm");
-            dateSelected.setText("Date : " + format1.format(mStartdate.getTime())); //j'affiche la date sélectionnée
-            txt_timeSeleted.setText("L'heure choisie est : " + format2.format(mStartdate.getTime()));
+            txt_dateSelected.setText("Date : " + format1.format(mStartdate.getTime()) + " à : " + format2.format(mStartdate.getTime())); //j'affiche la date sélectionnée
             timeSelected = format2.format(mStartdate.getTime());
         };
 
@@ -187,16 +187,18 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
             txt_Meeting_Object.setError("Merci de saisir un objet de réunion");
             return;
         }
-        mMareuApiService.createMeeting(new Meetings(meetingObject, timeSelected, roomSelected, mEmployeesSelected.toString()));
+        mMareuApiService.createMeeting(new Meetings(meetingObject, timeSelected, roomSelected, mEmployeesSelected));
         Toast.makeText(this, "L'objet de la réunion n'est pas vide", Toast.LENGTH_SHORT).show();
         finish();
     }
 
     @Override
     public void onEmployeesSelected(ArrayList<Employees> employees) {
+
         mEmployeesSelected = employees;
+
         //je charge la textview avec la liste des employées sélectionnés
-        list_invited.setText("Voici les salarié(e)s invité(e)s : " + mEmployeesSelected);
+        list_invited.setText("Voici les salarié(e)s invité(e)s : " + Utils.listEmployeesToString(employees));
         mDialogFragment.dismiss();
     }
 

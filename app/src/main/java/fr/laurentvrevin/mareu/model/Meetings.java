@@ -1,7 +1,8 @@
 package fr.laurentvrevin.mareu.model;
 
-public class Meetings {
+import java.util.ArrayList;
 
+public class Meetings {
 
     private String meetingname;
 
@@ -9,17 +10,14 @@ public class Meetings {
 
     private String roomname;
 
-    private String email;
+    private ArrayList<Employees> employees;
 
-    public Meetings( String meetingname, String startime, String roomname, String email) {
-
+    public Meetings(String meetingname, String startime, String roomname, ArrayList<Employees> employees) {
 
         this.meetingname = meetingname;
         this.startime = startime;
         this.roomname = roomname;
-        this.email = email;
-    }
-
+        this.employees = employees;    }
 
 
     public String getMeetingname() {
@@ -46,13 +44,11 @@ public class Meetings {
         this.roomname = roomname;
     }
 
-    public String getEmail() {
-        return email;
+    public ArrayList<Employees> getEmployees() {
+        return employees;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmployees(ArrayList<Employees> employees) {
+        this.employees = employees;
     }
-
-
 }

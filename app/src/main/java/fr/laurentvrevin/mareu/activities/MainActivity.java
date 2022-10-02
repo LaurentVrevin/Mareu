@@ -13,6 +13,9 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -34,34 +37,30 @@ public class MainActivity extends AppCompatActivity {
     private MareuApiService mMareuApiService = DI.getMeetingsApiService();
 
 
-
-    private void initRecyclerView(){
+    private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         meetingRecyclerView.setLayoutManager(layoutManager);
         MeetingsRecyclerViewAdapter meetingsRecyclerViewAdapter = new MeetingsRecyclerViewAdapter(mMeetingsArrayList);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(meetingRecyclerView.getContext(),layoutManager.getOrientation());
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(meetingRecyclerView.getContext(), layoutManager.getOrientation());
         meetingRecyclerView.addItemDecoration(dividerItemDecoration);
         meetingRecyclerView.setAdapter(meetingsRecyclerViewAdapter);
     }
 
-    private void initData(){
+    private void initData() {
         mMeetingsArrayList = new ArrayList<>(mMareuApiService.getMeetings());
     }
 
-    private void initUI(){
-
-    }
     @Override
     public void onResume() {
         super.onResume();
         initList();
     }
 
+
     private void initList() {
         mMeetingsArrayList = (ArrayList<Meetings>) mMareuApiService.getMeetings();
         meetingRecyclerView.setAdapter(new MeetingsRecyclerViewAdapter(mMeetingsArrayList));
     }
-
 
 
     @Override
@@ -84,5 +83,36 @@ public class MainActivity extends AppCompatActivity {
         initRecyclerView();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.filter_date:
+                dateDialog();
+                return true;
+            case R.id.reset:
+                resetFilter();
+                return true;
+            default:
+            return super.onOptionsItemSelected(item);
+        }
 
+    }
+
+    private void resetFilter() {
+        mMeetingsArrayList.clear();
+        mMeetingsArrayList.addAll(mMareuApiService.getMeetings());
+        //penser à mettre un if sinon plante si la liste est vide
+        meetingRecyclerView.getAdapter().notifyDataSetChanged();
+    }
+
+    private void dateDialog() {
+    }
+
+    //on crée le menu et on l'attache à la main activity
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 }

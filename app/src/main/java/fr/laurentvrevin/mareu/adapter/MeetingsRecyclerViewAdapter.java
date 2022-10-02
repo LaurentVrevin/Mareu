@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import fr.laurentvrevin.mareu.R;
+import fr.laurentvrevin.mareu.Utils;
 import fr.laurentvrevin.mareu.model.Meetings;
 
 public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRecyclerViewAdapter.ViewHolder> {
@@ -35,11 +36,11 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Meetings meeting = mMeetings.get(position);
-        //SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm");
+
         holder.mMeetingName.setText(meeting.getMeetingname());
         holder.mStarTime.setText(meeting.getStartime());
         holder.mRoomName.setText(meeting.getRoomname());
-        holder.mUserMail.setText(meeting.getEmail());
+        holder.mUserMail.setText(Utils.listEmployeesToString(meeting.getEmployees()));
     }
 
     @Override
