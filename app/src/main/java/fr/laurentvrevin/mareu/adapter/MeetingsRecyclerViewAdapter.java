@@ -3,13 +3,11 @@ package fr.laurentvrevin.mareu.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import fr.laurentvrevin.mareu.R;
@@ -37,10 +35,10 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Meetings meeting = mMeetings.get(position);
 
-        holder.mMeetingName.setText(meeting.getMeetingname());
-        holder.mStarTime.setText(meeting.getStartime());
+        holder.mMeetingName.setText(meeting.getMeetingname() + " - ");
+        holder.mStarTime.setText(meeting.getStartime() + " - ");
         holder.mRoomName.setText(meeting.getRoomname());
-        holder.mUserMail.setText(Utils.listEmployeesToString(meeting.getEmployees()));
+        holder.mUserMail.setText(Utils.listEmployeesToString(meeting.getEmployeesMails()));
     }
 
     @Override

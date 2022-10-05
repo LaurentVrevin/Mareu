@@ -10,14 +10,17 @@ public class Meetings {
 
     private String roomname;
 
-    private ArrayList<Employees> employees;
+    private String  date_meeting;
 
-    public Meetings(String meetingname, String startime, String roomname, ArrayList<Employees> employees) {
+    private ArrayList<Employees> employeesMails;
+
+    public Meetings(String meetingname, String startime, String roomname, String datemeeting, ArrayList<Employees> employeesMails) {
 
         this.meetingname = meetingname;
         this.startime = startime;
         this.roomname = roomname;
-        this.employees = employees;    }
+        this.date_meeting = datemeeting;
+        this.employeesMails = employeesMails;    }
 
 
     public String getMeetingname() {
@@ -44,11 +47,19 @@ public class Meetings {
         this.roomname = roomname;
     }
 
-    public ArrayList<Employees> getEmployees() {
-        return employees;
+    public String getDate_meeting() {
+        return date_meeting;
     }
 
-    public void setEmployees(ArrayList<Employees> employees) {
-        this.employees = employees;
+    public void setDate_meeting(String date_meeting) {
+        this.date_meeting = date_meeting;
+    }
+
+    public ArrayList<Employees> getEmployeesMails() {
+        return employeesMails;
+    }
+
+    public void setEmployeesMails(ArrayList<Employees> employeesMails) {
+        this.employeesMails = employeesMails;
     }
 }

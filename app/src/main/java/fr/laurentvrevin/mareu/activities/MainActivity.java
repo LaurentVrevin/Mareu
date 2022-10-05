@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
             default:
             return super.onOptionsItemSelected(item);
         }
-
     }
 
     private void resetFilter() {
@@ -106,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void dateDialog() {
+
     }
 
     //on crée le menu et on l'attache à la main activity

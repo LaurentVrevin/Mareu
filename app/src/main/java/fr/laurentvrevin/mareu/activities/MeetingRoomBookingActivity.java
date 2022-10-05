@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.datepicker.CalendarConstraints;
@@ -40,9 +41,10 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
     private Button mButtonInvitation, mButtonSaveMeeting;
     TextView txt_dateSelected, mButtonDateTimePicker,  txt_timeSeleted, txt_roomSeleted, list_invited;
     TextInputLayout txt_Meeting_Object;
-    private Employees employees;
+    //private Employees employees;
     private Spinner mRoomToSelectSpinner;
-    String meetingObject, timeSelected, roomSelected;
+
+    String meetingObject, timeSelected, roomSelected, dateselected;
     private ArrayList<Employees> mEmployeesToCheck;
     private ArrayList<Employees> mEmployeesSelected = new ArrayList<>();
     private ArrayList<Meetings> createMeetingList = new ArrayList<>();
@@ -57,6 +59,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
 
         setContentView(R.layout.activity_meeting_room_booking);
         mStartdate = Calendar.getInstance();
+
         //mEndDate = Calendar.getInstance();
 
         mButtonDateTimePicker = findViewById(R.id.tv_datetime_selected);
@@ -69,15 +72,16 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         mButtonSaveMeeting = findViewById(R.id.button_save_meeting);
         txt_Meeting_Object = findViewById(R.id.txt_Meeting_Object);
 
+
+        mButtonSaveMeeting.setEnabled(false);
+
         //On ouvre le dialog fragment en cliquant sur le button "mbutton_invitation"
         mButtonInvitation.setOnClickListener(v -> {
             mDialogFragment = EmployeesListDialogFragment.createDialogFragment((ArrayList<Employees>) DUMMY_EMPLOYEES, mEmployeesSelected, MeetingRoomBookingActivity.this);
             mDialogFragment.show(getSupportFragmentManager(), "MyFragment");
             //passer la liste employeeToCheck ici
             mEmployeesToCheck = new ArrayList<>(DUMMY_EMPLOYEES);
-
         });
-
 
         //ON GERE LE SPINNER DES SALLES DE REUNION
         //rooms = les salles étant dans getRooms
@@ -132,18 +136,21 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         Calendar calendar = Calendar.getInstance();
         int thour = calendar.get(Calendar.HOUR_OF_DAY);
         int tminute = calendar.get(Calendar.MINUTE);
+        //txt_dateSelected.setText(timeSelected);
 
-        //créer endtime,
 
         //on récupère l'heure et les minutes sélectionnées dans la vue pour être mises dans thour et tminutes
         TimePickerDialog.OnTimeSetListener onTimeSetListener = (view, hourSelected, minutesSelected) -> {
+
 
             mStartdate.set(Calendar.HOUR_OF_DAY, hourSelected); //on passe l'heure sélectionnée
             mStartdate.set(Calendar.MINUTE, minutesSelected); //on passe les minutes sélectionnées
             SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy"); //je lui dis quel format de date je souhaite
             SimpleDateFormat format2 = new SimpleDateFormat("HH:mm");
             txt_dateSelected.setText("Date : " + format1.format(mStartdate.getTime()) + " à : " + format2.format(mStartdate.getTime())); //j'affiche la date sélectionnée
+            dateselected = format1.format((mStartdate.getTime()));
             timeSelected = format2.format(mStartdate.getTime());
+            mButtonSaveMeeting.setEnabled(true);
         };
 
         //Quand je clique sur le bouton datetimePicker ouvre le fragment via la variable materialDatePicker
@@ -168,6 +175,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
             }
         });
 
+
         mButtonSaveMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,14 +189,15 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
     private void onSubmit() {
 
         meetingObject = txt_Meeting_Object.getEditText().getText().toString();
-        //roomSelected = txt_roomSeleted.getText().toString();
-
+        //
         if (meetingObject.isEmpty()) {
             txt_Meeting_Object.setError("Merci de saisir un objet de réunion");
             return;
         }
-        mMareuApiService.createMeeting(new Meetings(meetingObject, timeSelected, roomSelected, mEmployeesSelected));
-        Toast.makeText(this, "L'objet de la réunion n'est pas vide", Toast.LENGTH_SHORT).show();
+
+
+        mMareuApiService.createMeeting(new Meetings(meetingObject, timeSelected, roomSelected, dateselected, mEmployeesSelected));
+        //Toast.makeText(this, "L'objet de la réunion n'est pas vide", Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -196,7 +205,6 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
     public void onEmployeesSelected(ArrayList<Employees> employees) {
 
         mEmployeesSelected = employees;
-
         //je charge la textview avec la liste des employées sélectionnés
         list_invited.setText("Voici les salarié(e)s invité(e)s : " + Utils.listEmployeesToString(employees));
         mDialogFragment.dismiss();
