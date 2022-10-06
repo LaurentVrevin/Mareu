@@ -1,6 +1,9 @@
 package fr.laurentvrevin.mareu.service;
 
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import fr.laurentvrevin.mareu.model.Employees;
@@ -36,6 +39,21 @@ public class DummyMareuApiService implements MareuApiService{
     @Override
     public void deleteMeeting(Meetings meeting) {
         mMeetings.remove(meeting);
+
+    }
+
+    @Override
+    public void getAllMeeting(Meetings meeting) {
+
+    }
+
+    @Override
+    public void getMeetingByDay(Meetings meeting) {
+
+    }
+
+    @Override
+    public void getMeetingByRoom(Meetings meeting) {
 
     }
 

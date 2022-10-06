@@ -44,7 +44,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
     //private Employees employees;
     private Spinner mRoomToSelectSpinner;
 
-    String meetingObject, timeSelected, roomSelected, dateselected;
+    String meetingObject, timeSelected, roomSelected, dateselected, listInvited;
     private ArrayList<Employees> mEmployeesToCheck;
     private ArrayList<Employees> mEmployeesSelected = new ArrayList<>();
     private ArrayList<Meetings> createMeetingList = new ArrayList<>();
@@ -60,7 +60,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         setContentView(R.layout.activity_meeting_room_booking);
         mStartdate = Calendar.getInstance();
 
-        //mEndDate = Calendar.getInstance();
+
 
         mButtonDateTimePicker = findViewById(R.id.tv_datetime_selected);
         txt_dateSelected = findViewById(R.id.tv_datetime_selected);
@@ -71,9 +71,6 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         list_invited = findViewById(R.id.tv_list_invited);
         mButtonSaveMeeting = findViewById(R.id.button_save_meeting);
         txt_Meeting_Object = findViewById(R.id.txt_Meeting_Object);
-
-
-        mButtonSaveMeeting.setEnabled(false);
 
         //On ouvre le dialog fragment en cliquant sur le button "mbutton_invitation"
         mButtonInvitation.setOnClickListener(v -> {
@@ -149,7 +146,6 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
             txt_dateSelected.setText("Date : " + format1.format(mStartdate.getTime()) + " à : " + format2.format(mStartdate.getTime())); //j'affiche la date sélectionnée
             dateselected = format1.format((mStartdate.getTime()));
             timeSelected = format2.format(mStartdate.getTime());
-            mButtonSaveMeeting.setEnabled(true);
         };
 
         //Quand je clique sur le bouton datetimePicker ouvre le fragment via la variable materialDatePicker
@@ -188,12 +184,21 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
     private void onSubmit() {
 
         meetingObject = txt_Meeting_Object.getEditText().getText().toString();
+        listInvited = list_invited.getText().toString();
+        dateselected = txt_dateSelected.getText().toString();
         //
         if (meetingObject.isEmpty()) {
             txt_Meeting_Object.setError("Merci de saisir un objet de réunion");
             return;
         }
-
+        if (dateselected ==""){
+            Toast.makeText(this, "Vous devez choisir un date et une heure de début", Toast.LENGTH_SHORT).show();
+        return;
+        }
+        if (listInvited ==""){
+            Toast.makeText(this, "La liste des invités est vide", Toast.LENGTH_SHORT).show();
+        return;
+        }
 
         mMareuApiService.createMeeting(new Meetings(meetingObject, timeSelected, roomSelected, dateselected, mEmployeesSelected));
         //Toast.makeText(this, "L'objet de la réunion n'est pas vide", Toast.LENGTH_SHORT).show();

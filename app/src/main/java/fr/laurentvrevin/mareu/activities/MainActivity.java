@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.nfc.Tag;
@@ -19,11 +20,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
+import java.time.Year;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import fr.laurentvrevin.mareu.DI.DI;
@@ -45,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
     private RoomFilterDialogFragment mRoomFilterDF;
     private List<Rooms> mRoomsList;
 
-
-
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         meetingRecyclerView.setLayoutManager(layoutManager);
@@ -66,12 +68,10 @@ public class MainActivity extends AppCompatActivity {
         initList();
     }
 
-
     private void initList() {
         mMeetingsArrayList = (ArrayList<Meetings>) mMareuApiService.getMeetings();
         meetingRecyclerView.setAdapter(new MeetingsRecyclerViewAdapter(mMeetingsArrayList));
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +110,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void dateDialog() {
+        Calendar calendar = Calendar.getInstance();
+        int selectYear = calendar.get(Calendar.YEAR);
+        int selectMonth = calendar.get(Calendar.MONTH);
+        int selectDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                calendar.set(year, month, dayOfMonth);
+                mMeetingsArrayList.clear();
+            }
+        };
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, dateSetListener, selectYear, selectMonth, selectDayOfMonth);
+        datePickerDialog.show();
     }
 
     private void roomDialog() {
@@ -124,8 +140,6 @@ public class MainActivity extends AppCompatActivity {
         //penser à mettre un if sinon plante si la liste est vide
         meetingRecyclerView.getAdapter().notifyDataSetChanged();
     }
-
-
 
     //on crée le menu et on l'attache à la main activity
     @Override

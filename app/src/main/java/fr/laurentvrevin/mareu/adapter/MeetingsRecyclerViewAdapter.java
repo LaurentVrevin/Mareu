@@ -3,6 +3,7 @@ package fr.laurentvrevin.mareu.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,9 +14,11 @@ import java.util.ArrayList;
 import fr.laurentvrevin.mareu.R;
 import fr.laurentvrevin.mareu.Utils;
 import fr.laurentvrevin.mareu.model.Meetings;
+import fr.laurentvrevin.mareu.service.MareuApiService;
 
 public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRecyclerViewAdapter.ViewHolder> {
     private ArrayList<Meetings> mMeetings;
+
 
 
     public MeetingsRecyclerViewAdapter(ArrayList<Meetings> meetings) {
@@ -38,6 +41,13 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
         holder.mStarTime.setText(meeting.getStartime() + " - ");
         holder.mRoomName.setText(meeting.getRoomname());
         holder.mUserMail.setText(Utils.listEmployeesToString(meeting.getEmployeesMails()));
+        holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //mareuApiService.deleteMeeting(meeting);
+
+            }
+        });
     }
 
     @Override
@@ -48,7 +58,8 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView mMeetingName, mStarTime, mRoomName, mUserMail;
-        //public Button mDeleteButton;
+        public final ImageButton mDeleteButton;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -57,7 +68,7 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
             mStarTime = itemView.findViewById(R.id.item_list_meeting_startime);
             mRoomName = itemView.findViewById(R.id.item_list_meeting_roomname);
             mUserMail = itemView.findViewById(R.id.item_list_meeting_useremail);
-            //mDeleteButton = itemView.findViewById(R.id.button_delete);
+            mDeleteButton = itemView.findViewById(R.id.button_delete);
         }
     }
 }

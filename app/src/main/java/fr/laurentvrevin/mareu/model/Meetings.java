@@ -1,6 +1,7 @@
 package fr.laurentvrevin.mareu.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Meetings {
 
@@ -10,7 +11,7 @@ public class Meetings {
 
     private String roomname;
 
-    private String  date_meeting;
+    private String date_meeting;
 
     private ArrayList<Employees> employeesMails;
 

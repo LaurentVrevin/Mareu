@@ -60,7 +60,7 @@
             android:drawableEnd="@drawable/ic_baseline_calendar_month_24"
             android:gravity="center"
             android:paddingRight="10dp"
-            android:text="Sélectionnez la date et l'heure"
+            android:hint="Sélectionnez la date et l'heure"
             android:textStyle="bold" />
 
         <com.google.android.material.divider.MaterialDivider
