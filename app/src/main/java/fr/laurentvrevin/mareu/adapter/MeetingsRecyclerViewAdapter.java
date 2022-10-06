@@ -34,7 +34,6 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Meetings meeting = mMeetings.get(position);
-
         holder.mMeetingName.setText(meeting.getMeetingname() + " - ");
         holder.mStarTime.setText(meeting.getStartime() + " - ");
         holder.mRoomName.setText(meeting.getRoomname());

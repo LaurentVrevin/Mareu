@@ -5,6 +5,9 @@
     <item android:id="@+id/filter_date"
         android:title="Filtrer par date"
        app:showAsAction="never"/>
+    <item android:id="@+id/filter_room"
+        android:title="Filtrer par salle"
+        app:showAsAction="never"/>
     <item android:id="@+id/reset"
         android:title="Reset"
         app:showAsAction="never"/>

@@ -1,5 +1,7 @@
 package fr.laurentvrevin.mareu.activities;
 
+import static fr.laurentvrevin.mareu.service.DummyEmployeesGenerator.DUMMY_EMPLOYEES;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,11 +24,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.laurentvrevin.mareu.DI.DI;
 import fr.laurentvrevin.mareu.R;
 import fr.laurentvrevin.mareu.adapter.MeetingsRecyclerViewAdapter;
+import fr.laurentvrevin.mareu.fragment.EmployeesListDialogFragment;
+import fr.laurentvrevin.mareu.fragment.RoomFilterDialogFragment;
+import fr.laurentvrevin.mareu.model.Employees;
 import fr.laurentvrevin.mareu.model.Meetings;
+import fr.laurentvrevin.mareu.model.Rooms;
 import fr.laurentvrevin.mareu.service.MareuApiService;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView meetingRecyclerView;
     private ArrayList<Meetings> mMeetingsArrayList;
     private MareuApiService mMareuApiService = DI.getMeetingsApiService();
+    private RoomFilterDialogFragment mRoomFilterDF;
+    private List<Rooms> mRoomsList;
+
 
 
     private void initRecyclerView() {
@@ -89,12 +99,23 @@ public class MainActivity extends AppCompatActivity {
             case R.id.filter_date:
                 dateDialog();
                 return true;
+            case R.id.filter_room:
+                roomDialog();
+                return true;
             case R.id.reset:
                 resetFilter();
                 return true;
             default:
             return super.onOptionsItemSelected(item);
         }
+    }
+    private void dateDialog() {
+    }
+
+    private void roomDialog() {
+
+        mRoomFilterDF = RoomFilterDialogFragment.createDialogFragment(mRoomsList);
+        mRoomFilterDF.show(getSupportFragmentManager(), "MyRoomsFragment");
     }
 
     private void resetFilter() {
@@ -104,9 +125,7 @@ public class MainActivity extends AppCompatActivity {
         meetingRecyclerView.getAdapter().notifyDataSetChanged();
     }
 
-    private void dateDialog() {
 
-    }
 
     //on crée le menu et on l'attache à la main activity
     @Override

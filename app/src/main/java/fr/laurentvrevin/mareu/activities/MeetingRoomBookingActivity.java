@@ -142,7 +142,6 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         //on récupère l'heure et les minutes sélectionnées dans la vue pour être mises dans thour et tminutes
         TimePickerDialog.OnTimeSetListener onTimeSetListener = (view, hourSelected, minutesSelected) -> {
 
-
             mStartdate.set(Calendar.HOUR_OF_DAY, hourSelected); //on passe l'heure sélectionnée
             mStartdate.set(Calendar.MINUTE, minutesSelected); //on passe les minutes sélectionnées
             SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy"); //je lui dis quel format de date je souhaite
