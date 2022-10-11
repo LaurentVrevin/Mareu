@@ -44,7 +44,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
     //private Employees employees;
     private Spinner mRoomToSelectSpinner;
 
-    String meetingObject, timeSelected, roomSelected, dateselected, listInvited;
+    String meetingObject, roomSelected, listInvited;
     private ArrayList<Employees> mEmployeesToCheck;
     private ArrayList<Employees> mEmployeesSelected = new ArrayList<>();
     private ArrayList<Meetings> createMeetingList = new ArrayList<>();
@@ -58,7 +58,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_meeting_room_booking);
-        mStartdate = Calendar.getInstance();
+
 
 
 
@@ -144,8 +144,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
             SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy"); //je lui dis quel format de date je souhaite
             SimpleDateFormat format2 = new SimpleDateFormat("HH:mm");
             txt_dateSelected.setText("Date : " + format1.format(mStartdate.getTime()) + " à : " + format2.format(mStartdate.getTime())); //j'affiche la date sélectionnée
-            dateselected = format1.format((mStartdate.getTime()));
-            timeSelected = format2.format(mStartdate.getTime());
+
         };
 
         //Quand je clique sur le bouton datetimePicker ouvre le fragment via la variable materialDatePicker
@@ -162,7 +161,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
             @Override
             public void onPositiveButtonClick(Object selection) {
-
+                mStartdate = Calendar.getInstance();
                 mStartdate.setTimeInMillis((Long) selection);
                 //timeBuilder.setTimeFormat()
                 timePickerDialog.setTitle("Sélectionne l'heure de début");
@@ -185,13 +184,13 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
 
         meetingObject = txt_Meeting_Object.getEditText().getText().toString();
         listInvited = list_invited.getText().toString();
-        dateselected = txt_dateSelected.getText().toString();
+
         //
         if (meetingObject.isEmpty()) {
             txt_Meeting_Object.setError("Merci de saisir un objet de réunion");
             return;
         }
-        if (dateselected ==""){
+        if (mStartdate == null){
             Toast.makeText(this, "Vous devez choisir un date et une heure de début", Toast.LENGTH_SHORT).show();
         return;
         }
@@ -200,7 +199,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         return;
         }
 
-        mMareuApiService.createMeeting(new Meetings(meetingObject, timeSelected, roomSelected, dateselected, mEmployeesSelected));
+        mMareuApiService.createMeeting(new Meetings(meetingObject, roomSelected, mStartdate, mEmployeesSelected));
         //Toast.makeText(this, "L'objet de la réunion n'est pas vide", Toast.LENGTH_SHORT).show();
         finish();
     }

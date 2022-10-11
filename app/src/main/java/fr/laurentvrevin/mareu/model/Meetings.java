@@ -1,26 +1,23 @@
 package fr.laurentvrevin.mareu.model;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 
 public class Meetings {
 
     private String meetingname;
 
-    private String startime;
-
     private String roomname;
 
-    private String date_meeting;
+    private Calendar dateMeeting;
 
     private ArrayList<Employees> employeesMails;
 
-    public Meetings(String meetingname, String startime, String roomname, String datemeeting, ArrayList<Employees> employeesMails) {
+    public Meetings(String meetingName, String roomName, Calendar dateMeeting, ArrayList<Employees> employeesMails) {
 
-        this.meetingname = meetingname;
-        this.startime = startime;
-        this.roomname = roomname;
-        this.date_meeting = datemeeting;
+        this.meetingname = meetingName;
+        this.roomname = roomName;
+        this.dateMeeting = dateMeeting;
         this.employeesMails = employeesMails;    }
 
 
@@ -32,14 +29,6 @@ public class Meetings {
         this.meetingname = meetingname;
     }
 
-    public String getStartime() {
-        return startime;
-    }
-
-    public void setStartime(String startime) {
-        this.startime = startime;
-    }
-
     public String getRoomname() {
         return roomname;
     }
@@ -48,12 +37,12 @@ public class Meetings {
         this.roomname = roomname;
     }
 
-    public String getDate_meeting() {
-        return date_meeting;
+    public Calendar getDateMeeting() {
+        return dateMeeting;
     }
 
-    public void setDate_meeting(String date_meeting) {
-        this.date_meeting = date_meeting;
+    public void setDateMeeting(Calendar dateMeeting) {
+        this.dateMeeting = dateMeeting;
     }
 
     public ArrayList<Employees> getEmployeesMails() {

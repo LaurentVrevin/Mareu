@@ -1,9 +1,12 @@
 package fr.laurentvrevin.mareu.service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import fr.laurentvrevin.mareu.model.Employees;
 import fr.laurentvrevin.mareu.model.Meetings;
+import fr.laurentvrevin.mareu.model.Rooms;
 
 public interface MareuApiService {
 
@@ -15,10 +18,8 @@ public interface MareuApiService {
 
     void deleteMeeting(Meetings meeting);
 
-    void getAllMeeting(Meetings meeting);
+    List<Meetings> getMeetingByDay(Calendar calendar);
 
-    void getMeetingByDay(Meetings meeting);
-
-    void getMeetingByRoom(Meetings meeting);
+    List<Meetings> getMeetingByRoom(Rooms rooms);
 
 }

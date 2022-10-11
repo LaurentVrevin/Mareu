@@ -28,6 +28,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import fr.laurentvrevin.mareu.DI.DI;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton addMeetingButton;
     private RecyclerView meetingRecyclerView;
-    private ArrayList<Meetings> mMeetingsArrayList;
+    private ArrayList<Meetings> mMeetingsArrayList = new ArrayList<>();
     private MareuApiService mMareuApiService = DI.getMeetingsApiService();
     private RoomFilterDialogFragment mRoomFilterDF;
     private List<Rooms> mRoomsList;
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.filter_date:
                 dateDialog();
+
                 return true;
             case R.id.filter_room:
                 roomDialog();
@@ -116,14 +118,16 @@ public class MainActivity extends AppCompatActivity {
         int selectDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
+            @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                //Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, dayOfMonth);
                 mMeetingsArrayList.clear();
+                mMeetingsArrayList.addAll(mMareuApiService.getMeetingByDay(Calendar.getInstance()));
+                meetingRecyclerView.getAdapter().notifyDataSetChanged();
             }
         };
-
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, dateSetListener, selectYear, selectMonth, selectDayOfMonth);
         datePickerDialog.show();
     }
