@@ -1,6 +1,5 @@
 package fr.laurentvrevin.mareu.service;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -18,8 +17,8 @@ public interface MareuApiService {
 
     void deleteMeeting(Meetings meeting);
 
-    List<Meetings> getMeetingByDay(Calendar calendar);
+    List<Meetings> getMeetingsByDay(Date date);
 
-    List<Meetings> getMeetingByRoom(Rooms rooms);
+    List<Meetings> getMeetingsByRoom(Rooms rooms);
 
 }

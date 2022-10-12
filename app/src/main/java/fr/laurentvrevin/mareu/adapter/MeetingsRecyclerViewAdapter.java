@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.laurentvrevin.mareu.R;
 import fr.laurentvrevin.mareu.Utils;
@@ -19,7 +20,12 @@ import fr.laurentvrevin.mareu.model.Meetings;
 public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRecyclerViewAdapter.ViewHolder> {
     private ArrayList<Meetings> mMeetings;
 
+    public void updateMeetingList(List<Meetings> newMeetingsList){
+        mMeetings.clear();
+        mMeetings.addAll(newMeetingsList);
+        notifyDataSetChanged();
 
+    }
 
     public MeetingsRecyclerViewAdapter(ArrayList<Meetings> meetings) {
         this.mMeetings = new ArrayList<>(meetings);
@@ -37,9 +43,9 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Meetings meeting = mMeetings.get(position);
-        String date = new SimpleDateFormat("HH:mm").format(meeting.getDateMeeting().getTime());
+        SimpleDateFormat timeMeeting = new SimpleDateFormat("HH:mm");//.format(meeting.getDateMeeting().getTime());
         holder.mMeetingName.setText(meeting.getMeetingname() + " - ");
-        holder.mStarTime.setText(date + " - ");
+        holder.mStarTime.setText(timeMeeting.format(meeting.getDateMeeting().getTime()) + " - ");
         holder.mRoomName.setText(meeting.getRoomname());
         holder.mUserMail.setText(Utils.listEmployeesToString(meeting.getEmployeesMails()));
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {

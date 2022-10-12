@@ -1,9 +1,5 @@
 package fr.laurentvrevin.mareu.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import fr.laurentvrevin.mareu.model.Rooms;
 
 public class DummyRoomsGenerator {

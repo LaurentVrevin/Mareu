@@ -13,7 +13,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.datepicker.CalendarConstraints;
@@ -38,18 +37,16 @@ import fr.laurentvrevin.mareu.service.MareuApiService;
 
 
 public class MeetingRoomBookingActivity extends AppCompatActivity implements EmployeesListDialogFragment.Listener {
-    private Button mButtonInvitation, mButtonSaveMeeting;
-    TextView txt_dateSelected, mButtonDateTimePicker,  txt_timeSeleted, txt_roomSeleted, list_invited;
+    TextView txt_dateSelected, mButtonDateTimePicker, txt_timeSeleted, txt_roomSeleted, list_invited;
     TextInputLayout txt_Meeting_Object;
-    //private Employees employees;
-    private Spinner mRoomToSelectSpinner;
-
     String meetingObject, roomSelected, listInvited;
+    private Button mButtonInvitation, mButtonSaveMeeting;
+    private Spinner mRoomToSelectSpinner;
     private ArrayList<Employees> mEmployeesToCheck;
     private ArrayList<Employees> mEmployeesSelected = new ArrayList<>();
-    private ArrayList<Meetings> createMeetingList = new ArrayList<>();
+    private final ArrayList<Meetings> createMeetingList = new ArrayList<>();
     private EmployeesListDialogFragment mDialogFragment;
-    private MareuApiService mMareuApiService = DI.getMeetingsApiService();
+    private final MareuApiService mMareuApiService = DI.getMeetingsApiService();
     private Calendar mStartdate;
     private Calendar mEndDate;
 
@@ -60,11 +57,9 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         setContentView(R.layout.activity_meeting_room_booking);
 
 
-
-
         mButtonDateTimePicker = findViewById(R.id.tv_datetime_selected);
         txt_dateSelected = findViewById(R.id.tv_datetime_selected);
-       // txt_timeSeleted = findViewById(R.id.tv_time_selected);
+        // txt_timeSeleted = findViewById(R.id.tv_time_selected);
         mRoomToSelectSpinner = findViewById(R.id.spinner_room_toselect);
         //txt_roomSeleted = findViewById(R.id.tv_room_selected);
         mButtonInvitation = findViewById(R.id.button_invitation_employees);
@@ -163,12 +158,11 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
             public void onPositiveButtonClick(Object selection) {
                 mStartdate = Calendar.getInstance();
                 mStartdate.setTimeInMillis((Long) selection);
-                //timeBuilder.setTimeFormat()
+
                 timePickerDialog.setTitle("Sélectionne l'heure de début");
                 timePickerDialog.show();
             }
         });
-
 
         mButtonSaveMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,17 +184,17 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
             txt_Meeting_Object.setError("Merci de saisir un objet de réunion");
             return;
         }
-        if (mStartdate == null){
+        if (mStartdate == null) {
             Toast.makeText(this, "Vous devez choisir un date et une heure de début", Toast.LENGTH_SHORT).show();
-        return;
+            return;
         }
-        if (listInvited ==""){
+        if (listInvited == "") {
             Toast.makeText(this, "La liste des invités est vide", Toast.LENGTH_SHORT).show();
-        return;
+            return;
         }
 
         mMareuApiService.createMeeting(new Meetings(meetingObject, roomSelected, mStartdate, mEmployeesSelected));
-        //Toast.makeText(this, "L'objet de la réunion n'est pas vide", Toast.LENGTH_SHORT).show();
+
         finish();
     }
 

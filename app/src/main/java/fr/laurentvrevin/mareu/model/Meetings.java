@@ -18,7 +18,8 @@ public class Meetings {
         this.meetingname = meetingName;
         this.roomname = roomName;
         this.dateMeeting = dateMeeting;
-        this.employeesMails = employeesMails;    }
+        this.employeesMails = employeesMails;
+    }
 
 
     public String getMeetingname() {

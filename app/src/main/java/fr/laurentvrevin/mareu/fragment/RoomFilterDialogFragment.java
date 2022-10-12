@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import fr.laurentvrevin.mareu.R;
@@ -29,6 +31,7 @@ public class RoomFilterDialogFragment extends DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "roomsList";
+    private static RoomListener mRoomListener;
     //private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
@@ -36,23 +39,25 @@ public class RoomFilterDialogFragment extends DialogFragment {
     private String mParam2;
 
     private Spinner roomsSpinner;
-    private TextView txtroomfilter;
-    private Button buttonOK;
+
     private List<Rooms> roomsList;
+
 
 
     // TODO: Rename and change types and number of parameters
 
 
-    public static RoomFilterDialogFragment createDialogFragment(List<Rooms> roomsList) {
+    public static RoomFilterDialogFragment createDialogFragment(List<Rooms> roomsList, RoomListener roomListener) {
+        mRoomListener = roomListener;
         RoomFilterDialogFragment fragment = new RoomFilterDialogFragment();
+
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, String.valueOf(roomsList));
         fragment.setArguments(args);
-
         return fragment;
-
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +66,6 @@ public class RoomFilterDialogFragment extends DialogFragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             //mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
@@ -72,15 +76,13 @@ public class RoomFilterDialogFragment extends DialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_room_filter_dialog, container, false);
         roomsSpinner = view.findViewById(spinner_room_filter);
-        txtroomfilter = view.findViewById(R.id.txt_room_filter);
-        buttonOK = view.findViewById(R.id.button_OK);
 
 
         //ON GERE LE SPINNER DES SALLES DE REUNION
         //rooms = les salles étant dans getRooms
-        Rooms[] rooms = DummyRoomsGenerator.getRooms();
+        roomsList = Arrays.asList(DummyRoomsGenerator.getRooms());
         //On crée l'adapter de type Rooms dans un nouvel adapter
-        ArrayAdapter<Rooms> adapter = new ArrayAdapter<Rooms>(getContext(), com.google.android.material.R.layout.support_simple_spinner_dropdown_item, rooms);
+        ArrayAdapter<Rooms> adapter = new ArrayAdapter<Rooms>(getContext(), com.google.android.material.R.layout.support_simple_spinner_dropdown_item, roomsList);
         this.roomsSpinner.setAdapter(adapter);
         //On définit ce qu'il se passera quand on le déroule, selon ce que l'on fait.
 
@@ -89,6 +91,7 @@ public class RoomFilterDialogFragment extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 onItemSelectedHandler(parent, view, position, id);
+                mRoomListener.onRoomSelected(roomsList.get((int) id));
             }
 
             @Override
@@ -102,5 +105,10 @@ public class RoomFilterDialogFragment extends DialogFragment {
             }
         });
         return view;
+    }
+    public interface RoomListener{
+        public void onRoomSelected(Rooms rooms);
+
+
     }
 }
