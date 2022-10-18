@@ -12,12 +12,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
 
 import fr.laurentvrevin.mareu.R;
-import fr.laurentvrevin.mareu.adapter.EmployeesRecyclerViewAdapter;
-import fr.laurentvrevin.mareu.model.Employees;
-import fr.laurentvrevin.mareu.service.MareuApiService;
+
 
 
 public class ItemEmployeesFragment extends android.app.DialogFragment {

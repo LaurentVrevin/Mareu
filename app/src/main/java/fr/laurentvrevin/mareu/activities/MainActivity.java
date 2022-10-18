@@ -1,89 +1,76 @@
 package fr.laurentvrevin.mareu.activities;
 
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.DatePickerDialog;
-import android.content.Context;
-import android.content.Intent;
-
-import android.os.Bundle;
-
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-
 import java.util.List;
 
 import fr.laurentvrevin.mareu.DI.DI;
 import fr.laurentvrevin.mareu.R;
 import fr.laurentvrevin.mareu.adapter.MeetingsRecyclerViewAdapter;
-
+import fr.laurentvrevin.mareu.events.DeleteMeetingEvent;
 import fr.laurentvrevin.mareu.fragment.RoomFilterDialogFragment;
-
 import fr.laurentvrevin.mareu.model.Meetings;
 import fr.laurentvrevin.mareu.model.Rooms;
 import fr.laurentvrevin.mareu.service.MareuApiService;
 
 public class MainActivity extends AppCompatActivity implements RoomFilterDialogFragment.RoomListener {
 
+    private final MareuApiService mMareuApiService = DI.getNewInstanceApiService();
+    private final ArrayList<Meetings> mMeetingsArrayList = new ArrayList<>();
     private FloatingActionButton addMeetingButton;
     private RecyclerView meetingRecyclerView;
-    private ArrayList<Meetings> mMeetingsArrayList = new ArrayList<>();
-    private final MareuApiService mMareuApiService = DI.getMeetingsApiService();
     private RoomFilterDialogFragment mRoomFilterDF;
     private List<Rooms> mRoomsList;
-    private MeetingsRecyclerViewAdapter meetingsRecyclerViewAdapter = new MeetingsRecyclerViewAdapter(mMeetingsArrayList);
+    private final MeetingsRecyclerViewAdapter meetingsRecyclerViewAdapter = new MeetingsRecyclerViewAdapter(mMeetingsArrayList);
 
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         meetingRecyclerView.setLayoutManager(layoutManager);
-        //MeetingsRecyclerViewAdapter meetingsRecyclerViewAdapter = new MeetingsRecyclerViewAdapter(mMeetingsArrayList);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(meetingRecyclerView.getContext(), layoutManager.getOrientation());
         meetingRecyclerView.addItemDecoration(dividerItemDecoration);
         meetingRecyclerView.setAdapter(meetingsRecyclerViewAdapter);
-        /*meetingRecyclerView.setAdapter(new MeetingsRecyclerViewAdapter(mMeetingsArrayList));
-        mMeetingsArrayList = (ArrayList<Meetings>) mMareuApiService.getMeetings();*/
     }
-
-
-
-
 
     @Override
     protected void onStart() {
         super.onStart();
-
+        EventBus.getDefault().register(this);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onResume() {
         super.onResume();
-        meetingsRecyclerViewAdapter.updateMeetingList(mMareuApiService.getMeetings());
+        resetFilter();
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         addMeetingButton = findViewById(R.id.activity_list_Meeting_Add_Fab);
         meetingRecyclerView = findViewById(R.id.activity_list_Meeting);
-
         addMeetingButton.setOnClickListener(v -> {
             Context context = addMeetingButton.getContext();
             Intent intent = new Intent(context, MeetingRoomBookingActivity.class);
@@ -94,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements RoomFilterDialogF
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.filter_date:
                 dateDialog();
 
@@ -109,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements RoomFilterDialogF
                 return super.onOptionsItemSelected(item);
         }
     }
+
     private void dateDialog() {
         Calendar calendar = Calendar.getInstance();
         int selectYear = calendar.get(Calendar.YEAR);
@@ -124,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements RoomFilterDialogF
         datePickerDialog.show();
     }
 
-
     private void roomDialog() {
 
         mRoomFilterDF = RoomFilterDialogFragment.createDialogFragment(mRoomsList, this);
@@ -132,7 +119,9 @@ public class MainActivity extends AppCompatActivity implements RoomFilterDialogF
     }
 
     private void resetFilter() {
-        meetingsRecyclerViewAdapter.updateMeetingList(mMareuApiService.getMeetings());
+        mMeetingsArrayList.clear();
+        mMeetingsArrayList.addAll(mMareuApiService.getMeetings());
+        meetingRecyclerView.getAdapter().notifyDataSetChanged();
     }
 
     //on crée le menu et on l'attache à la main activity
@@ -144,7 +133,19 @@ public class MainActivity extends AppCompatActivity implements RoomFilterDialogF
     }
 
     @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Override
     public void onRoomSelected(Rooms rooms) {
         meetingsRecyclerViewAdapter.updateMeetingList(mMareuApiService.getMeetingsByRoom(rooms));
+    }
+
+    @Subscribe
+    public void onDeleteMeeting(DeleteMeetingEvent event) {
+        mMareuApiService.deleteMeeting(event.meetings);
+        onResume();
     }
 }

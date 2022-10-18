@@ -21,7 +21,6 @@ public class Meetings {
         this.employeesMails = employeesMails;
     }
 
-
     public String getMeetingname() {
         return meetingname;
     }

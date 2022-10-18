@@ -1,5 +1,8 @@
 package fr.laurentvrevin.mareu.adapter;
 
+import android.annotation.SuppressLint;
+import android.media.metrics.Event;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,26 +12,38 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.laurentvrevin.mareu.R;
 import fr.laurentvrevin.mareu.Utils;
+
+import fr.laurentvrevin.mareu.events.DeleteMeetingEvent;
 import fr.laurentvrevin.mareu.model.Meetings;
+import fr.laurentvrevin.mareu.service.MareuApiService;
+
 
 public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRecyclerViewAdapter.ViewHolder> {
-    private ArrayList<Meetings> mMeetings;
+    private final ArrayList<Meetings> mMeetings;
+    private MareuApiService mareuApiService;
+
+    private void deleteMeetingList(Meetings meetings){
+        EventBus.getDefault().post(new DeleteMeetingEvent(meetings));
+    }
 
     public void updateMeetingList(List<Meetings> newMeetingsList){
         mMeetings.clear();
         mMeetings.addAll(newMeetingsList);
         notifyDataSetChanged();
-
+        Log.d("UPDATE", "updateMeetingList: nouvelle donnee");
     }
 
     public MeetingsRecyclerViewAdapter(ArrayList<Meetings> meetings) {
-        this.mMeetings = new ArrayList<>(meetings);
+        this.mMeetings = meetings;//REVIEW new ArrayList<>(meetings);
     }
 
     @NonNull
@@ -41,9 +56,9 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Meetings meeting = mMeetings.get(position);
-        SimpleDateFormat timeMeeting = new SimpleDateFormat("HH:mm");//.format(meeting.getDateMeeting().getTime());
+        SimpleDateFormat timeMeeting = new SimpleDateFormat("HH:mm");
         holder.mMeetingName.setText(meeting.getMeetingname() + " - ");
         holder.mStarTime.setText(timeMeeting.format(meeting.getDateMeeting().getTime()) + " - ");
         holder.mRoomName.setText(meeting.getRoomname());
@@ -51,8 +66,10 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mareuApiService.deleteMeeting(mMeetings);
-
+                //mMeetings.remove((position));
+                EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
+                //deleteMeetingList(meeting);
+                Log.d("GARBAGE", "onClick: delete from garbage");
             }
         });
     }

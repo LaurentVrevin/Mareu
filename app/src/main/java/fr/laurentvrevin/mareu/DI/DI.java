@@ -20,7 +20,9 @@ public class DI {
      * @return
      */
     public static MareuApiService getNewInstanceApiService() {
-        return (MareuApiService) new DummyMareuApiService();
+        testservice = new DummyMareuApiService();
+        return testservice;
+
     }
 
 

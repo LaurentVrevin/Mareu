@@ -3,13 +3,11 @@ package fr.laurentvrevin.mareu.service;
 import java.util.Date;
 import java.util.List;
 
-import fr.laurentvrevin.mareu.model.Employees;
 import fr.laurentvrevin.mareu.model.Meetings;
 import fr.laurentvrevin.mareu.model.Rooms;
 
 public interface MareuApiService {
 
-    List<Employees> getEmployees();
 
     List<Meetings> getMeetings();
 
@@ -20,5 +18,6 @@ public interface MareuApiService {
     List<Meetings> getMeetingsByDay(Date date);
 
     List<Meetings> getMeetingsByRoom(Rooms rooms);
+
 
 }

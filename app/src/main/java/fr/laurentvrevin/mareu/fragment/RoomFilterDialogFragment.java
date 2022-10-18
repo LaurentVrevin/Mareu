@@ -106,8 +106,9 @@ public class RoomFilterDialogFragment extends DialogFragment {
         });
         return view;
     }
+    //on crée une interface pour le listener afin de récupérer la donnée rooms
     public interface RoomListener{
-        public void onRoomSelected(Rooms rooms);
+         void onRoomSelected(Rooms rooms);
 
 
     }
