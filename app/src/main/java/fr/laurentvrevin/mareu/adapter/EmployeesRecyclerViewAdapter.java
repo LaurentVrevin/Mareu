@@ -6,8 +6,11 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
+
 import fr.laurentvrevin.mareu.R;
 import fr.laurentvrevin.mareu.model.Employees;
 
@@ -23,7 +26,7 @@ public class EmployeesRecyclerViewAdapter extends RecyclerView.Adapter<Employees
     }
 
     @Override
-    public ViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_employees_item, parent, false);
         return new ViewHolder(view);
@@ -35,16 +38,16 @@ public class EmployeesRecyclerViewAdapter extends RecyclerView.Adapter<Employees
         holder.mEmployeeName.setText(employee.getFirstname());
         holder.mEmployeeFunction.setText(employee.getFunction());
         holder.mEmployeeEmail.setText(employee.getEmail());
-        if (mEmployeesChecked.contains(employee)){
+        if (mEmployeesChecked.contains(employee)) {
             holder.checkedButton.setChecked(true);
         }
         holder.checkedButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     mEmployeesChecked.add(employee);
 
-                }else{
+                } else {
                     mEmployeesChecked.remove(employee);
                 }
             }

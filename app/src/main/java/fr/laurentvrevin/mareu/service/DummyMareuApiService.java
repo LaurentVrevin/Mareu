@@ -10,7 +10,7 @@ import fr.laurentvrevin.mareu.model.Meetings;
 import fr.laurentvrevin.mareu.model.Rooms;
 
 public class DummyMareuApiService implements MareuApiService {
-    private final List<Meetings> mMeetings = MeetingListGenerator.generateMeeting();
+    private final List<Meetings> mMeetings = new ArrayList<>();
 
     /**
      * {@inheritDoc}

@@ -37,16 +37,16 @@ import fr.laurentvrevin.mareu.service.MareuApiService;
 
 
 public class MeetingRoomBookingActivity extends AppCompatActivity implements EmployeesListDialogFragment.Listener {
-    TextView txt_dateSelected, mButtonDateTimePicker, txt_timeSeleted, txt_roomSeleted, list_invited;
+    private final ArrayList<Meetings> createMeetingList = new ArrayList<>();
+    private final MareuApiService mMareuApiService = DI.getMeetingsApiService();
+    TextView txt_dateSelected, mButtonDateTimePicker, list_invited;
     TextInputLayout txt_Meeting_Object;
     String meetingObject, roomSelected, listInvited;
     private Button mButtonInvitation, mButtonSaveMeeting;
     private Spinner mRoomToSelectSpinner;
     private ArrayList<Employees> mEmployeesToCheck;
     private ArrayList<Employees> mEmployeesSelected = new ArrayList<>();
-    private final ArrayList<Meetings> createMeetingList = new ArrayList<>();
     private EmployeesListDialogFragment mDialogFragment;
-    private final MareuApiService mMareuApiService = DI.getMeetingsApiService();
     private Calendar mStartdate;
     private Calendar mEndDate;
 
@@ -101,7 +101,6 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
                 Adapter adapter = parent.getAdapter();
                 Rooms rooms = (Rooms) adapter.getItem(position);
                 //on met dans la textview via la variable roomSelected la salle  choisie
-                //txt_roomSeleted.setText(rooms.getName());
                 roomSelected = rooms.getName();
             }
         });
@@ -128,8 +127,6 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         Calendar calendar = Calendar.getInstance();
         int thour = calendar.get(Calendar.HOUR_OF_DAY);
         int tminute = calendar.get(Calendar.MINUTE);
-        //txt_dateSelected.setText(timeSelected);
-
 
         //on récupère l'heure et les minutes sélectionnées dans la vue pour être mises dans thour et tminutes
         TimePickerDialog.OnTimeSetListener onTimeSetListener = (view, hourSelected, minutesSelected) -> {
@@ -139,7 +136,6 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
             SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy"); //je lui dis quel format de date je souhaite
             SimpleDateFormat format2 = new SimpleDateFormat("HH:mm");
             txt_dateSelected.setText("Date : " + format1.format(mStartdate.getTime()) + " à : " + format2.format(mStartdate.getTime())); //j'affiche la date sélectionnée
-
         };
 
         //Quand je clique sur le bouton datetimePicker ouvre le fragment via la variable materialDatePicker
@@ -194,7 +190,6 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         }
 
         mMareuApiService.createMeeting(new Meetings(meetingObject, roomSelected, mStartdate, mEmployeesSelected));
-
         finish();
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 import fr.laurentvrevin.mareu.model.Employees;
 
 public class DummyEmployeesGenerator {
-    public static List<Employees> DUMMY_EMPLOYEES = new ArrayList<>(Arrays.asList(
+    public static ArrayList<Employees> DUMMY_EMPLOYEES = new ArrayList<>(Arrays.asList(
             new Employees(1, "Caroline", "Développeuse",
                     "caroline@lamzone.com"),
             new Employees(2, "Mathieu", "DRH",

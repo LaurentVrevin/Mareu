@@ -3,6 +3,7 @@ package fr.laurentvrevin.mareu.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Employees implements Serializable {
 
@@ -58,5 +59,16 @@ public class Employees implements Serializable {
         return this.getEmail();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employees employees = (Employees) o;
+        return id == employees.id && firstname.equals(employees.firstname) && function.equals(employees.function) && email.equals(employees.email);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstname, function, email);
+    }
 }

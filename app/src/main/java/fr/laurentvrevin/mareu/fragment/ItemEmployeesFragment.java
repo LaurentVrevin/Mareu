@@ -8,16 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import fr.laurentvrevin.mareu.R;
 
 
-
-public class ItemEmployeesFragment extends android.app.DialogFragment {
+public class ItemEmployeesFragment extends DialogFragment {
     private RecyclerView recyclerviewemployees;
 
 
