@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
-public class Meetings {
+public class Meeting {
 
     private String meetingname;
 
@@ -14,7 +14,7 @@ public class Meetings {
 
     private ArrayList<Employees> employeesMails;
 
-    public Meetings(String meetingName, String roomName, Calendar dateMeeting, ArrayList<Employees> employeesMails) {
+    public Meeting(String meetingName, String roomName, Calendar dateMeeting, ArrayList<Employees> employeesMails) {
 
         this.meetingname = meetingName;
         this.roomname = roomName;
@@ -58,7 +58,7 @@ public class Meetings {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Meetings meetings = (Meetings) o;
+        Meeting meetings = (Meeting) o;
         return meetingname.equals(meetings.meetingname) && roomname.equals(meetings.roomname) && dateMeeting.equals(meetings.dateMeeting) && employeesMails.equals(meetings.employeesMails);
     }
 

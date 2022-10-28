@@ -6,36 +6,36 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import fr.laurentvrevin.mareu.model.Meetings;
+import fr.laurentvrevin.mareu.model.Meeting;
 import fr.laurentvrevin.mareu.model.Rooms;
 
 public class DummyMareuApiService implements MareuApiService {
-    private final List<Meetings> mMeetings = new ArrayList<>();
+    private final List<Meeting> mMeetings = new ArrayList<>();
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Meetings> getMeetings() {
+    public List<Meeting> getMeetings() {
         return mMeetings;
     }
 
 
     @Override
-    public void createMeeting(Meetings meeting) {
+    public void createMeeting(Meeting meeting) {
         mMeetings.add(meeting);
 
     }
 
     @Override
-    public void deleteMeeting(Meetings meeting) {
+    public void deleteMeeting(Meeting meeting) {
         mMeetings.remove(meeting);
 
     }
 
     @Override
-    public List<Meetings> getMeetingsByDay(Date date) {
-        List<Meetings> meetingsByDateFiltered = new ArrayList<>();
+    public List<Meeting> getMeetingsByDay(Date date) {
+        List<Meeting> meetingsByDateFiltered = new ArrayList<>();
         Calendar calendar1 = Calendar.getInstance();
         calendar1.setTime(date);
         for (int i = 0; i < mMeetings.size(); i++) {
@@ -51,9 +51,9 @@ public class DummyMareuApiService implements MareuApiService {
     }
 
     @Override
-    public List<Meetings> getMeetingsByRoom(Rooms room) {
-        List<Meetings> meetingsByRoomsFiltered = new ArrayList<>();
-        for (Meetings roomFiltered : mMeetings) {
+    public List<Meeting> getMeetingsByRoom(Rooms room) {
+        List<Meeting> meetingsByRoomsFiltered = new ArrayList<>();
+        for (Meeting roomFiltered : mMeetings) {
             boolean sameRoom = roomFiltered.getRoomname() == room.getName();
             if (sameRoom) meetingsByRoomsFiltered.add(roomFiltered);
         }

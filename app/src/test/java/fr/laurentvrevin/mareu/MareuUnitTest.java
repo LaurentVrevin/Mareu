@@ -11,11 +11,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
 import fr.laurentvrevin.mareu.DI.DI;
-import fr.laurentvrevin.mareu.model.Meetings;
+import fr.laurentvrevin.mareu.model.Meeting;
 import fr.laurentvrevin.mareu.model.Rooms;
 import fr.laurentvrevin.mareu.service.MareuApiService;
 
@@ -28,8 +29,14 @@ import fr.laurentvrevin.mareu.service.MareuApiService;
 public class MareuUnitTest {
 
     private MareuApiService testservice;
-    private ArrayList<Meetings> testMeetingList;
+    private ArrayList<Meeting> testMeetingList;
     private Calendar calendarForTest = Calendar.getInstance();
+
+    private Meeting meeting1;
+    private Meeting meeting2;
+    private Meeting meeting3;
+    private Meeting meeting4;
+
 
 
     @Before
@@ -38,41 +45,30 @@ public class MareuUnitTest {
         calendarForTest.set(2022,10,27,10,30);
     }
 
-    @Test
-    public void test_GetMeetingsWithSuccess(){
-        //on doit vérifier qu'on récupère bien la liste des réunions
-        List<Meetings> meeting = testservice.getMeetings();
-        assertEquals(0, testservice.getMeetings().size());
-        //On donne pour valeur à expectedMeeting, le paramètre DUMMY_MEETING
-        testservice.getMeetings().addAll(DUMMY_MEETING);
-        List<Meetings> expectedMeeting = DUMMY_MEETING;
-        //On check que meeting est bien récupéré dans n'importe quel ordre
-        MatcherAssert.assertThat(meeting, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedMeeting.toArray()));
-    }
+
     @Test
     public void test_CreateMeetingWithSuccess(){
-        //on doit créer une réunion et vérifier si celle-ci est bien créée
-
-        //Affirme qu'il n'y a aucune réunion
         assertEquals(0, testservice.getMeetings().size());
-        //Ajoute la réunion 01 via DUMMY_MEETING
-        Meetings meetingToAdd = DUMMY_MEETING.get(0);
-        testservice.createMeeting(meetingToAdd);
-        //Affirme qu'il y a bien une réunion maintenant qui a été ajoutée
-        assertEquals(1, testservice.getMeetings().size());
-        Meetings meetingCreated = testservice.getMeetings().get(0);
-        //vérifie que meetingToAdd est bien celle de MeetingCreated
-        assertEquals(meetingToAdd, meetingCreated);
+        //On donne pour valeur à expectedMeeting, le paramètre DUMMY_MEETING
+        testservice.createMeeting(meeting1);
+        testservice.createMeeting(meeting2);
+        //bien penser à creer les meeting
+        List<Meeting> expectedMeeting = Arrays.asList(meeting1, meeting2);
+        //On check que meeting est bien récupéré dans n'importe quel ordre
+        MatcherAssert.assertThat(testservice.getMeetings(), IsIterableContainingInAnyOrder.containsInAnyOrder(expectedMeeting.toArray()));
 
     }
 
     @Test
     public void test_GetMeetingsByDayWithSuccess(){
+        //tester sur un jour avec des meeting
+        //tester sur un jour ou pas de meeting
+        //REMPLACER TOUS LES ADDALL
         Calendar calendarForFilter = Calendar.getInstance();
         calendarForFilter.set(2022, 10, 25, 10,30);
         //List<Meetings> meeting = testservice.getMeetings();
         testservice.getMeetings().addAll(DUMMY_MEETING);
-        List<Meetings> meetingFilteredByDate = testservice.getMeetingsByDay(calendarForFilter.getTime());
+        List<Meeting> meetingFilteredByDate = testservice.getMeetingsByDay(calendarForFilter.getTime());
         assertTrue(meetingFilteredByDate.size()==0);
 
     }
@@ -81,16 +77,16 @@ public class MareuUnitTest {
         Rooms roomForFilter = new Rooms("Thousand Sunny");
         //List<Meetings> meeting = testservice.getMeetings();
         testservice.getMeetings().addAll(DUMMY_MEETING);
-        List<Meetings>meetingFilteredByRoom = testservice.getMeetingsByRoom(roomForFilter);
+        List<Meeting>meetingFilteredByRoom = testservice.getMeetingsByRoom(roomForFilter);
         assertTrue(meetingFilteredByRoom.size()==1);
 
     }
     @Test
     public void test_DeleteMeetingWithSuccess(){
-        List<Meetings> meeting = testservice.getMeetings();
-        testservice.getMeetings().addAll(DUMMY_MEETING);
+        List<Meeting> meeting = testservice.getMeetings();
+
         assertEquals(2, testservice.getMeetings().size());
-        Meetings meetingToDelete = testservice.getMeetings().get(0);
+        Meeting meetingToDelete = testservice.getMeetings().get(0);
         testservice.deleteMeeting(meetingToDelete);
         assertFalse(testservice.getMeetings().contains(meetingToDelete));
         assertEquals(1,testservice.getMeetings().size());

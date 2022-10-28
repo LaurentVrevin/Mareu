@@ -30,14 +30,14 @@ import fr.laurentvrevin.mareu.R;
 import fr.laurentvrevin.mareu.adapter.MeetingsRecyclerViewAdapter;
 import fr.laurentvrevin.mareu.events.DeleteMeetingEvent;
 import fr.laurentvrevin.mareu.fragment.RoomFilterDialogFragment;
-import fr.laurentvrevin.mareu.model.Meetings;
+import fr.laurentvrevin.mareu.model.Meeting;
 import fr.laurentvrevin.mareu.model.Rooms;
 import fr.laurentvrevin.mareu.service.MareuApiService;
 
 public class MainActivity extends AppCompatActivity implements RoomFilterDialogFragment.RoomListener {
 
     private final MareuApiService mMareuApiService = DI.getNewInstanceApiService();
-    private final ArrayList<Meetings> mMeetingsArrayList = new ArrayList<>();
+    private final ArrayList<Meeting> mMeetingsArrayList = new ArrayList<>();
     private FloatingActionButton addMeetingButton;
     private RecyclerView meetingRecyclerView;
     private RoomFilterDialogFragment mRoomFilterDF;

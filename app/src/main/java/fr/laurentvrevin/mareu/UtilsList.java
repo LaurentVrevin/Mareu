@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import fr.laurentvrevin.mareu.model.Employees;
 
-public class Utils {
+public class UtilsList {
     static public String listEmployeesToString(ArrayList<Employees> employees){
         StringBuilder employeestostring = new StringBuilder();
         String prefixe = "";

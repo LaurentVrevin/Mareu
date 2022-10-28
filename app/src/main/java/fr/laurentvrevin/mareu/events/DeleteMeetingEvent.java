@@ -1,12 +1,12 @@
 package fr.laurentvrevin.mareu.events;
 
-import fr.laurentvrevin.mareu.model.Meetings;
+import fr.laurentvrevin.mareu.model.Meeting;
 
 public class DeleteMeetingEvent {
 
-    public Meetings meetings;
+    public Meeting meetings;
 
-    public DeleteMeetingEvent(Meetings meeting) {
+    public DeleteMeetingEvent(Meeting meeting) {
         this.meetings = meeting;
     }
 }

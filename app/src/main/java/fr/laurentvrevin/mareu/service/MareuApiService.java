@@ -3,21 +3,21 @@ package fr.laurentvrevin.mareu.service;
 import java.util.Date;
 import java.util.List;
 
-import fr.laurentvrevin.mareu.model.Meetings;
+import fr.laurentvrevin.mareu.model.Meeting;
 import fr.laurentvrevin.mareu.model.Rooms;
 
 public interface MareuApiService {
 
 
-    List<Meetings> getMeetings();
+    List<Meeting> getMeetings();
 
-    void createMeeting(Meetings meeting);
+    void createMeeting(Meeting meeting);
 
-    void deleteMeeting(Meetings meeting);
+    void deleteMeeting(Meeting meeting);
 
-    List<Meetings> getMeetingsByDay(Date date);
+    List<Meeting> getMeetingsByDay(Date date);
 
-    List<Meetings> getMeetingsByRoom(Rooms rooms);
+    List<Meeting> getMeetingsByRoom(Rooms rooms);
 
 
 }

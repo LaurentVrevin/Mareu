@@ -27,17 +27,17 @@ import java.util.Calendar;
 
 import fr.laurentvrevin.mareu.DI.DI;
 import fr.laurentvrevin.mareu.R;
-import fr.laurentvrevin.mareu.Utils;
+import fr.laurentvrevin.mareu.UtilsList;
 import fr.laurentvrevin.mareu.fragment.EmployeesListDialogFragment;
 import fr.laurentvrevin.mareu.model.Employees;
-import fr.laurentvrevin.mareu.model.Meetings;
+import fr.laurentvrevin.mareu.model.Meeting;
 import fr.laurentvrevin.mareu.model.Rooms;
 import fr.laurentvrevin.mareu.service.DummyRoomsGenerator;
 import fr.laurentvrevin.mareu.service.MareuApiService;
 
 
 public class MeetingRoomBookingActivity extends AppCompatActivity implements EmployeesListDialogFragment.Listener {
-    private final ArrayList<Meetings> createMeetingList = new ArrayList<>();
+    private final ArrayList<Meeting> createMeetingList = new ArrayList<>();
     private final MareuApiService mMareuApiService = DI.getMeetingsApiService();
     TextView txt_dateSelected, mButtonDateTimePicker, list_invited;
     TextInputLayout txt_Meeting_Object;
@@ -57,8 +57,8 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         setContentView(R.layout.activity_meeting_room_booking);
 
 
-        mButtonDateTimePicker = findViewById(R.id.tv_datetime_selected);
-        txt_dateSelected = findViewById(R.id.tv_datetime_selected);
+        mButtonDateTimePicker = findViewById(R.id.tv_date_time_toselect);
+        txt_dateSelected = findViewById(R.id.tv_date_time_toselect);
         // txt_timeSeleted = findViewById(R.id.tv_time_selected);
         mRoomToSelectSpinner = findViewById(R.id.spinner_room_toselect);
         //txt_roomSeleted = findViewById(R.id.tv_room_selected);
@@ -70,7 +70,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         //On ouvre le dialog fragment en cliquant sur le button "mbutton_invitation"
         mButtonInvitation.setOnClickListener(v -> {
             mDialogFragment = EmployeesListDialogFragment.createDialogFragment((ArrayList<Employees>) DUMMY_EMPLOYEES, mEmployeesSelected, MeetingRoomBookingActivity.this);
-            mDialogFragment.show(getSupportFragmentManager(), "MyFragment");
+            mDialogFragment.show(getSupportFragmentManager(), "MyRecyclerDialogFragment");
             //passer la liste employeeToCheck ici
             mEmployeesToCheck = new ArrayList<>(DUMMY_EMPLOYEES);
         });
@@ -107,6 +107,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
 
         //ON GERE LE DATE PICKER
         long today = MaterialDatePicker.todayInUtcMilliseconds();
+
         //contrainte du date picker, il doit démarrer à la date du jour
         // et ne doit pas permettre de réserver une date antérieur à celle-ci.
         CalendarConstraints.Builder constraintDateBuilder = new CalendarConstraints.Builder();
@@ -189,7 +190,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
             return;
         }
 
-        mMareuApiService.createMeeting(new Meetings(meetingObject, roomSelected, mStartdate, mEmployeesSelected));
+        mMareuApiService.createMeeting(new Meeting(meetingObject, roomSelected, mStartdate, mEmployeesSelected));
         finish();
     }
 
@@ -198,7 +199,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
 
         mEmployeesSelected = employees;
         //je charge la textview avec la liste des employées sélectionnés
-        list_invited.setText("Voici les salarié(e)s invité(e)s : " + Utils.listEmployeesToString(employees));
+        list_invited.setText("Voici les salarié(e)s invité(e)s : " + UtilsList.listEmployeesToString(employees));
         mDialogFragment.dismiss();
     }
 

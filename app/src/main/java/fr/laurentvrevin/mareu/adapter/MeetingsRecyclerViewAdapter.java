@@ -1,7 +1,6 @@
 package fr.laurentvrevin.mareu.adapter;
 
 import android.annotation.SuppressLint;
-import android.media.metrics.Event;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,29 +19,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.laurentvrevin.mareu.R;
-import fr.laurentvrevin.mareu.Utils;
+import fr.laurentvrevin.mareu.UtilsList;
 
 import fr.laurentvrevin.mareu.events.DeleteMeetingEvent;
-import fr.laurentvrevin.mareu.model.Meetings;
+import fr.laurentvrevin.mareu.model.Meeting;
 import fr.laurentvrevin.mareu.service.MareuApiService;
 
 
 public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRecyclerViewAdapter.ViewHolder> {
-    private final ArrayList<Meetings> mMeetings;
+    private final ArrayList<Meeting> mMeetings;
     private MareuApiService mareuApiService;
 
-    private void deleteMeetingList(Meetings meetings){
+    private void deleteMeetingList(Meeting meetings){
         EventBus.getDefault().post(new DeleteMeetingEvent(meetings));
     }
 
-    public void updateMeetingList(List<Meetings> newMeetingsList){
+    public void updateMeetingList(List<Meeting> newMeetingsList){
         mMeetings.clear();
         mMeetings.addAll(newMeetingsList);
         notifyDataSetChanged();
         Log.d("UPDATE", "updateMeetingList: nouvelle donnee");
     }
 
-    public MeetingsRecyclerViewAdapter(ArrayList<Meetings> meetings) {
+    public MeetingsRecyclerViewAdapter(ArrayList<Meeting> meetings) {
         this.mMeetings = meetings;//REVIEW new ArrayList<>(meetings);
     }
 
@@ -57,12 +56,12 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Meetings meeting = mMeetings.get(position);
+        Meeting meeting = mMeetings.get(position);
         SimpleDateFormat timeMeeting = new SimpleDateFormat("HH:mm");
         holder.mMeetingName.setText(meeting.getMeetingname() + " - ");
         holder.mStarTime.setText(timeMeeting.format(meeting.getDateMeeting().getTime()) + " - ");
         holder.mRoomName.setText(meeting.getRoomname());
-        holder.mUserMail.setText(Utils.listEmployeesToString(meeting.getEmployeesMails()));
+        holder.mUserMail.setText(UtilsList.listEmployeesToString(meeting.getEmployeesMails()));
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
