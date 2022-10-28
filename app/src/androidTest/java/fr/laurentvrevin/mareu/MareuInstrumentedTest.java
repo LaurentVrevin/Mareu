@@ -75,7 +75,7 @@ public class MareuInstrumentedTest {
         onView(ViewMatchers.withId(R.id.test_txt_object)).perform(typeText("Reunion"));
         //Choisis une date et une heure de début
         onView(ViewMatchers.withId(R.id.tv_date_time_toselect)).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2022,10,30));
+        //onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2022,10,30));
         //onView(withId(R.id.ok_button)).perform(click());
         onView(withText("OK")).perform(click());
         onView(withText("OK")).perform(click());
