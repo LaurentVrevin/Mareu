@@ -18,6 +18,7 @@ import java.util.List;
 import fr.laurentvrevin.mareu.DI.DI;
 import fr.laurentvrevin.mareu.model.Meeting;
 import fr.laurentvrevin.mareu.model.Rooms;
+import fr.laurentvrevin.mareu.service.DummyEmployeesGenerator;
 import fr.laurentvrevin.mareu.service.MareuApiService;
 
 /**
@@ -30,19 +31,21 @@ public class MareuUnitTest {
 
     private MareuApiService testservice;
     private ArrayList<Meeting> testMeetingList;
-    private Calendar calendarForTest = Calendar.getInstance();
+    private Calendar calendarForTest01 = Calendar.getInstance();
+    private Calendar calendarForTest02 = Calendar.getInstance();
 
-    private Meeting meeting1;
-    private Meeting meeting2;
-    private Meeting meeting3;
-    private Meeting meeting4;
+    private Meeting meeting1 = new Meeting("#9ABCA4", "reunion 01", "Oro Jakson", calendarForTest01, DummyEmployeesGenerator.DUMMY_EMPLOYEES);
+    private Meeting meeting2 = new Meeting ("#E9D0C6", "reunion 02", "Thousand Sunny", calendarForTest01, DummyEmployeesGenerator.DUMMY_EMPLOYEES);
+    private Meeting meeting3 = new Meeting ("#9ab8bc", "reunion 03", "Moby Dick", calendarForTest02, DummyEmployeesGenerator.DUMMY_EMPLOYEES);
+    private Meeting meeting4 = new Meeting ("#9ab8bc", "reunion 04", "Moby Dick", calendarForTest01, DummyEmployeesGenerator.DUMMY_EMPLOYEES);
 
 
 
     @Before
     public void setup(){
         testservice = DI.getNewInstanceApiService();
-        calendarForTest.set(2022,10,27,10,30);
+        calendarForTest01.set(2022,10,27,10,30);
+        calendarForTest01.set(2022,11,01,14,00);
     }
 
 
@@ -67,14 +70,15 @@ public class MareuUnitTest {
         Calendar calendarForFilter = Calendar.getInstance();
         calendarForFilter.set(2022, 10, 25, 10,30);
         //List<Meetings> meeting = testservice.getMeetings();
-        testservice.getMeetings().addAll(DUMMY_MEETING);
+        testservice.getMeetings().add(meeting1);
+        testservice.getMeetings().add(meeting3);
         List<Meeting> meetingFilteredByDate = testservice.getMeetingsByDay(calendarForFilter.getTime());
         assertTrue(meetingFilteredByDate.size()==0);
 
     }
     @Test
     public void test_GetMeetingsByRoomWithSuccess(){
-        Rooms roomForFilter = new Rooms("Thousand Sunny");
+        Rooms roomForFilter = new Rooms("Thousand Sunny", "#E9D0C6");
         //List<Meetings> meeting = testservice.getMeetings();
         testservice.getMeetings().addAll(DUMMY_MEETING);
         List<Meeting>meetingFilteredByRoom = testservice.getMeetingsByRoom(roomForFilter);

@@ -1,11 +1,14 @@
 package fr.laurentvrevin.mareu.adapter;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,7 +25,9 @@ import fr.laurentvrevin.mareu.R;
 import fr.laurentvrevin.mareu.UtilsList;
 
 import fr.laurentvrevin.mareu.events.DeleteMeetingEvent;
+import fr.laurentvrevin.mareu.fragment.RoomFilterDialogFragment;
 import fr.laurentvrevin.mareu.model.Meeting;
+import fr.laurentvrevin.mareu.model.Rooms;
 import fr.laurentvrevin.mareu.service.MareuApiService;
 
 
@@ -58,17 +63,15 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Meeting meeting = mMeetings.get(position);
         SimpleDateFormat timeMeeting = new SimpleDateFormat("HH:mm");
-        holder.mMeetingName.setText(meeting.getMeetingname() + " - ");
-        holder.mStarTime.setText(timeMeeting.format(meeting.getDateMeeting().getTime()) + " - ");
+        holder.avatarColor.setColorFilter(Color.parseColor(meeting.getRoomColor()));
+        holder.mMeetingName.setText(meeting.getMeetingname() + "- ");
+        holder.mStarTime.setText(timeMeeting.format(meeting.getDateMeeting().getTime()) + "- ");
         holder.mRoomName.setText(meeting.getRoomname());
         holder.mUserMail.setText(UtilsList.listEmployeesToString(meeting.getEmployeesMails()));
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mMeetings.remove((position));
                 EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
-                //deleteMeetingList(meeting);
-                Log.d("GARBAGE", "onClick: delete from garbage");
             }
         });
     }
@@ -81,12 +84,13 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView mMeetingName, mStarTime, mRoomName, mUserMail;
+        public final ImageView avatarColor;
         public final ImageButton mDeleteButton;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            avatarColor= itemView.findViewById(R.id.item_list_meeting_avatar);
             mMeetingName = itemView.findViewById(R.id.item_list_meeting_meetingname);
             mStarTime = itemView.findViewById(R.id.item_list_meeting_startime);
             mRoomName = itemView.findViewById(R.id.item_list_meeting_roomname);

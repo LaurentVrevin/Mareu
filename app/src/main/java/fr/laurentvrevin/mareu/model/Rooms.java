@@ -1,13 +1,18 @@
 package fr.laurentvrevin.mareu.model;
 
+import android.graphics.Color;
+
 import androidx.annotation.NonNull;
 
 public class Rooms {
 
     private String name;
+    private String avatarColor;
 
-    public Rooms(String name){
+    public Rooms(String name, String avatarColor){
+
         this.name = name;
+        this.avatarColor = avatarColor;
     }
 
 
@@ -17,6 +22,14 @@ public class Rooms {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAvatarColor() {
+        return avatarColor;
+    }
+
+    public void setAvatarColor(String avatarColor) {
+        this.avatarColor = avatarColor;
     }
 
     @Override

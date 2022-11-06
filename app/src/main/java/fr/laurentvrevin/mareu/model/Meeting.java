@@ -13,9 +13,10 @@ public class Meeting {
     private Calendar dateMeeting;
 
     private ArrayList<Employees> employeesMails;
+    private String roomColor;
 
-    public Meeting(String meetingName, String roomName, Calendar dateMeeting, ArrayList<Employees> employeesMails) {
-
+    public Meeting(String meetingColor, String meetingName, String roomName, Calendar dateMeeting, ArrayList<Employees> employeesMails) {
+        this.roomColor = meetingColor;
         this.meetingname = meetingName;
         this.roomname = roomName;
         this.dateMeeting = dateMeeting;
@@ -52,6 +53,14 @@ public class Meeting {
 
     public void setEmployeesMails(ArrayList<Employees> employeesMails) {
         this.employeesMails = employeesMails;
+    }
+
+    public String getRoomColor() {
+        return roomColor;
+    }
+
+    public void setRoomColor(String roomColor) {
+        this.roomColor = roomColor;
     }
 
     @Override

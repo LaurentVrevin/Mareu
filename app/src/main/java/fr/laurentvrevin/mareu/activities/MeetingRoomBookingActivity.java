@@ -2,17 +2,22 @@ package fr.laurentvrevin.mareu.activities;
 
 import static fr.laurentvrevin.mareu.service.DummyEmployeesGenerator.DUMMY_EMPLOYEES;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.datepicker.CalendarConstraints;
@@ -41,7 +46,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
     private final MareuApiService mMareuApiService = DI.getMeetingsApiService();
     TextView txt_dateSelected, mButtonDateTimePicker, list_invited;
     TextInputLayout txt_Meeting_Object;
-    String meetingObject, roomSelected, listInvited;
+    String meetingObject, roomSelected, listInvited, colorSelected;
     private Button mButtonInvitation, mButtonSaveMeeting;
     private Spinner mRoomToSelectSpinner;
     private ArrayList<Employees> mEmployeesToCheck;
@@ -49,7 +54,9 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
     private EmployeesListDialogFragment mDialogFragment;
     private Calendar mStartdate;
     private Calendar mEndDate;
+    int yearSelected, monthSelected, daySelected;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +109,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
                 Rooms rooms = (Rooms) adapter.getItem(position);
                 //on met dans la textview via la variable roomSelected la salle  choisie
                 roomSelected = rooms.getName();
+                colorSelected = rooms.getAvatarColor();
             }
         });
 
@@ -126,6 +134,13 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         //ON GERE LE TIME PICKER
         //on commence le time Picker à l'heure du jour
         Calendar calendar = Calendar.getInstance();
+
+        calendar.add(Calendar.DATE, 0);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this);
+        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+        this.yearSelected = calendar.get(Calendar.YEAR);
+        this.monthSelected = calendar.get(Calendar.MONTH);
+        this.daySelected = calendar.get(Calendar.DAY_OF_MONTH);
         int thour = calendar.get(Calendar.HOUR_OF_DAY);
         int tminute = calendar.get(Calendar.MINUTE);
 
@@ -143,23 +158,39 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
         mButtonDateTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER");
+                datePickerDialog.show();
+                //materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER");
             }
         });
-
-        //Quand je valide la date choisie, ouvre le timePicker via materialTimePicker
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, thour, tminute, true);
-
-        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+        DatePickerDialog.OnDateSetListener onDateSetListener= new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onPositiveButtonClick(Object selection) {
-                mStartdate = Calendar.getInstance();
-                mStartdate.setTimeInMillis((Long) selection);
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
+            }
+        };
+        datePickerDialog.setButton(DatePickerDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mStartdate = Calendar.getInstance();
                 timePickerDialog.setTitle("Sélectionne l'heure de début");
                 timePickerDialog.show();
             }
         });
+
+
+        //Quand je valide la date choisie, ouvre le timePicker via materialTimePicker
+
+
+       /* materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+            @Override
+            public void onPositiveButtonClick(Object selection) {
+                mStartdate = Calendar.getInstance();
+                mStartdate.setTimeInMillis((Long) selection);
+                timePickerDialog.setTitle("Sélectionne l'heure de début");
+                timePickerDialog.show();
+            }
+        });*/
 
         mButtonSaveMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,7 +221,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
             return;
         }
 
-        mMareuApiService.createMeeting(new Meeting(meetingObject, roomSelected, mStartdate, mEmployeesSelected));
+        mMareuApiService.createMeeting(new Meeting(colorSelected ,meetingObject, roomSelected, mStartdate, mEmployeesSelected));
         finish();
     }
 

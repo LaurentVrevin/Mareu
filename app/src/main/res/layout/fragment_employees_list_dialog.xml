@@ -12,13 +12,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_employees"
-        android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_width="196dp"
+        android:layout_height="597dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/fragment_employees_item"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="6dp"
+        tools:listitem="@layout/fragment_employees_item" />
 
     <Button
         android:id="@+id/ok_button"
