@@ -7,10 +7,14 @@ import java.util.Date;
 import java.util.List;
 
 import fr.laurentvrevin.mareu.model.Meeting;
-import fr.laurentvrevin.mareu.model.Rooms;
+import fr.laurentvrevin.mareu.model.Room;
 
 public class DummyMareuApiService implements MareuApiService {
-    private final List<Meeting> mMeetings = new ArrayList<>();
+    private  final List<Meeting> mMeetings = new ArrayList<>();
+
+    public DummyMareuApiService() {
+        mMeetings.addAll(DummyMeetingListGenerator.generateMeeting()) ;
+    }
 
     /**
      * {@inheritDoc}
@@ -51,7 +55,7 @@ public class DummyMareuApiService implements MareuApiService {
     }
 
     @Override
-    public List<Meeting> getMeetingsByRoom(Rooms room) {
+    public List<Meeting> getMeetingsByRoom(Room room) {
         List<Meeting> meetingsByRoomsFiltered = new ArrayList<>();
         for (Meeting roomFiltered : mMeetings) {
             boolean sameRoom = roomFiltered.getRoomname() == room.getName();

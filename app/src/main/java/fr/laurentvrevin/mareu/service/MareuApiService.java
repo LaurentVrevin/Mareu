@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import fr.laurentvrevin.mareu.model.Meeting;
-import fr.laurentvrevin.mareu.model.Rooms;
+import fr.laurentvrevin.mareu.model.Room;
 
 public interface MareuApiService {
 
@@ -17,7 +17,7 @@ public interface MareuApiService {
 
     List<Meeting> getMeetingsByDay(Date date);
 
-    List<Meeting> getMeetingsByRoom(Rooms rooms);
+    List<Meeting> getMeetingsByRoom(Room rooms);
 
 
 }

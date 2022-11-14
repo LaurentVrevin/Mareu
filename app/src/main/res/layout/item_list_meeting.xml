@@ -21,52 +21,71 @@
 
     <TextView
         android:id="@+id/item_list_meeting_meetingname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_width="80dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="20dp"
         android:text="Réunion A"
         android:textColor="@color/black"
         android:textSize="16dp"
         android:textStyle="bold"
-
+        android:ellipsize="end"
         app:layout_constraintStart_toEndOf="@+id/item_list_meeting_avatar"
         app:layout_constraintTop_toTopOf="@+id/item_list_meeting_avatar" />
+
     <TextView
-        android:id="@+id/item_list_meeting_startime"
+        android:id="@+id/line1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="14h00"
+        android:layout_height="20dp"
+        android:text=" - "
         android:textStyle="bold"
         android:textSize="16dp"
-        android:textColor="@color/black"
-
         app:layout_constraintStart_toEndOf="@+id/item_list_meeting_meetingname"
         app:layout_constraintTop_toTopOf="@+id/item_list_meeting_avatar"
         />
 
     <TextView
-        android:id="@+id/item_list_meeting_roomname"
+        android:id="@+id/item_list_meeting_startime"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="Nom de la salle"
+        android:layout_height="20dp"
+        android:text="14h00"
+        android:textStyle="bold"
         android:textSize="16dp"
         android:textColor="@color/black"
-
+        app:layout_constraintStart_toEndOf="@+id/line1"
+        app:layout_constraintTop_toTopOf="@+id/item_list_meeting_avatar"
+        />
+    <TextView
+        android:id="@+id/line2"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text=" - "
         android:textStyle="bold"
+        android:textSize="16dp"
         app:layout_constraintStart_toEndOf="@+id/item_list_meeting_startime"
+        app:layout_constraintTop_toTopOf="@+id/item_list_meeting_avatar"
+        />
+
+    <TextView
+        android:id="@+id/item_list_meeting_roomname"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
+        android:text="Nom de la salle"
+        android:textSize="16dp"
+        android:ellipsize="end"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/line2"
         app:layout_constraintTop_toTopOf="@+id/item_list_meeting_avatar" />
 
     <TextView
         android:id="@+id/item_list_meeting_useremail"
-        android:layout_width="255dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="24dp"
+        android:layout_width="250dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
+        android:ellipsize="end"
         android:maxLines="1"
         android:text="qui@lamzone.com?"
-        android:textStyle=""
         app:layout_constraintBottom_toBottomOf="@+id/item_list_meeting_avatar"
         app:layout_constraintStart_toEndOf="@+id/item_list_meeting_avatar"
         app:layout_constraintTop_toBottomOf="@+id/item_list_meeting_meetingname" />
@@ -76,10 +95,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@null"
         app:layout_constraintBottom_toBottomOf="@+id/item_list_meeting_avatar"
+        app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/item_list_meeting_roomname"
         app:layout_constraintTop_toTopOf="@+id/item_list_meeting_avatar"
         app:srcCompat="@drawable/ic_baseline_delete_24" />
 

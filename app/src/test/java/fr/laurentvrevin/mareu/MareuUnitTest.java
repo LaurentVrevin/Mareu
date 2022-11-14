@@ -3,7 +3,6 @@ package fr.laurentvrevin.mareu;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static fr.laurentvrevin.mareu.service.MeetingListGenerator.DUMMY_MEETING;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
@@ -17,7 +16,7 @@ import java.util.List;
 
 import fr.laurentvrevin.mareu.DI.DI;
 import fr.laurentvrevin.mareu.model.Meeting;
-import fr.laurentvrevin.mareu.model.Rooms;
+import fr.laurentvrevin.mareu.model.Room;
 import fr.laurentvrevin.mareu.service.DummyEmployeesGenerator;
 import fr.laurentvrevin.mareu.service.MareuApiService;
 
@@ -75,7 +74,7 @@ public class MareuUnitTest {
     }
     @Test
     public void test_GetMeetingsByRoomWithSuccess(){
-        Rooms roomForFilter = new Rooms("Thousand Sunny", "#E9D0C6");
+        Room roomForFilter = new Room("Thousand Sunny", "#E9D0C6");
         //List<Meetings> meeting = testservice.getMeetings();
         testservice.getMeetings().add(meeting2);
         testservice.getMeetings().add(meeting4);

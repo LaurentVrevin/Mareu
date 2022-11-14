@@ -2,7 +2,7 @@ package fr.laurentvrevin.mareu.adapter;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.icu.text.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,9 +25,7 @@ import fr.laurentvrevin.mareu.R;
 import fr.laurentvrevin.mareu.UtilsList;
 
 import fr.laurentvrevin.mareu.events.DeleteMeetingEvent;
-import fr.laurentvrevin.mareu.fragment.RoomFilterDialogFragment;
 import fr.laurentvrevin.mareu.model.Meeting;
-import fr.laurentvrevin.mareu.model.Rooms;
 import fr.laurentvrevin.mareu.service.MareuApiService;
 
 
@@ -43,7 +41,7 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
         mMeetings.clear();
         mMeetings.addAll(newMeetingsList);
         notifyDataSetChanged();
-        Log.d("UPDATE", "updateMeetingList: nouvelle donnee");
+
     }
 
     public MeetingsRecyclerViewAdapter(ArrayList<Meeting> meetings) {
@@ -64,8 +62,8 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
         Meeting meeting = mMeetings.get(position);
         SimpleDateFormat timeMeeting = new SimpleDateFormat("HH:mm");
         holder.avatarColor.setColorFilter(Color.parseColor(meeting.getRoomColor()));
-        holder.mMeetingName.setText(meeting.getMeetingname() + "- ");
-        holder.mStarTime.setText(timeMeeting.format(meeting.getDateMeeting().getTime()) + "- ");
+        holder.mMeetingName.setText(meeting.getMeetingname());
+        holder.mStarTime.setText(timeMeeting.format(meeting.getDateMeeting().getTime()).replace(":", "h"));
         holder.mRoomName.setText(meeting.getRoomname());
         holder.mUserMail.setText(UtilsList.listEmployeesToString(meeting.getEmployeesMails()));
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {

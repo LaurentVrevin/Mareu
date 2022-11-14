@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +28,7 @@ public class EmployeesListDialogFragment extends DialogFragment {
     private static final String EMPLOYEES_CHECKED_LIST = "checked_employees";
     private static final String LISTENER = "listener";
     private Listener mListener;
+    private Button buttonOK, buttonCancel;
     private EmployeesRecyclerViewAdapter mEmployeesAdapter;
     private RecyclerView mRecyclerView;
     private MareuApiService mMareuApiService;
@@ -57,6 +59,8 @@ public class EmployeesListDialogFragment extends DialogFragment {
         ArrayList<Employees> employeesChecked = (ArrayList<Employees>) getArguments().getSerializable(EMPLOYEES_CHECKED_LIST);
         //adapter = nouvel adapter de recyclerview comprenant les employes cochés et non cochés
         mRecyclerView = view.findViewById(R.id.recycler_view_employees);
+        buttonOK = view.findViewById(R.id.ok_button);
+        buttonCancel = view.findViewById(R.id.cancel_button);
         mEmployeesAdapter = new EmployeesRecyclerViewAdapter(employees, employeesChecked);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -68,7 +72,7 @@ public class EmployeesListDialogFragment extends DialogFragment {
         mRecyclerView = view.findViewById(R.id.recycler_view_employees);
 
         //On gère le bouton OK qui écoute les éléments de liste sélectionnées
-        view.findViewById(R.id.ok_button).setOnClickListener(new View.OnClickListener() {
+        buttonOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.onEmployeesSelected(mEmployeesAdapter.mEmployeesChecked);
@@ -76,7 +80,7 @@ public class EmployeesListDialogFragment extends DialogFragment {
             }});
 
         //On gère le bouton Cancel pour annuler
-        view.findViewById(R.id.cancel_button).setOnClickListener(v -> dismiss());
+        buttonCancel.setOnClickListener(v -> dismiss());
         return view;
     }
 

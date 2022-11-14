@@ -4,12 +4,12 @@ import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 
-public class Rooms {
+public class Room {
 
     private String name;
     private String avatarColor;
 
-    public Rooms(String name, String avatarColor){
+    public Room(String name, String avatarColor){
 
         this.name = name;
         this.avatarColor = avatarColor;

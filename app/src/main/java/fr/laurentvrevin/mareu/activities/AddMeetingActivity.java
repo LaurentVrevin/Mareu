@@ -12,7 +12,6 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,10 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.datepicker.CalendarConstraints;
-import com.google.android.material.datepicker.DateValidatorPointForward;
-import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
@@ -36,12 +31,12 @@ import fr.laurentvrevin.mareu.UtilsList;
 import fr.laurentvrevin.mareu.fragment.EmployeesListDialogFragment;
 import fr.laurentvrevin.mareu.model.Employees;
 import fr.laurentvrevin.mareu.model.Meeting;
-import fr.laurentvrevin.mareu.model.Rooms;
-import fr.laurentvrevin.mareu.service.DummyRoomsGenerator;
+import fr.laurentvrevin.mareu.model.Room;
+import fr.laurentvrevin.mareu.service.DummyRoomGenerator;
 import fr.laurentvrevin.mareu.service.MareuApiService;
 
 
-public class MeetingRoomBookingActivity extends AppCompatActivity implements EmployeesListDialogFragment.Listener {
+public class AddMeetingActivity extends AppCompatActivity implements EmployeesListDialogFragment.Listener {
     private final ArrayList<Meeting> createMeetingList = new ArrayList<>();
     private final MareuApiService mMareuApiService = DI.getMeetingsApiService();
     TextView txt_dateSelected, mButtonDateTimePicker, list_invited;
@@ -61,7 +56,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_meeting_room_booking);
+        setContentView(R.layout.activity_meeting_add);
 
 
         mButtonDateTimePicker = findViewById(R.id.tv_date_time_toselect);
@@ -76,7 +71,7 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
 
         //On ouvre le dialog fragment en cliquant sur le button "mbutton_invitation"
         mButtonInvitation.setOnClickListener(v -> {
-            mDialogFragment = EmployeesListDialogFragment.createDialogFragment((ArrayList<Employees>) DUMMY_EMPLOYEES, mEmployeesSelected, MeetingRoomBookingActivity.this);
+            mDialogFragment = EmployeesListDialogFragment.createDialogFragment((ArrayList<Employees>) DUMMY_EMPLOYEES, mEmployeesSelected, AddMeetingActivity.this);
             mDialogFragment.show(getSupportFragmentManager(), "MyRecyclerDialogFragment");
             //passer la liste employeeToCheck ici
             mEmployeesToCheck = new ArrayList<>(DUMMY_EMPLOYEES);
@@ -84,9 +79,9 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
 
         //ON GERE LE SPINNER DES SALLES DE REUNION
         //rooms = les salles étant dans getRooms
-        Rooms[] rooms = DummyRoomsGenerator.getRooms();
+        Room[] rooms = DummyRoomGenerator.getRooms();
         //On crée l'adapter de type Rooms dans un nouvel adapter
-        ArrayAdapter<Rooms> adapter = new ArrayAdapter<Rooms>
+        ArrayAdapter<Room> adapter = new ArrayAdapter<Room>
                 (this, com.google.android.material.R.layout.support_simple_spinner_dropdown_item, rooms);
         //On charge l'adapter dans le spinner
         this.mRoomToSelectSpinner.setAdapter(adapter);
@@ -106,35 +101,16 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
             //gestionnaire de l'item sélectionné, on récupère l'item selon sa position, servira pour plus tard avec rooms
             private void onItemSelectedHandler(AdapterView<?> parent, View view, int position, long id) {
                 Adapter adapter = parent.getAdapter();
-                Rooms rooms = (Rooms) adapter.getItem(position);
+                Room rooms = (Room) adapter.getItem(position);
                 //on met dans la textview via la variable roomSelected la salle  choisie
                 roomSelected = rooms.getName();
                 colorSelected = rooms.getAvatarColor();
             }
         });
 
-        //ON GERE LE DATE PICKER
-        long today = MaterialDatePicker.todayInUtcMilliseconds();
-
-        //contrainte du date picker, il doit démarrer à la date du jour
-        // et ne doit pas permettre de réserver une date antérieur à celle-ci.
-        CalendarConstraints.Builder constraintDateBuilder = new CalendarConstraints.Builder();
-        constraintDateBuilder.setStart(today);
-        constraintDateBuilder.setValidator(DateValidatorPointForward.now());
-        //Material Date Picker
-        MaterialDatePicker.Builder<Long> dateBuilder = MaterialDatePicker.Builder.datePicker();
-        dateBuilder.setTitleText("SELECTIONNE UNE DATE");
-        //charge pour date sélectionnée, la date du jour
-        dateBuilder.setSelection(today);
-        //Je lui rappelle qu'il a pour contrainte d'être à aujourd'hui
-        // et de ne pas pouvoir sélectionner de date antérieur à celle du jour
-        dateBuilder.setCalendarConstraints(constraintDateBuilder.build());
-        final MaterialDatePicker<Long> materialDatePicker = dateBuilder.build();
-
         //ON GERE LE TIME PICKER
         //on commence le time Picker à l'heure du jour
         Calendar calendar = Calendar.getInstance();
-
         calendar.add(Calendar.DATE, 0);
         DatePickerDialog datePickerDialog = new DatePickerDialog(this);
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
@@ -163,11 +139,8 @@ public class MeetingRoomBookingActivity extends AppCompatActivity implements Emp
             }
         });
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, thour, tminute, true);
-        DatePickerDialog.OnDateSetListener onDateSetListener= new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        DatePickerDialog.OnDateSetListener onDateSetListener= (view, year, month, dayOfMonth) -> {
 
-            }
         };
         datePickerDialog.setButton(DatePickerDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             @Override
