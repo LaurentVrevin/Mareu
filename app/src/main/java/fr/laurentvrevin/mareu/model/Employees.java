@@ -2,7 +2,6 @@ package fr.laurentvrevin.mareu.model;
 
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class Employees implements Serializable {
@@ -54,8 +53,9 @@ public class Employees implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         return this.getEmail();
     }
 

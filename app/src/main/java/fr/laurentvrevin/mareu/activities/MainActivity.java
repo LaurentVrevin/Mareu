@@ -37,12 +37,12 @@ import fr.laurentvrevin.mareu.service.MareuApiService;
 public class MainActivity extends AppCompatActivity implements RoomFilterDialogFragment.RoomListener {
 
     private final MareuApiService mMareuApiService = DI.getNewInstanceApiService();
-    private final ArrayList<Meeting> mMeetingsArrayList= new ArrayList<>();
+    private final ArrayList<Meeting> mMeetingsArrayList = new ArrayList<>();
+    private final MeetingsRecyclerViewAdapter meetingsRecyclerViewAdapter = new MeetingsRecyclerViewAdapter(mMeetingsArrayList);
     private FloatingActionButton addMeetingButton;
     private RecyclerView meetingRecyclerView;
     private RoomFilterDialogFragment mRoomFilterDF;
     private List<Room> mRoomsList;
-    private final MeetingsRecyclerViewAdapter meetingsRecyclerViewAdapter = new MeetingsRecyclerViewAdapter(mMeetingsArrayList);
 
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

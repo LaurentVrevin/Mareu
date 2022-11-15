@@ -2,8 +2,6 @@ package fr.laurentvrevin.mareu.adapter;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.icu.text.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
@@ -23,7 +20,6 @@ import java.util.List;
 
 import fr.laurentvrevin.mareu.R;
 import fr.laurentvrevin.mareu.UtilsList;
-
 import fr.laurentvrevin.mareu.events.DeleteMeetingEvent;
 import fr.laurentvrevin.mareu.model.Meeting;
 import fr.laurentvrevin.mareu.service.MareuApiService;
@@ -33,19 +29,19 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
     private final ArrayList<Meeting> mMeetings;
     private MareuApiService mareuApiService;
 
-    private void deleteMeetingList(Meeting meetings){
+    public MeetingsRecyclerViewAdapter(ArrayList<Meeting> meetings) {
+        this.mMeetings = meetings;
+    }
+
+    private void deleteMeetingList(Meeting meetings) {
         EventBus.getDefault().post(new DeleteMeetingEvent(meetings));
     }
 
-    public void updateMeetingList(List<Meeting> newMeetingsList){
+    public void updateMeetingList(List<Meeting> newMeetingsList) {
         mMeetings.clear();
         mMeetings.addAll(newMeetingsList);
         notifyDataSetChanged();
 
-    }
-
-    public MeetingsRecyclerViewAdapter(ArrayList<Meeting> meetings) {
-        this.mMeetings = meetings;//REVIEW new ArrayList<>(meetings);
     }
 
     @NonNull
@@ -88,7 +84,7 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            avatarColor= itemView.findViewById(R.id.item_list_meeting_avatar);
+            avatarColor = itemView.findViewById(R.id.item_list_meeting_avatar);
             mMeetingName = itemView.findViewById(R.id.item_list_meeting_meetingname);
             mStarTime = itemView.findViewById(R.id.item_list_meeting_startime);
             mRoomName = itemView.findViewById(R.id.item_list_meeting_roomname);

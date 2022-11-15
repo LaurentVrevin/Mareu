@@ -1,15 +1,11 @@
 package fr.laurentvrevin.mareu.model;
 
-import android.graphics.Color;
-
-import androidx.annotation.NonNull;
-
 public class Room {
 
     private String name;
     private String avatarColor;
 
-    public Room(String name, String avatarColor){
+    public Room(String name, String avatarColor) {
 
         this.name = name;
         this.avatarColor = avatarColor;
@@ -33,7 +29,7 @@ public class Room {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.getName();
     }
 }

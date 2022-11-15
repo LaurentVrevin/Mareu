@@ -42,6 +42,7 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
     TextView txt_dateSelected, mButtonDateTimePicker, list_invited;
     TextInputLayout txt_Meeting_Object;
     String meetingObject, roomSelected, listInvited, colorSelected;
+    int yearSelected, monthSelected, daySelected;
     private Button mButtonInvitation, mButtonSaveMeeting;
     private Spinner mRoomToSelectSpinner;
     private ArrayList<Employees> mEmployeesToCheck;
@@ -49,7 +50,6 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
     private EmployeesListDialogFragment mDialogFragment;
     private Calendar mStartdate;
     private Calendar mEndDate;
-    int yearSelected, monthSelected, daySelected;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -71,7 +71,7 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
 
         //On ouvre le dialog fragment en cliquant sur le button "mbutton_invitation"
         mButtonInvitation.setOnClickListener(v -> {
-            mDialogFragment = EmployeesListDialogFragment.createDialogFragment((ArrayList<Employees>) DUMMY_EMPLOYEES, mEmployeesSelected, AddMeetingActivity.this);
+            mDialogFragment = EmployeesListDialogFragment.createDialogFragment(DUMMY_EMPLOYEES, mEmployeesSelected, AddMeetingActivity.this);
             mDialogFragment.show(getSupportFragmentManager(), "MyRecyclerDialogFragment");
             //passer la liste employeeToCheck ici
             mEmployeesToCheck = new ArrayList<>(DUMMY_EMPLOYEES);
@@ -135,11 +135,11 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
             @Override
             public void onClick(View v) {
                 datePickerDialog.show();
-                //materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER");
+
             }
         });
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, thour, tminute, true);
-        DatePickerDialog.OnDateSetListener onDateSetListener= (view, year, month, dayOfMonth) -> {
+        DatePickerDialog.OnDateSetListener onDateSetListener = (view, year, month, dayOfMonth) -> {
 
         };
         datePickerDialog.setButton(DatePickerDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
@@ -150,20 +150,6 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
                 timePickerDialog.show();
             }
         });
-
-
-        //Quand je valide la date choisie, ouvre le timePicker via materialTimePicker
-
-
-       /* materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
-            @Override
-            public void onPositiveButtonClick(Object selection) {
-                mStartdate = Calendar.getInstance();
-                mStartdate.setTimeInMillis((Long) selection);
-                timePickerDialog.setTitle("Sélectionne l'heure de début");
-                timePickerDialog.show();
-            }
-        });*/
 
         mButtonSaveMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,11 +162,9 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
     }
 
     private void onSubmit() {
-
         meetingObject = txt_Meeting_Object.getEditText().getText().toString();
         listInvited = list_invited.getText().toString();
 
-        //
         if (meetingObject.isEmpty()) {
             txt_Meeting_Object.setError("Merci de saisir un objet de réunion");
             return;
@@ -193,19 +177,15 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
             Toast.makeText(this, "La liste des invités est vide", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        mMareuApiService.createMeeting(new Meeting(colorSelected ,meetingObject, roomSelected, mStartdate, mEmployeesSelected));
+        mMareuApiService.createMeeting(new Meeting(colorSelected, meetingObject, roomSelected, mStartdate, mEmployeesSelected));
         finish();
     }
 
     @Override
     public void onEmployeesSelected(ArrayList<Employees> employees) {
-
         mEmployeesSelected = employees;
         //je charge la textview avec la liste des employées sélectionnés
         list_invited.setText("Voici les salarié(e)s invité(e)s : " + UtilsList.listEmployeesToString(employees));
         mDialogFragment.dismiss();
     }
-
-
 }

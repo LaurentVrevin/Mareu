@@ -10,10 +10,10 @@ import fr.laurentvrevin.mareu.model.Meeting;
 import fr.laurentvrevin.mareu.model.Room;
 
 public class DummyMareuApiService implements MareuApiService {
-    private  final List<Meeting> mMeetings = new ArrayList<>();
+    private final List<Meeting> mMeetings = new ArrayList<>();
 
     public DummyMareuApiService() {
-        mMeetings.addAll(DummyMeetingListGenerator.generateMeeting()) ;
+        mMeetings.addAll(DummyMeetingListGenerator.generateMeeting());
     }
 
     /**
@@ -50,8 +50,6 @@ public class DummyMareuApiService implements MareuApiService {
             if (sameDay) meetingsByDateFiltered.add(mMeetings.get(i));
         }
         return meetingsByDateFiltered;
-
-
     }
 
     @Override
@@ -63,7 +61,5 @@ public class DummyMareuApiService implements MareuApiService {
         }
         return meetingsByRoomsFiltered;
     }
-
-
 }
 

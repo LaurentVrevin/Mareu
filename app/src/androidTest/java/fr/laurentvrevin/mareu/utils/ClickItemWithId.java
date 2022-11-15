@@ -1,7 +1,6 @@
 package fr.laurentvrevin.mareu.utils;
 
 
-import android.util.Log;
 import android.view.View;
 
 import androidx.test.espresso.UiController;

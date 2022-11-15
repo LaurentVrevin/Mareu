@@ -24,21 +24,15 @@ import fr.laurentvrevin.mareu.service.DummyRoomGenerator;
 
 public class RoomFilterDialogFragment extends DialogFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "roomsList";
     private static RoomListener mRoomListener;
 
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
-    private String mParam2;
+    //private String mParam2;
     private Spinner roomsSpinner;
     private List<Room> roomsList;
     private Button buttonOkRoomFilter;
-
-
-    // TODO: Rename and change types and number of parameters
-
 
     public static RoomFilterDialogFragment createDialogFragment(List<Room> roomsList, RoomListener roomListener) {
         mRoomListener = roomListener;
@@ -50,13 +44,12 @@ public class RoomFilterDialogFragment extends DialogFragment {
         return fragment;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            //mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -69,7 +62,6 @@ public class RoomFilterDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_room_filter_dialog, container, false);
         roomsSpinner = view.findViewById(spinner_room_filter);
         buttonOkRoomFilter = view.findViewById(R.id.button_OK_RoomFilter);
-
 
         //ON GERE LE SPINNER DES SALLES DE REUNION
         //rooms = les salles étant dans getRooms

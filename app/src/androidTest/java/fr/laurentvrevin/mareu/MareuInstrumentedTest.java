@@ -1,40 +1,26 @@
 package fr.laurentvrevin.mareu;
 
 
-
-
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-
-import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.anything;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-
 import static fr.laurentvrevin.mareu.utils.RecyclerViewItemCountAssertion.withItemCount;
 
 import android.widget.DatePicker;
-import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import androidx.test.espresso.contrib.PickerActions;
-
 import androidx.test.espresso.contrib.RecyclerViewActions;
-import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
@@ -45,8 +31,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import fr.laurentvrevin.mareu.activities.MainActivity;
 import fr.laurentvrevin.mareu.activities.AddMeetingActivity;
+import fr.laurentvrevin.mareu.activities.MainActivity;
 import fr.laurentvrevin.mareu.utils.ClickItemWithId;
 import fr.laurentvrevin.mareu.utils.DeleteViewAction;
 
@@ -58,31 +44,24 @@ import fr.laurentvrevin.mareu.utils.DeleteViewAction;
 @RunWith(AndroidJUnit4.class)
 public class MareuInstrumentedTest {
 
-    private MainActivity mMainActivity;
-    int ITEM_COUNT;
-
     @Rule
     public ActivityTestRule mainActivityActivityTestRule =
             new ActivityTestRule(MainActivity.class);
+    int ITEM_COUNT;
+    private MainActivity mMainActivity;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         mMainActivity = (MainActivity) mainActivityActivityTestRule.getActivity();
         assertThat(mMainActivity, notNullValue());
-        ITEM_COUNT = 2 ;
+        ITEM_COUNT = 2;
 
     }
 
-    @Test
-    public void open_MeetingRoomBookingActivity(){
 
-        onView(ViewMatchers.withId(R.id.activity_list_Meeting_Add_Fab)).perform(click());
-        intended(hasComponent(AddMeetingActivity.class.getName()));
-
-    }
 
     @Test
-    public void create_MeetingWithAllControls(){
+    public void create_Meeting_With_Success() {
 
         //OUVRIR L'ACTIVITE DE CREATION DE REUNION
         onView(ViewMatchers.withId(R.id.activity_list_Meeting_Add_Fab)).perform(click());
@@ -92,7 +71,7 @@ public class MareuInstrumentedTest {
 
         //DATEPICKER DIALOG
         onView(ViewMatchers.withId(R.id.tv_date_time_toselect)).perform(click());
-        onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2022,11,30));
+        onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2022, 11, 30));
         onView(withText("OK")).perform(click());
         //TIMEPICKER DIALOG
         onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(19, 0));
@@ -112,38 +91,39 @@ public class MareuInstrumentedTest {
         onView(ViewMatchers.withId(R.id.button_save_meeting)).perform(click());
 
         //CHECK MEETINGLIST = 1 REUNION
-        onView(ViewMatchers.withId(R.id.activity_list_Meeting)).check(withItemCount(ITEM_COUNT=3));
+        onView(ViewMatchers.withId(R.id.activity_list_Meeting)).check(withItemCount(ITEM_COUNT = 3));
     }
 
     @Test
-    public void delete_Meeting_With_Success(){
-        onView(ViewMatchers.withId(R.id.activity_list_Meeting)).check(withItemCount(ITEM_COUNT=2));
+    public void delete_Meeting_With_Success() {
+        onView(ViewMatchers.withId(R.id.activity_list_Meeting)).check(withItemCount(ITEM_COUNT = 2));
 
         //SUPPRIME 1ERE REUNION
         onView(ViewMatchers.withId(R.id.activity_list_Meeting)).perform(RecyclerViewActions.actionOnItemAtPosition(0, new DeleteViewAction()));
         // VERIFIE REUNION = 0
-        onView(ViewMatchers.withId(R.id.activity_list_Meeting)).check(withItemCount(ITEM_COUNT=1));
+        onView(ViewMatchers.withId(R.id.activity_list_Meeting)).check(withItemCount(ITEM_COUNT = 1));
     }
 
 
     @Test
-    public void filter_By_Date(){
-        onView(ViewMatchers.withId(R.id.activity_list_Meeting)).check(withItemCount(ITEM_COUNT=2));
+    public void filter_By_Date_With_Success() {
+        onView(ViewMatchers.withId(R.id.activity_list_Meeting)).check(withItemCount(ITEM_COUNT = 2));
         onView(ViewMatchers.withId(R.id.menu_activity_item_sort_by)).perform(click());
         onView(withText("Filtrer par date")).perform(click());
-        onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2022,11,29));
+        onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2022, 11, 29));
         onView(withText("OK")).perform(click());
-        onView(ViewMatchers.withId(R.id.activity_list_Meeting)).check(withItemCount(ITEM_COUNT=0));
+        onView(ViewMatchers.withId(R.id.activity_list_Meeting)).check(withItemCount(ITEM_COUNT = 0));
     }
+
     @Test
-    public void filter_By_Room(){
-        onView(ViewMatchers.withId(R.id.activity_list_Meeting)).check(withItemCount(ITEM_COUNT=2));
+    public void filter_By_Room_With_Success() {
+        onView(ViewMatchers.withId(R.id.activity_list_Meeting)).check(withItemCount(ITEM_COUNT = 2));
         onView(ViewMatchers.withId(R.id.menu_activity_item_sort_by)).perform(click());
         onView(withText("Filtrer par salle")).perform(click());
         onView(ViewMatchers.withId(R.id.spinner_room_filter)).perform(click());
         onView(withText("Oro Jackson")).inRoot(isPlatformPopup()).perform(click());
         onView(ViewMatchers.withId(R.id.button_OK_RoomFilter)).perform(click());
-        onView(ViewMatchers.withId(R.id.activity_list_Meeting)).check(withItemCount(ITEM_COUNT=1));
+        onView(ViewMatchers.withId(R.id.activity_list_Meeting)).check(withItemCount(ITEM_COUNT = 1));
     }
 
 }

@@ -46,7 +46,6 @@ public class EmployeesRecyclerViewAdapter extends RecyclerView.Adapter<Employees
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     mEmployeesChecked.add(employee);
-
                 } else {
                     mEmployeesChecked.remove(employee);
                 }
@@ -73,5 +72,4 @@ public class EmployeesRecyclerViewAdapter extends RecyclerView.Adapter<Employees
 
         }
     }
-
 }

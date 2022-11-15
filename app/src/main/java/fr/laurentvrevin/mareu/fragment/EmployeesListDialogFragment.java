@@ -71,6 +71,7 @@ public class EmployeesListDialogFragment extends DialogFragment {
         mRecyclerView.setAdapter(mEmployeesAdapter);
         mRecyclerView = view.findViewById(R.id.recycler_view_employees);
 
+
         //On gère le bouton OK qui écoute les éléments de liste sélectionnées
         buttonOK.setOnClickListener(new View.OnClickListener() {
             @Override
