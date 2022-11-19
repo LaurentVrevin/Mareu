@@ -69,11 +69,14 @@
         android:id="@+id/item_list_meeting_roomname"
         android:layout_width="100dp"
         android:layout_height="20dp"
-        android:text="Nom de la salle"
-        android:textSize="16dp"
         android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Nom de la salle"
         android:textColor="@color/black"
+        android:textSize="16dp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/button_delete"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/line2"
         app:layout_constraintTop_toTopOf="@+id/item_list_meeting_avatar" />
 
@@ -83,12 +86,16 @@
         android:layout_height="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
+        android:paddingTop="2dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="qui@lamzone.com?"
         app:layout_constraintBottom_toBottomOf="@+id/item_list_meeting_avatar"
+        app:layout_constraintEnd_toStartOf="@+id/button_delete"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/item_list_meeting_avatar"
-        app:layout_constraintTop_toBottomOf="@+id/item_list_meeting_meetingname" />
+        app:layout_constraintTop_toBottomOf="@+id/item_list_meeting_meetingname"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
         android:id="@+id/button_delete"

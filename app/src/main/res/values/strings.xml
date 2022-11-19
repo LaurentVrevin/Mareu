@@ -1,5 +1,28 @@
 <resources>
     <string name="app_name">Mareu</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
+    <!-- ACTIVITY MEETING ADD XML -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="reunion_object">Objet de la réunion</string>
+    <string name="choose_room">Choisissez votre salle de réunion</string>
+    <string name="select_date_time_duration">Sélectionnez la date et l\'heure et la durée</string>
+    <string name="guest_list">liste des participants</string>
+    <string name="button_invitation">INVITER</string>
+    <string name="button_save">ENREGISTRER</string>
+    <string name="chip1">1h</string>
+    <string name="chip2">2h</string>
+    <string name="chip3">3h</string>
+
+    <!--FRAGMENT ROOM FILTER -->
+    <string name="filter_by_room">Filtrer par salle de réunion</string>
+    <string name="button_ok">OK</string>
+
+    <!--MENU FILTER -->
+    <string name="menu_filter_by_room">Filtrer par salle de réunion</string>
+    <string name="menu_filter_by_date">Filtrer par date</string>
+    <string name="menu_filter_reset">Reset</string>
+
+    <!--DIALOG FRAGMENT EMPLOYEES LIST -->
+    <string name="button_frg_empl_list_OK">Valider</string>
+    <string name="button_frg_empl_list_Cancel">Annuler</string>
 </resources>

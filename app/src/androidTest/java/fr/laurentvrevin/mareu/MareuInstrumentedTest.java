@@ -58,8 +58,6 @@ public class MareuInstrumentedTest {
 
     }
 
-
-
     @Test
     public void create_Meeting_With_Success() {
 
@@ -97,7 +95,6 @@ public class MareuInstrumentedTest {
     @Test
     public void delete_Meeting_With_Success() {
         onView(ViewMatchers.withId(R.id.activity_list_Meeting)).check(withItemCount(ITEM_COUNT = 2));
-
         //SUPPRIME 1ERE REUNION
         onView(ViewMatchers.withId(R.id.activity_list_Meeting)).perform(RecyclerViewActions.actionOnItemAtPosition(0, new DeleteViewAction()));
         // VERIFIE REUNION = 0

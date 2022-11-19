@@ -6,20 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".activities.AddMeetingActivity">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_margin="12dp"
-        android:paddingBottom="20dp"
-        android:gravity="center"
-        android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txt_Meeting_Object"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Objet de la réunion">
+            android:layout_margin="@dimen/margin_standard"
+            android:hint="@string/reunion_object"
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/test_txt_object"
@@ -28,138 +27,166 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.divider.MaterialDivider
-            android:layout_width="400dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp" />
+            android:id="@+id/divider1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_standard"
+            android:padding="@dimen/padding_standard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_Meeting_Object" />
 
         <TextView
             android:id="@+id/tvRoomChoice"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Choisissez votre salle de réunion"
+            android:layout_margin="@dimen/margin_standard"
+            android:gravity="center"
+            android:padding="@dimen/padding_small"
+            android:text="@string/choose_room"
             android:textStyle="bold"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider1" />
 
         <Spinner
             android:id="@+id/spinner_room_toselect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_standard"
             android:gravity="center"
-            tools:ignore="MissingConstraints" />
+            android:padding="@dimen/padding_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvRoomChoice" />
 
         <com.google.android.material.divider.MaterialDivider
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp" />
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_standard"
+            android:padding="@dimen/padding_standard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_room_toselect" />
 
         <TextView
             android:id="@+id/tv_date_time_toselect"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_margin="@dimen/margin_standard"
             android:drawableEnd="@drawable/ic_baseline_calendar_month_24"
             android:gravity="center"
-            android:paddingEnd="10dp"
-            android:hint="Sélectionnez la date et l'heure et la durée"
-            android:textStyle="bold" />
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:paddingBottom="10dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+            android:hint="@string/select_date_time_duration"
+            android:padding="@dimen/padding_standard"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipgroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:singleSelection="true"
+            android:layout_margin="@dimen/margin_standard"
+            android:gravity="center"
+            android:padding="@dimen/padding_small"
             app:checkedChip="@id/chip1"
-            >
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip1"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:clickable="true"
-            android:text="1h"
-            android:theme="@style/Widget.MaterialComponents.Chip.Choice"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tv_date_time_toselect"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip1"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_standard"
+                android:layout_marginLeft="@dimen/margin_standard"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_standard"
+                android:layout_marginRight="@dimen/margin_standard"
+                android:clickable="true"
+                android:text="@string/chip1"
+                android:theme="@style/Widget.MaterialComponents.Chip.Choice"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip2"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:clickable="true"
-            android:text="2h"
-            android:theme="@style/Widget.MaterialComponents.Chip.Choice"
-            />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip2"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_standard"
+                android:layout_marginLeft="@dimen/margin_standard"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_standard"
+                android:layout_marginRight="@dimen/margin_standard"
+                android:clickable="true"
+                android:text="@string/chip2"
+                android:theme="@style/Widget.MaterialComponents.Chip.Choice" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip3"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:clickable="true"
-            android:text="3h"
-            android:theme="@style/Widget.MaterialComponents.Chip.Choice"
-            />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip3"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_standard"
+                android:layout_marginLeft="@dimen/margin_standard"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_standard"
+                android:layout_marginRight="@dimen/margin_standard"
+                android:clickable="true"
+                android:text="@string/chip3"
+                android:theme="@style/Widget.MaterialComponents.Chip.Choice" />
         </com.google.android.material.chip.ChipGroup>
-    </LinearLayout>
 
         <com.google.android.material.divider.MaterialDivider
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp" />
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_standard"
+            android:padding="@dimen/padding_standard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chipgroup" />
 
         <Button
             android:id="@+id/button_invitation_employees"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_standard"
             android:background="@drawable/rounded_button"
-            android:text="Inviter" />
+            android:text="@string/button_invitation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
         <TextView
             android:id="@+id/tv_list_invited"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:paddingTop="10dp"
-
-            android:layout_margin="12dp"
-            android:hint="liste des participants" />
+            android:layout_margin="@dimen/margin_standard"
+            android:hint="@string/guest_list"
+            android:padding="@dimen/padding_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_invitation_employees" />
 
         <Button
             android:id="@+id/button_save_meeting"
-            android:background="@drawable/rounded_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="enregistrer" />
-
-
-    </LinearLayout>
-
+            android:layout_margin="@dimen/margin_standard"
+            android:background="@drawable/rounded_button"
+            android:text="@string/button_save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_list_invited" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

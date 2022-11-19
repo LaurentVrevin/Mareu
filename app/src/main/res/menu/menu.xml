@@ -14,13 +14,13 @@
         <menu>
 
     <item android:id="@+id/filter_date"
-        android:title="Filtrer par date"
+        android:title="@string/menu_filter_by_date"
        app:showAsAction="never"/>
     <item android:id="@+id/filter_room"
-        android:title="Filtrer par salle"
+        android:title="@string/menu_filter_by_room"
         app:showAsAction="never"/>
     <item android:id="@+id/reset"
-        android:title="Reset"
+        android:title="@string/menu_filter_reset"
         app:showAsAction="never"/>
     </menu>
     </item>

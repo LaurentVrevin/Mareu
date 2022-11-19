@@ -1,47 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_employee"
     android:layout_width="wrap_content"
-    android:layout_height="@dimen/fab_margin"
+    android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:padding="1dp"
+    android:padding="1dp"   >
 
-    >
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_employees"
-        android:layout_width="250dp"
-        android:layout_height="300dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="@+id/ok_button"
-        app:layout_constraintStart_toStartOf="parent"
-
-        tools:listitem="@layout/fragment_employees_item"
-        />
-
-    <Button
-        android:id="@+id/ok_button"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Valider"
-        app:layout_constraintBottom_toBottomOf="@id/recycler_view_employees"
-        app:layout_constraintRight_toLeftOf="@id/cancel_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        android:layout_marginLeft="20dp"/>
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/cancel_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Annuler"
-        app:layout_constraintBottom_toBottomOf="@id/recycler_view_employees"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/ok_button"
-        app:layout_constraintTop_toBottomOf="parent"
-        android:layout_marginRight="20dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_employees"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/fragment_employees_item"
+            tools:ignore="MissingConstraints" />
+        <Button
+            android:id="@+id/ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="@string/button_frg_empl_list_OK"
+            app:layout_constraintRight_toLeftOf="@id/cancel_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view_employees" />
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_frg_empl_list_Cancel"
+            app:layout_constraintBottom_toBottomOf="@id/recycler_view_employees"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/ok_button"
+            app:layout_constraintTop_toBottomOf="parent"
+            android:layout_marginRight="20dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
