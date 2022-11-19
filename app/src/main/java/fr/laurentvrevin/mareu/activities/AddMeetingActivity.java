@@ -213,7 +213,7 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
         //On ajoute la durée choisie via le chip à mEndTime et on vérifie dans le toast ¨PENSER A CLEAN
         mEndTime.add(Calendar.MINUTE, chip);
         Toast.makeText(this, "La durée est de : " + chip + " minutes, votre réunion se termine à " + formatToast.format(mEndTime.getTime()), Toast.LENGTH_LONG).show();
-        mMareuApiService.createMeeting(new Meeting(colorSelected, meetingObject, roomSelected, mStartdate, mEmployeesSelected));
+        mMareuApiService.createMeeting(new Meeting(colorSelected, meetingObject, roomSelected, mStartdate, mEndTime, mEmployeesSelected));
         finish();
     }
 
