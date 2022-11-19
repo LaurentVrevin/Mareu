@@ -4,7 +4,7 @@ package fr.laurentvrevin.mareu.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Employees implements Serializable {
+public class Employee implements Serializable {
 
     private long id;
 
@@ -14,7 +14,7 @@ public class Employees implements Serializable {
 
     private String email;
 
-    public Employees(long id, String firstname, String function, String email) {
+    public Employee(long id, String firstname, String function, String email) {
 
         this.id = id;
         this.firstname = firstname;
@@ -63,8 +63,8 @@ public class Employees implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Employees employees = (Employees) o;
-        return id == employees.id && firstname.equals(employees.firstname) && function.equals(employees.function) && email.equals(employees.email);
+        Employee employee = (Employee) o;
+        return id == employee.id && firstname.equals(employee.firstname) && function.equals(employee.function) && email.equals(employee.email);
     }
 
     @Override

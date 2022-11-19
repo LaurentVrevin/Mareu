@@ -4,39 +4,39 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import fr.laurentvrevin.mareu.model.Employees;
+import fr.laurentvrevin.mareu.model.Employee;
 
 public class DummyEmployeesGenerator {
-    public static ArrayList<Employees> DUMMY_EMPLOYEES = new ArrayList<>(Arrays.asList(
-            new Employees(1, "Juliette", "Manager",
+    public static ArrayList<Employee> DUMMY_EMPLOYEES = new ArrayList<>(Arrays.asList(
+            new Employee(1, "Juliette", "Manager",
                     "juliette@lamzone.com"),
-            new Employees(2, "Lydie", "DRH",
+            new Employee(2, "Lydie", "DRH",
                     "lydie@lamzone.com"),
-            new Employees(3, "Laura", "Designeuse",
+            new Employee(3, "Laura", "Designeuse",
                     "laura@lamzone.com"),
-            new Employees(4, "Laurent", "Développeur",
+            new Employee(4, "Laurent", "Développeur",
                     "laurent@lamzone.com"),
-            new Employees(5, "Carla", "Manager",
+            new Employee(5, "Carla", "Manager",
                     "carla@lamzone.com"),
-            new Employees(6, "Elodie", "Commerciale",
+            new Employee(6, "Elodie", "Commerciale",
                     "elodie@lamzone.com"),
-            new Employees(7, "Léa", "Marketing",
+            new Employee(7, "Léa", "Marketing",
                     "lea@lamzone.com"),
-            new Employees(8, "Camille", "Graphiste",
+            new Employee(8, "Camille", "Graphiste",
                     "camille@lamzone.com"),
-            new Employees(9, "Andréa", "Développeuse",
+            new Employee(9, "Andréa", "Développeuse",
                     "andrea@lamzone.com"),
-            new Employees(10, "Justine", "Commerciale",
+            new Employee(10, "Justine", "Commerciale",
                     "justine@lamzone.com"),
-            new Employees(11, "Noémie", "Développeuse",
+            new Employee(11, "Noémie", "Développeuse",
                     "noemie@lamzone.com"),
-            new Employees(12, "Eliya", "Développeuse",
+            new Employee(12, "Eliya", "Développeuse",
                     "eliya@lamzone.com"),
-            new Employees(13, "Marine", "Développeuse",
+            new Employee(13, "Marine", "Développeuse",
                     "marine@lamzone.com")
     ));
 
-    static List<Employees> generateEmployees() {
+    static List<Employee> generateEmployees() {
         return new ArrayList<>(DUMMY_EMPLOYEES);
     }
 }

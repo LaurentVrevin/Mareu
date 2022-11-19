@@ -12,15 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import fr.laurentvrevin.mareu.R;
-import fr.laurentvrevin.mareu.model.Employees;
+import fr.laurentvrevin.mareu.model.Employee;
 
 
 public class EmployeesRecyclerViewAdapter extends RecyclerView.Adapter<EmployeesRecyclerViewAdapter.ViewHolder> {
-    public ArrayList<Employees> mEmployees;
-    public ArrayList<Employees> mEmployeesChecked;
+    public ArrayList<Employee> mEmployees;
+    public ArrayList<Employee> mEmployeesChecked;
 
 
-    public EmployeesRecyclerViewAdapter(ArrayList<Employees> employees, ArrayList<Employees> checkedemployees) {
+    public EmployeesRecyclerViewAdapter(ArrayList<Employee> employees, ArrayList<Employee> checkedemployees) {
         this.mEmployees = new ArrayList<>(employees);
         this.mEmployeesChecked = new ArrayList<>(checkedemployees);
     }
@@ -34,7 +34,7 @@ public class EmployeesRecyclerViewAdapter extends RecyclerView.Adapter<Employees
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Employees employee = mEmployees.get(position);
+        Employee employee = mEmployees.get(position);
         holder.mEmployeeName.setText(employee.getFirstname());
         holder.mEmployeeFunction.setText(employee.getFunction());
         holder.mEmployeeEmail.setText(employee.getEmail());

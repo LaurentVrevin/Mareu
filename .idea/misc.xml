@@ -3,16 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.263" />
         <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/drawable/circle.xml" value="0.283" />
+        <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.263" />
+        <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/drawable/ic_baseline_calendar_month_24.xml" value="0.263" />
+        <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.263" />
+        <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/drawable/ic_baseline_filter_list_24.xml" value="0.263" />
         <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/drawable/ic_baseline_save_24.xml" value="0.2865" />
+        <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/drawable/ic_launcher_background.xml" value="0.263" />
         <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/drawable/ring.xml" value="0.283" />
         <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/drawable/rounded_button.xml" value="0.2365" />
         <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/layout/activity_meeting_add.xml" value="0.42916666666666664" />
+        <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/layout/activity_meeting_add.xml" value="0.33" />
         <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/layout/activity_meeting_room_booking.xml" value="0.4271653543307087" />
         <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/layout/fragment_employees.xml" value="0.42916666666666664" />
         <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/layout/fragment_employees_item.xml" value="0.42916666666666664" />
-        <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/layout/fragment_employees_list_dialog.xml" value="0.4109848484848485" />
+        <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/layout/fragment_employees_list_dialog.xml" value="0.5" />
         <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/layout/fragment_room_filter.xml" value="0.358695652173913" />
         <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/layout/fragment_room_filter_dialog.xml" value="0.358695652173913" />
         <entry key="..\:/COURS OPENCLASSROOMS/PROJET 04/app/src/main/res/layout/item_list_meeting.xml" value="0.33" />

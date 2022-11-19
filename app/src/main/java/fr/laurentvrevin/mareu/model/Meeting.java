@@ -12,10 +12,10 @@ public class Meeting {
 
     private Calendar dateMeeting;
 
-    private ArrayList<Employees> employeesMails;
+    private ArrayList<Employee> employeesMails;
     private String roomColor;
 
-    public Meeting(String meetingColor, String meetingName, String roomName, Calendar dateMeeting, ArrayList<Employees> employeesMails) {
+    public Meeting(String meetingColor, String meetingName, String roomName, Calendar dateMeeting, ArrayList<Employee> employeesMails) {
         this.roomColor = meetingColor;
         this.meetingname = meetingName;
         this.roomname = roomName;
@@ -47,11 +47,11 @@ public class Meeting {
         this.dateMeeting = dateMeeting;
     }
 
-    public ArrayList<Employees> getEmployeesMails() {
+    public ArrayList<Employee> getEmployeesMails() {
         return employeesMails;
     }
 
-    public void setEmployeesMails(ArrayList<Employees> employeesMails) {
+    public void setEmployeesMails(ArrayList<Employee> employeesMails) {
         this.employeesMails = employeesMails;
     }
 

@@ -19,6 +19,8 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
@@ -29,7 +31,7 @@ import fr.laurentvrevin.mareu.DI.DI;
 import fr.laurentvrevin.mareu.R;
 import fr.laurentvrevin.mareu.UtilsList;
 import fr.laurentvrevin.mareu.fragment.EmployeesListDialogFragment;
-import fr.laurentvrevin.mareu.model.Employees;
+import fr.laurentvrevin.mareu.model.Employee;
 import fr.laurentvrevin.mareu.model.Meeting;
 import fr.laurentvrevin.mareu.model.Room;
 import fr.laurentvrevin.mareu.service.DummyRoomGenerator;
@@ -43,13 +45,16 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
     TextInputLayout txt_Meeting_Object;
     String meetingObject, roomSelected, listInvited, colorSelected;
     int yearSelected, monthSelected, daySelected;
+    int chip;
+    private Calendar mStartdate, mEndTime;
     private Button mButtonInvitation, mButtonSaveMeeting;
+    private Chip chip1h, chip2h, chip3h;
+    private ChipGroup chipgroup;
     private Spinner mRoomToSelectSpinner;
-    private ArrayList<Employees> mEmployeesToCheck;
-    private ArrayList<Employees> mEmployeesSelected = new ArrayList<>();
+    private ArrayList<Employee> mEmployeesToCheck;
+    private ArrayList<Employee> mEmployeesSelected = new ArrayList<>();
     private EmployeesListDialogFragment mDialogFragment;
-    private Calendar mStartdate;
-    private Calendar mEndDate;
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -58,12 +63,13 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
 
         setContentView(R.layout.activity_meeting_add);
 
-
         mButtonDateTimePicker = findViewById(R.id.tv_date_time_toselect);
         txt_dateSelected = findViewById(R.id.tv_date_time_toselect);
-        // txt_timeSeleted = findViewById(R.id.tv_time_selected);
+        chip1h = findViewById(R.id.chip1);
+        chip2h = findViewById(R.id.chip2);
+        chip3h = findViewById(R.id.chip3);
+        chipgroup = findViewById(R.id.chipgroup);
         mRoomToSelectSpinner = findViewById(R.id.spinner_room_toselect);
-        //txt_roomSeleted = findViewById(R.id.tv_room_selected);
         mButtonInvitation = findViewById(R.id.button_invitation_employees);
         list_invited = findViewById(R.id.tv_list_invited);
         mButtonSaveMeeting = findViewById(R.id.button_save_meeting);
@@ -110,6 +116,7 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
 
         //ON GERE LE TIME PICKER
         //on commence le time Picker à l'heure du jour
+
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, 0);
         DatePickerDialog datePickerDialog = new DatePickerDialog(this);
@@ -120,15 +127,39 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
         int thour = calendar.get(Calendar.HOUR_OF_DAY);
         int tminute = calendar.get(Calendar.MINUTE);
 
+        SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy"); //je lui dis quel format de date je souhaite
+        SimpleDateFormat format2 = new SimpleDateFormat("HH:mm");
+        chip = 60;
+
         //on récupère l'heure et les minutes sélectionnées dans la vue pour être mises dans thour et tminutes
         TimePickerDialog.OnTimeSetListener onTimeSetListener = (view, hourSelected, minutesSelected) -> {
 
             mStartdate.set(Calendar.HOUR_OF_DAY, hourSelected); //on passe l'heure sélectionnée
             mStartdate.set(Calendar.MINUTE, minutesSelected); //on passe les minutes sélectionnées
-            SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy"); //je lui dis quel format de date je souhaite
-            SimpleDateFormat format2 = new SimpleDateFormat("HH:mm");
             txt_dateSelected.setText("Date : " + format1.format(mStartdate.getTime()) + " à : " + format2.format(mStartdate.getTime())); //j'affiche la date sélectionnée
+            mEndTime.set(Calendar.HOUR_OF_DAY, hourSelected);
+            mEndTime.set(Calendar.MINUTE, minutesSelected);
+
         };
+        //CHIPGROUP
+        chip1h.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chip = 60;
+            }
+        });
+        chip2h.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chip = 120;
+            }
+        });
+        chip3h.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chip = 180;
+            }
+        });
 
         //Quand je clique sur le bouton datetimePicker ouvre le fragment via la variable materialDatePicker
         mButtonDateTimePicker.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +177,7 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mStartdate = Calendar.getInstance();
+                mEndTime = Calendar.getInstance();
                 timePickerDialog.setTitle("Sélectionne l'heure de début");
                 timePickerDialog.show();
             }
@@ -164,6 +196,7 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
     private void onSubmit() {
         meetingObject = txt_Meeting_Object.getEditText().getText().toString();
         listInvited = list_invited.getText().toString();
+        SimpleDateFormat formatToast = new SimpleDateFormat("HH:mm");
 
         if (meetingObject.isEmpty()) {
             txt_Meeting_Object.setError("Merci de saisir un objet de réunion");
@@ -177,12 +210,15 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
             Toast.makeText(this, "La liste des invités est vide", Toast.LENGTH_SHORT).show();
             return;
         }
+        //On ajoute la durée choisie via le chip à mEndTime et on vérifie dans le toast ¨PENSER A CLEAN
+        mEndTime.add(Calendar.MINUTE, chip);
+        Toast.makeText(this, "La durée est de : " + chip + " minutes, votre réunion se termine à " + formatToast.format(mEndTime.getTime()), Toast.LENGTH_LONG).show();
         mMareuApiService.createMeeting(new Meeting(colorSelected, meetingObject, roomSelected, mStartdate, mEmployeesSelected));
         finish();
     }
 
     @Override
-    public void onEmployeesSelected(ArrayList<Employees> employees) {
+    public void onEmployeesSelected(ArrayList<Employee> employees) {
         mEmployeesSelected = employees;
         //je charge la textview avec la liste des employées sélectionnés
         list_invited.setText("Voici les salarié(e)s invité(e)s : " + UtilsList.listEmployeesToString(employees));
