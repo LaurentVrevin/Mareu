@@ -20,7 +20,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
@@ -41,7 +40,7 @@ import fr.laurentvrevin.mareu.service.MareuApiService;
 public class AddMeetingActivity extends AppCompatActivity implements EmployeesListDialogFragment.Listener {
     private final ArrayList<Meeting> createMeetingList = new ArrayList<>();
     private final MareuApiService mMareuApiService = DI.getMeetingsApiService();
-    TextView txt_dateSelected, mButtonDateTimePicker, list_invited;
+    TextView mTxtButtonDateTimePicker, list_invited;
     TextInputLayout txt_Meeting_Object;
     String meetingObject, roomSelected, listInvited, colorSelected;
     int yearSelected, monthSelected, daySelected;
@@ -49,7 +48,6 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
     private Calendar mStartdate, mEndTime;
     private Button mButtonInvitation, mButtonSaveMeeting;
     private Chip chip1h, chip2h, chip3h;
-    private ChipGroup chipgroup;
     private Spinner mRoomToSelectSpinner;
     private ArrayList<Employee> mEmployeesToCheck;
     private ArrayList<Employee> mEmployeesSelected = new ArrayList<>();
@@ -63,12 +61,10 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
 
         setContentView(R.layout.activity_meeting_add);
 
-        mButtonDateTimePicker = findViewById(R.id.tv_date_time_toselect);
-        txt_dateSelected = findViewById(R.id.tv_date_time_toselect);
+        mTxtButtonDateTimePicker = findViewById(R.id.tv_date_time_toselect);
         chip1h = findViewById(R.id.chip1);
         chip2h = findViewById(R.id.chip2);
         chip3h = findViewById(R.id.chip3);
-        chipgroup = findViewById(R.id.chipgroup);
         mRoomToSelectSpinner = findViewById(R.id.spinner_room_toselect);
         mButtonInvitation = findViewById(R.id.button_invitation_employees);
         list_invited = findViewById(R.id.tv_list_invited);
@@ -79,7 +75,7 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
         mButtonInvitation.setOnClickListener(v -> {
             mDialogFragment = EmployeesListDialogFragment.createDialogFragment(DUMMY_EMPLOYEES, mEmployeesSelected, AddMeetingActivity.this);
             mDialogFragment.show(getSupportFragmentManager(), "MyRecyclerDialogFragment");
-            //passer la liste employeeToCheck ici
+            //passer la liste employeeToCheck
             mEmployeesToCheck = new ArrayList<>(DUMMY_EMPLOYEES);
         });
 
@@ -108,15 +104,15 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
             private void onItemSelectedHandler(AdapterView<?> parent, View view, int position, long id) {
                 Adapter adapter = parent.getAdapter();
                 Room rooms = (Room) adapter.getItem(position);
-                //on met dans la textview via la variable roomSelected la salle  choisie
+                //On passe le nom et la couleur de la salle sélectionnée dans la variable
                 roomSelected = rooms.getName();
                 colorSelected = rooms.getAvatarColor();
             }
         });
 
-        //ON GERE LE TIME PICKER
+        //DATE et TIME PICKER
         //on commence le time Picker à l'heure du jour
-
+        //on fait en sorte de ne pas pouvoir choisir une date antérieur
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, 0);
         DatePickerDialog datePickerDialog = new DatePickerDialog(this);
@@ -127,21 +123,24 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
         int thour = calendar.get(Calendar.HOUR_OF_DAY);
         int tminute = calendar.get(Calendar.MINUTE);
 
-        SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy"); //je lui dis quel format de date je souhaite
+        //On paramètre les pattern pour la date et pour l'heure
+        SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat format2 = new SimpleDateFormat("HH:mm");
+        //On donne à chip la valeur de 60 (secondes) pour l'ajouter à l'heure et la passer lorsqu'on submit
         chip = 60;
 
-        //on récupère l'heure et les minutes sélectionnées dans la vue pour être mises dans thour et tminutes
         TimePickerDialog.OnTimeSetListener onTimeSetListener = (view, hourSelected, minutesSelected) -> {
 
             mStartdate.set(Calendar.HOUR_OF_DAY, hourSelected); //on passe l'heure sélectionnée
             mStartdate.set(Calendar.MINUTE, minutesSelected); //on passe les minutes sélectionnées
-            txt_dateSelected.setText("Date : " + format1.format(mStartdate.getTime()) + " à : " + format2.format(mStartdate.getTime())); //j'affiche la date sélectionnée
+            mTxtButtonDateTimePicker.setText("Date : " + format1.format(mStartdate.getTime()) + " à : " + format2.format(mStartdate.getTime()));
             mEndTime.set(Calendar.HOUR_OF_DAY, hourSelected);
             mEndTime.set(Calendar.MINUTE, minutesSelected);
 
         };
+
         //CHIPGROUP
+        //On gère chaque valeur de chaque chip
         chip1h.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,18 +160,17 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
             }
         });
 
-        //Quand je clique sur le bouton datetimePicker ouvre le fragment via la variable materialDatePicker
-        mButtonDateTimePicker.setOnClickListener(new View.OnClickListener() {
+        //Ouverture du DATEPICKER
+        mTxtButtonDateTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 datePickerDialog.show();
 
             }
         });
+        //On récupère thour et tminute pour être à l'heure du jour
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, thour, tminute, true);
-        DatePickerDialog.OnDateSetListener onDateSetListener = (view, year, month, dayOfMonth) -> {
 
-        };
         datePickerDialog.setButton(DatePickerDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -192,7 +190,8 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
             }
         });
     }
-
+    //ONSUBMIT
+    //On check que chaque champs ne soit pas vide
     private void onSubmit() {
         meetingObject = txt_Meeting_Object.getEditText().getText().toString();
         listInvited = list_invited.getText().toString();

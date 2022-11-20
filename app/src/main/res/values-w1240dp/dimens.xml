@@ -12,14 +12,14 @@
     <!-- ITEM LIST MEETING XML -->
     <dimen name="itemlist_tv_width_time">50dp</dimen>
     <dimen name="itemlist_tv_width_object">80dp</dimen>
-    <dimen name="itemlist_tv_width_room">100dp</dimen>
-    <dimen name="itemlist_tv_width_email">250dp</dimen>
+    <dimen name="itemlist_tv_width_room">200dp</dimen>
+    <dimen name="itemlist_tv_width_email">800dp</dimen>
     <dimen name="itemlist_tv_height">20dp</dimen>
 
     <!-- FRAGMENT EMPLOYEES LIST DIALOG XML-->
-    <dimen name="empl_list_dialog_recyclerview_width">250dp</dimen>
-    <dimen name="empl_list_dialog_recyclerview_height">350dp</dimen>
-    <dimen name="empl_list_dialog_recyclerview_marginside">20dp</dimen>
-    <dimen name="empl_list_dialog_recyclerview_marginsmall">5dp</dimen>
+    <dimen name="empl_list_dialog_recyclerview_width">350dp</dimen>
+    <dimen name="empl_list_dialog_recyclerview_height">500dp</dimen>
+    <dimen name="empl_list_dialog_recyclerview_marginside">50dp</dimen>
+    <dimen name="empl_list_dialog_recyclerview_marginsmall">10dp</dimen>
 
 </resources>

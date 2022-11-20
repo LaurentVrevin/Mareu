@@ -13,16 +13,28 @@
     <string name="chip2">2h</string>
     <string name="chip3">3h</string>
 
-    <!--FRAGMENT ROOM FILTER -->
+    <!--FRAGMENT ROOM FILTER XML -->
     <string name="filter_by_room">Filtrer par salle de réunion</string>
     <string name="button_ok">OK</string>
 
-    <!--MENU FILTER -->
-    <string name="menu_filter_by_room">Filtrer par salle de réunion</string>
+    <!--MENU FILTER XML -->
+    <string name="menu_filter_by_room">Filtrer par salle</string>
     <string name="menu_filter_by_date">Filtrer par date</string>
     <string name="menu_filter_reset">Reset</string>
 
-    <!--DIALOG FRAGMENT EMPLOYEES LIST -->
+    <!--DIALOG FRAGMENT EMPLOYEES LIST XML -->
     <string name="button_frg_empl_list_OK">Valider</string>
     <string name="button_frg_empl_list_Cancel">Annuler</string>
+
+    <!-- FRAGMENT EMPLOYEES ITEM XML -->
+    <string name="frag_empl_name">Nom de l\'employé</string>
+    <string name="frag_empl_function">Fonction de l\'employé</string>
+    <string name="frag_empl_email">Email de l\'employé</string>
+
+    <!-- ITEM LIST MEETING XML -->
+    <string name="itemlist_meetingname">Sujet de la réunion</string>
+    <string name="itemlist_meetingtime">14h00</string>
+    <string name="itemlist_meetingroom">Thousand Sunny</string>
+    <string name="itemlist_meetingguest">qui@lamzone.com</string>
+
 </resources>
