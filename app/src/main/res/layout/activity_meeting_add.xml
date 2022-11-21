@@ -18,6 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_standard"
             android:hint="@string/reunion_object"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText

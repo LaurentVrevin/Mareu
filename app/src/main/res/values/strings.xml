@@ -5,7 +5,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="reunion_object">Objet de la réunion</string>
     <string name="choose_room">Choisissez votre salle de réunion</string>
-    <string name="select_date_time_duration">Sélectionnez la date et l\'heure et la durée</string>
+    <string name="select_date_time_duration">Sélectionnez la date, l\'heure et la durée</string>
     <string name="guest_list">liste des participants</string>
     <string name="button_invitation">INVITER</string>
     <string name="button_save">ENREGISTRER</string>

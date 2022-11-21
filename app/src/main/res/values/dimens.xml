@@ -9,6 +9,7 @@
     <dimen name="textsize_medium">16sp</dimen>
     <dimen name="textsize_big">24sp</dimen>
 
+
     <!-- ITEM LIST MEETING XML -->
     <dimen name="itemlist_tv_width_time">50dp</dimen>
     <dimen name="itemlist_tv_width_object">80dp</dimen>

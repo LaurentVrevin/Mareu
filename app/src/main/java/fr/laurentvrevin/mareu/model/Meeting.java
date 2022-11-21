@@ -84,6 +84,6 @@ public class Meeting {
 
     @Override
     public int hashCode() {
-        return Objects.hash(meetingname, roomname, dateMeeting, endTimeMeeting, employeesMails);
+        return Objects.hash(meetingname, roomname, dateMeeting, /*endTimeMeeting, */employeesMails);
     }
 }
