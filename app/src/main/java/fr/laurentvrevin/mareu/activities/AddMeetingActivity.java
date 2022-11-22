@@ -142,35 +142,42 @@ public class AddMeetingActivity extends AppCompatActivity implements EmployeesLi
         mTxtButtonDateTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.DATE, 0);
+                Calendar calendar1 = Calendar.getInstance();
+                Calendar calendar2 = Calendar.getInstance();
+                calendar1.add(Calendar.DATE, 0);
                 DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, month);
-                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        calendar1.set(Calendar.YEAR, year);
+                        calendar2.set(Calendar.YEAR, year);
+                        calendar1.set(Calendar.MONTH, month);
+                        calendar2.set(Calendar.MONTH, month);
+                        calendar1.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        calendar2.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
 
                         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                                calendar.set(Calendar.MINUTE, minute);
+                                calendar1.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                calendar2.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                calendar1.set(Calendar.MINUTE, minute);
+                                calendar2.set(Calendar.MINUTE, minute);
 
                                 SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
                                 SimpleDateFormat format2 = new SimpleDateFormat("HH:mm");
-                                mStartdate = calendar;
-                                mEndTime = calendar;
+
+                                mStartdate = calendar1;
+                                mEndTime = calendar2;
                                 mTxtButtonDateTimePicker.setText("La date est le : " + format1.format(mStartdate.getTime()) + " à " + format2.format(mStartdate.getTime()));
                             }
                         };
                         new TimePickerDialog(AddMeetingActivity.this, timeSetListener,
-                                calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show();
+                                calendar1.get(Calendar.HOUR_OF_DAY), calendar1.get(Calendar.MINUTE), true).show();
                     }
                 };
                 new DatePickerDialog(AddMeetingActivity.this, onDateSetListener,
-                        calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+                        calendar1.get(Calendar.YEAR), calendar1.get(Calendar.MONTH), calendar1.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
